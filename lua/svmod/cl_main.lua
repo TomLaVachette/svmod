@@ -4,10 +4,6 @@
    Desc: Enables or disables SVMod on the server.
 -----------------------------------------------------------]]
 function SVMOD:SetAddonState(value)
-    if not LocalPlayer():IsSuperAdmin() then
-        return
-    end
-
     if not value then
         value = false
     end

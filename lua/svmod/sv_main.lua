@@ -50,16 +50,17 @@ end)
 
 util.AddNetworkString("SV_SetAddonState")
 net.Receive("SV_SetAddonState", function(_, ply)
-    if not ply:IsSuperAdmin() then
-        return
-    end
-
-    local State = net.ReadBool()
-    if State then
-        SVMOD:Enable()
-    else
-        SVMOD:Disable()
-    end
+    CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+        if hasAccess then
+            local state = net.ReadBool()
+            
+            if state then
+                SVMOD:Enable()
+            else
+                SVMOD:Disable()
+            end
+        end
+    end)
 end)
 
 hook.Add("PlayerConnect", "SV_EnableAddon", function()

@@ -137,10 +137,3 @@ net.Receive("SV_Editor_Close", function(_, ply)
         Entity:Remove()
     end
 end)
-
-util.AddNetworkString("SV_Seats_Reload")
-net.Receive("SV_Seats_Reload", function(_, ply)
-    if not ply:IsSuperAdmin() then return end
-
-    SVMOD:Seats_Initialize()
-end)

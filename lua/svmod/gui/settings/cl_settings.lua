@@ -14,40 +14,44 @@ surface.CreateFont("SV_Calibri18", {
 })
 
 net.Receive("SV_Settings", function()
-    local data = {
-        Status = net.ReadBool(),
-        LastVehicleUpdate = net.ReadString(),
-        ConflictList = net.ReadString(),
+    local data = {}
 
-        IsSwitchEnabled = net.ReadBool(),
-        IsKickEnabled = net.ReadBool(),
-        IsLockEnabled = net.ReadBool(),
+    data.HasAccess = net.ReadBool()
 
-        AreHeadlightsEnabled = net.ReadBool(),
-        TurnOffHeadlightsOnExit = net.ReadBool(),
-        TimeTurnOffHeadlights = net.ReadFloat(),
-        AreHazardLightsEnabled = net.ReadBool(),
-        TurnOffHazardOnExit = net.ReadBool(),
-        TimeTurnOffHazard = net.ReadFloat(),
-        AreReverseLightsEnabled = net.ReadBool(),
+    data.Status = net.ReadBool()
+    data.LastVehicleUpdate = net.ReadString()
+    data.ConflictList = net.ReadString()
 
-        AreFlashingLightsEnabled = net.ReadBool(),
-        TurnOffFlashingLightsOnExit = net.ReadBool(),
-        TimeTurnOffFlashingLights = net.ReadFloat(),
+    if data.HasAccess then
+        data.IsSwitchEnabled = net.ReadBool()
+        data.IsKickEnabled = net.ReadBool()
+        data.IsLockEnabled = net.ReadBool()
 
-        HornIsEnabled = net.ReadBool(),
+        data.AreHeadlightsEnabled = net.ReadBool()
+        data.TurnOffHeadlightsOnExit = net.ReadBool()
+        data.TimeTurnOffHeadlights = net.ReadFloat()
+        data.AreHazardLightsEnabled = net.ReadBool()
+        data.TurnOffHazardOnExit = net.ReadBool()
+        data.TimeTurnOffHazard = net.ReadFloat()
+        data.AreReverseLightsEnabled = net.ReadBool()
 
-        PhysicsMultiplier = math.Round(net.ReadFloat(), 2),
-        BulletMultiplier = math.Round(net.ReadFloat(), 2),
-        CarbonisedChance = math.Round(net.ReadFloat(), 2),
-        SmokePercent = math.Round(net.ReadFloat(), 2),
-        DriverMultiplier = math.Round(net.ReadFloat(), 2),
-        PassengerMultiplier = math.Round(net.ReadFloat(), 2),
-        PlayerExitMultiplier = math.Round(net.ReadFloat(), 2),
+        data.AreFlashingLightsEnabled = net.ReadBool()
+        data.TurnOffFlashingLightsOnExit = net.ReadBool()
+        data.TimeTurnOffFlashingLights = net.ReadFloat()
 
-        FuelIsEnabled = net.ReadBool(),
-        FuelMultiplier = math.Round(net.ReadFloat(), 2)
-    }
+        data.HornIsEnabled = net.ReadBool()
+
+        data.PhysicsMultiplier = math.Round(net.ReadFloat(), 2)
+        data.BulletMultiplier = math.Round(net.ReadFloat(), 2)
+        data.CarbonisedChance = math.Round(net.ReadFloat(), 2)
+        data.SmokePercent = math.Round(net.ReadFloat(), 2)
+        data.DriverMultiplier = math.Round(net.ReadFloat(), 2)
+        data.PassengerMultiplier = math.Round(net.ReadFloat(), 2)
+        data.PlayerExitMultiplier = math.Round(net.ReadFloat(), 2)
+
+        data.FuelIsEnabled = net.ReadBool()
+        data.FuelMultiplier = math.Round(net.ReadFloat(), 2)
+    end
 
     local frame = vgui.Create("DPanel")
     frame:SetSize(900, 650)
@@ -181,29 +185,31 @@ net.Receive("SV_Settings", function()
         SVMOD:GUI_Vehicles(centerPanel, data)
     end)
 
-    createMenuButton(SVMOD:GetLanguage("SEATS"), TOP, function()
-        SVMOD:GUI_Seats(centerPanel, data)
-    end)
+    if data.HasAccess then
+        createMenuButton(SVMOD:GetLanguage("SEATS"), TOP, function()
+            SVMOD:GUI_Seats(centerPanel, data)
+        end)
 
-    createMenuButton(SVMOD:GetLanguage("LIGHTS"), TOP, function()
-        SVMOD:GUI_Lights(centerPanel, data)
-    end)
+        createMenuButton(SVMOD:GetLanguage("LIGHTS"), TOP, function()
+            SVMOD:GUI_Lights(centerPanel, data)
+        end)
 
-    createMenuButton(SVMOD:GetLanguage("ELS"), TOP, function()
-        SVMOD:GUI_ELS(centerPanel, data)
-    end)
+        createMenuButton(SVMOD:GetLanguage("ELS"), TOP, function()
+            SVMOD:GUI_ELS(centerPanel, data)
+        end)
 
-    createMenuButton(SVMOD:GetLanguage("SOUNDS"), TOP, function()
-        SVMOD:GUI_Sounds(centerPanel, data)
-    end)
+        createMenuButton(SVMOD:GetLanguage("SOUNDS"), TOP, function()
+            SVMOD:GUI_Sounds(centerPanel, data)
+        end)
 
-    createMenuButton(SVMOD:GetLanguage("DAMAGE"), TOP, function()
-        SVMOD:GUI_Damage(centerPanel, data)
-    end)
+        createMenuButton(SVMOD:GetLanguage("DAMAGE"), TOP, function()
+            SVMOD:GUI_Damage(centerPanel, data)
+        end)
 
-    createMenuButton(SVMOD:GetLanguage("FUEL"), TOP, function()
-        SVMOD:GUI_Fuel(centerPanel, data)
-    end)
+        createMenuButton(SVMOD:GetLanguage("FUEL"), TOP, function()
+            SVMOD:GUI_Fuel(centerPanel, data)
+        end)
+    end
 
     createMenuButton(SVMOD:GetLanguage("CLOSE"), BOTTOM, function()
         frame:Remove()

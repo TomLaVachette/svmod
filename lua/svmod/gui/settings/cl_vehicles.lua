@@ -132,11 +132,6 @@ function SVMOD:GUI_Vehicles(panel, data)
     button.DoClick = function(self)
         SVMOD:Data_Update()
 
-        if LocalPlayer():IsSuperAdmin() then
-            net.Start("SV_UpdateData")
-            net.SendToServer()
-        end
-
         panel:GetParent():Remove()
     end
     button.Paint = function(self, w, h)

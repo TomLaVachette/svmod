@@ -1,44 +1,44 @@
 concommand.Add("sv_givewrench", function(ply)
-    if not ply:IsAdmin() then
-        return
-    end
-
-    ply:Give("sv_wrench")
+    CAMI.PlayerHasAccess(ply, "SV_UseCommands", function(hasAccess)
+        if hasAccess then
+            ply:Give("sv_wrench")
+        end
+    end)
 end)
 
 concommand.Add("sv_lock", function(ply)
-    if not ply:IsAdmin() then
-        return
-    end
-
-    local Vehicle = ply:GetEyeTrace().Entity
-    if not SVMOD:IsVehicle(Vehicle) then
-        return
-    end
-
-    Vehicle:SV_Lock()
+    CAMI.PlayerHasAccess(ply, "SV_UseCommands", function(hasAccess)
+        if hasAccess then
+            local veh = ply:GetEyeTrace().Entity
+            if not SVMOD:IsVehicle(veh) then
+                return
+            end
+        
+            veh:SV_Lock()
+        end
+    end)
 end)
 
 concommand.Add("sv_unlock", function(ply)
-    if not ply:IsAdmin() then
-        return
-    end
-
-    local Vehicle = ply:GetEyeTrace().Entity
-    if not SVMOD:IsVehicle(Vehicle) then
-        return
-    end
-
-    Vehicle:SV_Unlock()
+    CAMI.PlayerHasAccess(ply, "SV_UseCommands", function(hasAccess)
+        if hasAccess then
+            local veh = ply:GetEyeTrace().Entity
+            if not SVMOD:IsVehicle(veh) then
+                return
+            end
+        
+            veh:SV_Unlock()
+        end
+    end)
 end)
 
 concommand.Add("sv_repair", function(ply)
-    if not ply:IsAdmin() then
-        return
-    end
-
-    local Vehicle = ply:GetEyeTrace().Entity
-    if not SVMOD:IsVehicle(Vehicle) then return end
-
-    Vehicle:SV_SetHealth(100)
+    CAMI.PlayerHasAccess(ply, "SV_UseCommands", function(hasAccess)
+        if hasAccess then
+            local veh = ply:GetEyeTrace().Entity
+            if not SVMOD:IsVehicle(veh) then return end
+        
+            veh:SV_SetHealth(100)
+        end
+    end)
 end)
