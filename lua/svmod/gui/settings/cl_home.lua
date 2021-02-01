@@ -162,29 +162,53 @@ function SVMOD:GUI_Home(panel, data)
          }
     })
 
-    SVMOD:CreateSettingPanel(panel, "Performance", {
+    local perfMode = 0
+    if SVMOD.CFG.Lights.DrawProjectedLights then
+        if not SVMOD.CFG.Lights.DrawShadows then
+            perfMode = 1
+        else
+            perfMode = 2
+        end
+    end
+
+    SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Performance"), {
         {
-            Name = "High",
+            Name = SVMOD:GetLanguage("High"),
             Color = Color(59, 217, 85),
             HoverColor = Color(156, 255, 161),
+            IsSelected = (perfMode == 2),
             DoClick = function()
+                SVMOD.CFG.Lights.DrawProjectedLights = true
+                SVMOD.CFG.Lights.DrawShadows = true
+                SVMOD.CFG.Damage.DrawSmoke = true
 
+                SVMOD:Save()
             end
         },
         {
-            Name = "Normal",
+            Name = SVMOD:GetLanguage("Normal"),
             Color = Color(59, 217, 85),
             HoverColor = Color(156, 255, 161),
+            IsSelected = (perfMode == 1),
             DoClick = function()
+                SVMOD.CFG.Lights.DrawProjectedLights = true
+                SVMOD.CFG.Lights.DrawShadows = false
+                SVMOD.CFG.Damage.DrawSmoke = true
 
+                SVMOD:Save()
             end
         },
         {
-            Name = "Low",
+            Name = SVMOD:GetLanguage("Low"),
             Color = Color(59, 217, 85),
             HoverColor = Color(156, 255, 161),
+            IsSelected = (perfMode == 0),
             DoClick = function()
+                SVMOD.CFG.Lights.DrawProjectedLights = false
+                SVMOD.CFG.Lights.DrawShadows = false
+                SVMOD.CFG.Damage.DrawSmoke = false
 
+                SVMOD:Save()
             end
         }
     })

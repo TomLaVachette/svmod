@@ -56,6 +56,18 @@ SVMOD.Languages = {
     ["Language"] = {
         ["FR"] = "Langage"
     },
+    ["Performance"] = {
+        ["FR"] = "Performance"
+    },
+    ["Low"] = {
+        ["FR"] = "Bas"
+    },
+    ["Normal"] = {
+        ["FR"] = "Normal"
+    },
+    ["High"] = {
+        ["FR"] = "Élevé"
+    },
     ["Contributor Mode"] = {
         ["FR"] = "Mode contributeur"
     },
