@@ -1,0 +1,92 @@
+function SVMOD:GUI_Damage(panel, data)
+    panel:Clear()
+
+    SVMOD:CreateTitle(panel, SVMOD:GetLanguage("VEHICLE DAMAGE"))
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Physics damage multiplier"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("PhysicsMultiplier")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.PhysicsMultiplier * 100)
+    slide:SetMaxValue(200)
+    slide:SetUnit("%")
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Bullet damage multiplier"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("BulletMultiplier")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.BulletMultiplier * 100)
+    slide:SetMaxValue(200)
+    slide:SetUnit("%")
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Chance that the vehicle carbonises"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("CarbonisedChance")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.CarbonisedChance * 100)
+    slide:SetMaxValue(100)
+    slide:SetUnit("%")
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Percentage of life before the vehicle smokes"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("SmokePercent")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.SmokePercent * 100)
+    slide:SetMaxValue(100)
+    slide:SetUnit("%")
+
+    local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("PLAYER DAMAGE"))
+    title:DockMargin(0, 30, 0, 0)
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Driver damage multiplier"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("DriverMultiplier")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.DriverMultiplier * 100)
+    slide:SetMaxValue(200)
+    slide:SetUnit("%")
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Passenger damage multiplier"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("PassengerMultiplier")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.PassengerMultiplier * 100)
+    slide:SetMaxValue(200)
+    slide:SetUnit("%")
+
+    local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Exit damage multiplier"), function(val)
+        net.Start("SV_Settings")
+        net.WriteString("Damage")
+        net.WriteString("PlayerExitMultiplier")
+        net.WriteUInt(1, 2) -- float
+        net.WriteFloat(val / 100)
+        net.SendToServer()
+    end)
+    slide:SetValue(data.PlayerExitMultiplier * 100)
+    slide:SetMaxValue(200)
+    slide:SetUnit("%")
+end

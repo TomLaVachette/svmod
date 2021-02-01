@@ -1,0 +1,141 @@
+--[[---------------------------------------------------------
+   Name: SVMOD:IsVehicle()
+   Type: Shared
+   Desc: Returns true if the vehicle is a SV vehicle, false
+         otherwise.
+-----------------------------------------------------------]]
+function SVMOD:IsVehicle(veh)
+    return IsValid(veh) and veh.SV_GetDriverSeat and veh:SV_GetDriverSeat().SV_States ~= nil
+end
+
+hook.Add("OnEntityCreated", "SV_LoadVehicle", function(ent)
+    if not IsValid(ent) or not ent:IsVehicle() then return end
+
+    if not SVMOD:GetAddonState() then
+        -- Addon disabled or we do not know the state of the addon yet
+        return
+    end
+
+    -- SVMod not loaded yet?!
+    if not SVMOD.Data then
+        return
+    end
+
+    if SERVER then
+        -- Wait, because the entity is not fully loaded on the server!
+        timer.Simple(FrameTime(), function()
+            -- SVMOD:Compatiblity_VCMod_Seat_Fix()
+            SVMOD:LoadVehicle(ent)
+        end)
+    else -- CLIENT
+        SVMOD:LoadVehicle(ent)
+    end
+end)
+
+hook.Add("EntityRemoved", "SV_UnloadVehicle", function(ent)
+    if SVMOD:IsVehicle(ent) then
+        -- Same as SVMOD:UnloadVehicle without removing pointers
+        -- because it is unnecessary
+        hook.Run("SV_UnloadVehicle", ent)
+    end
+end)
+
+hook.Add("SV_Enabled", "SV_UpdateAndLoad", function()
+    SVMOD:Data_Update(function()
+        SVMOD:LoadAllVehicles()
+    end)
+end)
+
+hook.Add("SV_Disabled", "SV_Unload", function()
+    SVMOD:UnloadAllVehicles()
+end)
+
+--[[---------------------------------------------------------
+   Name: SVMOD:LoadVehicle(Vehicle veh)
+   Type: Shared
+   Desc: Loads a vehicle, which allows it to become an
+         SV Vehicle.
+   Note: This is an internal function, you should not use it.
+-----------------------------------------------------------]]
+function SVMOD:LoadVehicle(veh)
+    if not IsValid(veh) or not veh:IsVehicle() then return end
+
+    if SVMOD:GetData(veh:GetModel()) or veh:GetNW2Bool("SV_IsSeat", false) then
+        -- Add pointers to the vehicle metatable
+        for k, v in pairs(SVMOD.Metatable) do
+            veh[k] = v
+        end
+        
+        -- Get configuration and call InitEntity on driver seat ONLY
+        if veh:GetModel() ~= "models/nova/airboat_seat.mdl" then
+            veh.SV_Data = table.Copy(SVMOD:GetData(veh:GetModel()))
+
+            veh.SV_States = {
+                Headlights = false,
+                BackLights = false,
+                LeftBlinkers = false,
+                RightBlinkers = false,
+                HazardLights = false,
+                FlashingLights = false,
+                Horn = false
+            }
+
+            hook.Run("SV_LoadVehicle", veh)
+        end
+    end
+end
+
+--[[---------------------------------------------------------
+   Name: SVMOD:UnloadVehicle(Vehicle veh)
+   Type: Shared
+   Desc: Unloads a vehicle, which allows it to become a basic
+        vehicle.
+   Note: This is an internal function, you should not use it.
+-----------------------------------------------------------]]
+function SVMOD:UnloadVehicle(veh)
+    hook.Run("SV_UnloadVehicle", veh)
+
+    -- Remove pointers to the vehicle metatable
+    for k, _ in pairs(SVMOD.Metatable) do
+        veh[k] = nil
+    end
+end
+
+--[[---------------------------------------------------------
+   Name: SVMOD:LoadAllVehicles()
+   Type: Shared
+   Desc: Loads all vehicles of the game.
+   Note: This is an internal function, you should not use it.
+-----------------------------------------------------------]]
+function SVMOD:LoadAllVehicles()
+    for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
+        if SERVER then
+            local ply = veh:GetDriver()
+            if IsValid(ply) then
+                ply:ExitVehicle()
+            end
+        end
+
+        SVMOD:LoadVehicle(veh)
+    end
+end
+
+--[[---------------------------------------------------------
+   Name: SVMOD:UnloadAllVehicles()
+   Type: Shared
+   Desc: Unloads all vehicles of the game.
+   Note: This is an internal function, you should not use it.
+-----------------------------------------------------------]]
+function SVMOD:UnloadAllVehicles()
+    for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
+        if SERVER then
+            for _, ply in ipairs(veh:SV_GetAllPlayers()) do
+                ply:ExitVehicle()
+            end
+        end
+
+        timer.Simple(FrameTime() * 4, function()
+            SVMOD:UnloadVehicle(veh)
+        end)
+    end
+end

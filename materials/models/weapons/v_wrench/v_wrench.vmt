@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\weapons\v_wrench\v_wrench"
+	"$bumpmap" "models\weapons\v_wrench\v_wrench_bump"
+	"$basemapalphaphongmask" "1"
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost"	"1"
+	"$phongfresnelranges"	"[1 7 4]"
+	"$selfillum"	"1"
+}
