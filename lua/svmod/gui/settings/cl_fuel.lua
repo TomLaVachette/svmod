@@ -44,5 +44,5 @@ function SVMOD:GUI_Fuel(panel, data)
     end)
     slide:SetValue(data.FuelMultiplier * 100)
     slide:SetMaxValue(200)
-    slide:SetUnit(SVMOD:GetLanguage("%"))
+    slide:SetUnit("%")
 end

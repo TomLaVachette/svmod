@@ -68,15 +68,6 @@ SVMOD.Languages = {
     ["High"] = {
         ["FR"] = "Élevé"
     },
-    ["Contributor Mode"] = {
-        ["FR"] = "Mode contributeur"
-    },
-    ["Enter your API key..."] = {
-        ["FR"] = "Entrez votre clé API..."
-    },
-    ["Invalid API key."] = {
-        ["FR"] = "Clé API invalide."
-    },
     ["Support"] = {
         ["FR"] = "Support"
     },
@@ -281,8 +272,8 @@ SVMOD.Languages = {
     ["Percentage of life before the vehicle smokes"] = {
         ["FR"] = "Pourcentage de vie avant qu'il émet une fumée"
     },
-    ["Player damage"] = {
-        ["FR"] = "Dommage sur les joueurs"
+    ["PLAYER DAMAGE"] = {
+        ["FR"] = "DÉGATS SUR LES JOUEURS"
     },
     ["Driver damage multiplier"] = {
         ["FR"] = "Multiplicateur de dommage sur le conducteur"
@@ -316,6 +307,24 @@ SVMOD.Languages = {
     },
     ["CREDITS"] = {
         ["FR"] = "CREDITS"
+    },
+    ["CONTRIBUTOR"] = {
+        ["FR"] = "CONTRIBUTEUR"
+    },
+    ["API Key"] = {
+        ["FR"] = "Clé API"
+    },
+    ["Contributor mode enabled"] = {
+        ["FR"] = "Mode contributeur activé"
+    },
+    ["Contributor mode disabled"] = {
+        ["FR"] = "Mode contributeur désactivé"
+    },
+    ["Invalid API key."] = {
+        ["FR"] = "Clé API invalide."
+    },
+    ["Verify"] = {
+        ["FR"] = "Vérifier"
     },
     ["Enable"] = {
         ["FR"] = "Activer"

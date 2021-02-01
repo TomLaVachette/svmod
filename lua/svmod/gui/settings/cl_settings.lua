@@ -53,9 +53,11 @@ net.Receive("SV_Settings", function()
         data.FuelMultiplier = math.Round(net.ReadFloat(), 2)
     end
 
-    local frame = vgui.Create("DPanel")
+    local frame = vgui.Create("DFrame")
     frame:SetSize(900, 650)
     frame:Center()
+    frame:ShowCloseButton(false)
+    frame:SetTitle("")
     frame:MakePopup()
     frame.Paint = function(self, w, h)
         surface.SetDrawColor(18, 25, 31)
@@ -65,26 +67,8 @@ net.Receive("SV_Settings", function()
         surface.DrawRect(0, 0, w, 4)
     end
 
-    local headerPanel = vgui.Create("DPanel", frame)
-    headerPanel:Dock(TOP)
-    headerPanel:SetSize(0, 40)
-    headerPanel:SetDrawBackground(false)
-    headerPanel.OnMousePressed = function(_, keyCode)
-        if keyCode == MOUSE_LEFT then
-            local frameX, frameY = frame:GetPos()
-            local offsetX, offsetY = gui.MouseX() - frameX, gui.MouseY() - frameY
-            hook.Add("Think", "SV_DragMenuFrame", function()
-                if not input.IsMouseDown(MOUSE_LEFT) then
-                    hook.Remove("Think", "SV_DragMenuFrame")
-                else
-                    frame:SetPos(gui.MouseX() - offsetX, gui.MouseY() - offsetY)
-                end
-            end)
-        end
-    end
-
-    local title = vgui.Create("DLabel", headerPanel)
-    title:SetPos(10, 10)
+    local title = vgui.Create("DLabel", frame)
+    title:SetPos(15, 12)
     title:SetFont("SV_CalibriLight22")
     title:SetText("SVMOD : SIMPLE VEHICLE MOD 1.2")
     title:SetColor(Color(178, 95, 245))
@@ -92,7 +76,7 @@ net.Receive("SV_Settings", function()
 
     local topHorizontalLine = vgui.Create("DPanel", frame)
     topHorizontalLine:Dock(TOP)
-    topHorizontalLine:DockMargin(10, 0, 10, 0)
+    topHorizontalLine:DockMargin(10, 15, 10, 0)
     topHorizontalLine:SetSize(0, 1)
     topHorizontalLine.Paint = function(self, w, h)
         surface.SetDrawColor(39, 52, 58)
@@ -217,6 +201,10 @@ net.Receive("SV_Settings", function()
 
     createMenuButton(SVMOD:GetLanguage("CREDITS"), BOTTOM, function()
         SVMOD:GUI_Credits(centerPanel, data)
+    end)
+
+    createMenuButton(SVMOD:GetLanguage("CONTRIBUTOR"), BOTTOM, function()
+        SVMOD:GUI_Contributor(centerPanel, data)
     end)
 
     SVMOD:GUI_Home(centerPanel, data)
