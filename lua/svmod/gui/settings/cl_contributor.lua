@@ -30,6 +30,8 @@ function SVMOD:GUI_Contributor(panel, data)
         draw.SimpleText(self:GetValue(), "SV_Calibri18", 8, h / 2, Color(200, 200, 200), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
     end
 
+    keyTextEntry:SetValue(SVMOD.CFG.Contributor.Key or "")
+
     local subKeyPanel = vgui.Create("DPanel", panel)
     subKeyPanel:Dock(TOP)
     subKeyPanel:DockMargin(0, 4, 0, 4)
