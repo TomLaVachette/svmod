@@ -137,18 +137,6 @@ function SVMOD:GUI_Home(panel, data)
 
     SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Language"), {
         {
-            ISO = "RU",
-            Name = "русский",
-            Color = Color(59, 217, 85),
-            HoverColor = Color(156, 255, 161),
-            IsSelected = (SVMOD.CFG.Language == "RU"),
-            DoClick = function()
-                SVMOD.CFG.Language = "RU"
-                panel:GetParent():Remove()
-                LocalPlayer():ConCommand("svmod")
-            end
-        },
-        {
             ISO = "FR",
             Name = "Français",
             Color = Color(59, 217, 85),
