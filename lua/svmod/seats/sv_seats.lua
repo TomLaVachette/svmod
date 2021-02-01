@@ -187,7 +187,7 @@ hook.Add("PlayerEnteredVehicle", "SV_PlayerEnteredVehicle", function(ply, seat)
 
     if not ply.SV_IsSwitchingSeat then
         -- Hook server side
-        hook.Run("SV_EnteredVehicle", ply, seat:SV_GetDriverSeat())
+        hook.Run("SV_PlayerEnteredVehicle", ply, seat:SV_GetDriverSeat())
 
         -- Hook client side
         net.Start("SV_PlayerEnteredVehicle")
@@ -286,7 +286,7 @@ hook.Add("PlayerLeaveVehicle", "SV_PlayerLeaveVehicle", function(ply, seat)
     ply:SetVelocity(seat:GetVelocity())
 
     -- Hook server side
-    hook.Run("SV_ExitVehicle", ply, seat:SV_GetDriverSeat())
+    hook.Run("SV_PlayerLeaveVehicle", ply, seat:SV_GetDriverSeat())
 
     -- Hook client side
     net.Start("SV_PlayerLeaveVehicle")
@@ -409,7 +409,7 @@ hook.Add("EntityRemoved", "SV_ExitPlayer", function(ent)
 
     if IsValid(ply) then
         -- Hook server side
-        hook.Run("SV_ExitVehicle", ply, ent)
+        hook.Run("SV_PlayerLeaveVehicle", ply, ent)
 
         -- Hook client side
         net.Start("SV_PlayerLeaveVehicle")

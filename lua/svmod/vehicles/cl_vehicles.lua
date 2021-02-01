@@ -6,15 +6,15 @@ hook.Add("InitPostEntity", "SV_InitializeCS", function()
 end)
 
 net.Receive("SV_PlayerEnteredVehicle", function()
-    local Seat = net.ReadEntity()
+    local veh = net.ReadEntity()
 
-    hook.Run("SV_PlayerEnteredVehicle", Seat)
+    hook.Run("SV_PlayerEnteredVehicle", LocalPlayer(), veh)
 end)
 
 net.Receive("SV_PlayerLeaveVehicle", function()
-    local Vehicle = net.ReadEntity()
+    local veh = net.ReadEntity()
 
-    hook.Run("SV_PlayerLeaveVehicle", Vehicle)
+    hook.Run("SV_PlayerLeaveVehicle", LocalPlayer(), veh)
 end)
 
 hook.Add("SV_LoadVehicle", "SV_GetVehicleStates", function(veh)

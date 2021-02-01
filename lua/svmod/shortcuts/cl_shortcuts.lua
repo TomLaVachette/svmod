@@ -1,4 +1,4 @@
-hook.Add("SV_PlayerEnteredVehicle", "SV_StartShortcutsThink", function(veh)
+hook.Add("SV_PlayerEnteredVehicle", "SV_StartShortcutsThink", function(_, veh)
     local LastShortcut
     hook.Add("Think", "SV_DetectShortcuts", function()
         -- Return if menu open

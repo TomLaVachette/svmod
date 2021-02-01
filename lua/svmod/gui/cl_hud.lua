@@ -8,7 +8,7 @@ surface.CreateFont('HudHintTextLarge25', {
 	size = 25
 })
 
--- hook.Add("SV_PlayerEnteredVehicle", "SV_EnableHUD", function(veh)
+-- hook.Add("SV_PlayerEnteredVehicle", "SV_EnableHUD", function(ply, veh)
 --     hook.Add("HUDPaint", "SV_HUDPaint", function()
 --         local Vehicle = LocalPlayer():GetVehicle()
 --         if not SVMOD:IsVehicle(Vehicle) then return end
