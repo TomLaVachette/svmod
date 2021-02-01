@@ -281,7 +281,3 @@ function SVMOD:Data_Load(fun)
         fun()
     end
 end
-
-hook.Add("InitPostEntity", "SV_UpdateAndLoad", function()
-    SVMOD:Data_Update()
-end)
