@@ -23,8 +23,8 @@ hook.Add("SV_PlayerLeaveVehicle", "SV_RemoveWheelMouse", function()
 end)
 
 hook.Add("CalcVehicleView", "SV_VehicleView", function(veh, ply, view)
-    local veh = ply:GetVehicle()
-    if not SVMOD:IsVehicle(veh) or not veh:GetThirdPersonMode() then return end
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:GetThirdPersonMode() then return end
 
 	veh = veh:SV_GetDriverSeat()
 

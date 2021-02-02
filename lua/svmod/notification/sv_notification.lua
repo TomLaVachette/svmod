@@ -6,9 +6,9 @@
 -----------------------------------------------------------]]
 util.AddNetworkString("SV_Notification")
 function SVMOD:SendNotification(ply, text, type, length)
-    net.Start("SV_Notification")
-    net.WriteString(text)
-    net.WriteInt(type, 4)
-    net.WriteInt(length, 4)
-    net.Send(ply)
+	net.Start("SV_Notification")
+	net.WriteString(text)
+	net.WriteInt(type, 4)
+	net.WriteInt(length, 4)
+	net.Send(ply)
 end

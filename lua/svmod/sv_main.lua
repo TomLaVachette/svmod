@@ -2,70 +2,70 @@
    Name: SVMOD:Enable()
    Type: Server
    Desc: Enables SVMod. The next vehicles that appear will be
-         affected by the addon.
+		 affected by the addon.
 -----------------------------------------------------------]]
 function SVMOD:Enable()
-    -- Do not start SVMod if conflict detected
-    if #self:GetConflictList() > 0 then
-        self:PrintConsole(SVMOD.LOG.Error, SVMOD:GetLanguage("Unable to start SVMod: conflict detected."))
-        self.CFG.IsEnabled = false
-        return false
-    end
+	-- Do not start SVMod if conflict detected
+	if #self:GetConflictList() > 0 then
+		self:PrintConsole(SVMOD.LOG.Error, SVMOD:GetLanguage("Unable to start SVMod: conflict detected."))
+		self.CFG.IsEnabled = false
+		return false
+	end
 
-    self.CFG.IsEnabled = true
+	self.CFG.IsEnabled = true
 
-    hook.Run("SV_Enabled")
+	hook.Run("SV_Enabled")
 
-    -- Send to clients
-    net.Start("SV_SetAddonState")
-    net.WriteBool(true)
-    net.Broadcast()
+	-- Send to clients
+	net.Start("SV_SetAddonState")
+	net.WriteBool(true)
+	net.Broadcast()
 
-    return true
+	return true
 end
 
 --[[---------------------------------------------------------
    Name: SVMOD:Disable()
    Type: Server
    Desc: Disables SVMod. The next vehicles that appear will no
-         longer be affected by the addon.
+		 longer be affected by the addon.
 -----------------------------------------------------------]]
 function SVMOD:Disable()
-    self.CFG.IsEnabled = false
+	self.CFG.IsEnabled = false
 
-    hook.Run("SV_Disabled")
+	hook.Run("SV_Disabled")
 
-    -- Send to clients
-    net.Start("SV_SetAddonState")
-    net.WriteBool(false)
-    net.Broadcast()
+	-- Send to clients
+	net.Start("SV_SetAddonState")
+	net.WriteBool(false)
+	net.Broadcast()
 end
 
 util.AddNetworkString("SV_GetAddonState")
 net.Receive("SV_GetAddonState", function(_, ply)
-    net.Start("SV_SetAddonState")
-    net.WriteBool(SVMOD:GetAddonState())
-    net.Send(ply)
+	net.Start("SV_SetAddonState")
+	net.WriteBool(SVMOD:GetAddonState())
+	net.Send(ply)
 end)
 
 util.AddNetworkString("SV_SetAddonState")
 net.Receive("SV_SetAddonState", function(_, ply)
-    CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
-        if hasAccess then
-            local state = net.ReadBool()
-            
-            if state then
-                SVMOD:Enable()
-            else
-                SVMOD:Disable()
-            end
-        end
-    end)
+	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+		if hasAccess then
+			local state = net.ReadBool()
+			
+			if state then
+				SVMOD:Enable()
+			else
+				SVMOD:Disable()
+			end
+		end
+	end)
 end)
 
 hook.Add("PlayerConnect", "SV_EnableAddon", function()
-    if SVMOD.CFG.IsEnabled then
-        SVMOD:Enable()
-    end
-    hook.Remove("PlayerConnect", "SV_EnableAddon")
+	if SVMOD.CFG.IsEnabled then
+		SVMOD:Enable()
+	end
+	hook.Remove("PlayerConnect", "SV_EnableAddon")
 end)

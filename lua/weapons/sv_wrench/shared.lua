@@ -13,15 +13,15 @@ SWEP.Spawnable = true
 SWEP.AdminOnly = true
 
 SWEP.Primary = {
-    ClipSize = -1,
-    DefaultClip = -1,
-    Automatic = false,
-    Ammo = "none"
+	ClipSize = -1,
+	DefaultClip = -1,
+	Automatic = false,
+	Ammo = "none"
 }
 
 SWEP.Secondary = {
-    ClipSize = -1,
-    DefaultClip = -1,
-    Automatic = false,
-    Ammo = "none"
+	ClipSize = -1,
+	DefaultClip = -1,
+	Automatic = false,
+	Ammo = "none"
 }

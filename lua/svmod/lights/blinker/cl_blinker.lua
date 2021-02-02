@@ -2,85 +2,85 @@
    Name: SVMOD:SetLeftBlinkerState(boolean value = false)
    Type: Client
    Desc: Sets the state of the left blinker of the vehicle
-         driven by the player.
+		 driven by the player.
 -----------------------------------------------------------]]
 function SVMOD:SetLeftBlinkerState(value)
-    local Vehicle = LocalPlayer():GetVehicle()
-    if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local Vehicle = LocalPlayer():GetVehicle()
+	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
 
-    if not value then
-        value = false
-    end
+	if not value then
+		value = false
+	end
 
-    net.Start("SV_SetLeftBlinkerState")
-    net.WriteBool(value)
-    net.SendToServer()
+	net.Start("SV_SetLeftBlinkerState")
+	net.WriteBool(value)
+	net.SendToServer()
 end
 
 --[[---------------------------------------------------------
    Name: SVMOD:SetRightBlinkerState(boolean value)
    Type: Client
    Desc: Sets the state of the right blinker of the vehicle
-         driven by the player.
+		 driven by the player.
 -----------------------------------------------------------]]
 function SVMOD:SetRightBlinkerState(value)
-    local Vehicle = LocalPlayer():GetVehicle()
-    if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local Vehicle = LocalPlayer():GetVehicle()
+	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
 
-    if not value then
-        value = false
-    end
+	if not value then
+		value = false
+	end
 
-    net.Start("SV_SetRightBlinkerState")
-    net.WriteBool(value)
-    net.SendToServer()
+	net.Start("SV_SetRightBlinkerState")
+	net.WriteBool(value)
+	net.SendToServer()
 end
 
 net.Receive("SV_TurnLeftBlinker", function()
-    local Vehicle = net.ReadEntity()
-    if not SVMOD:IsVehicle(Vehicle) then return end
+	local Vehicle = net.ReadEntity()
+	if not SVMOD:IsVehicle(Vehicle) then return end
 
-    Vehicle.SV_States.LeftBlinkers = net.ReadBool()
-    Vehicle.SV_States.RightBlinkers = false
+	Vehicle.SV_States.LeftBlinkers = net.ReadBool()
+	Vehicle.SV_States.RightBlinkers = false
 
-    if Vehicle.SV_States.LeftBlinkers then
-        Vehicle:EmitSound("svmod/blinker/switch_on.wav")
-    else
-        Vehicle:EmitSound("svmod/blinker/switch_off.wav")
-    end
+	if Vehicle.SV_States.LeftBlinkers then
+		Vehicle:EmitSound("svmod/blinker/switch_on.wav")
+	else
+		Vehicle:EmitSound("svmod/blinker/switch_off.wav")
+	end
 end)
 
 net.Receive("SV_TurnRightBlinker", function()
-    local Vehicle = net.ReadEntity()
-    if not SVMOD:IsVehicle(Vehicle) then return end
+	local Vehicle = net.ReadEntity()
+	if not SVMOD:IsVehicle(Vehicle) then return end
 
-    Vehicle.SV_States.RightBlinkers = net.ReadBool()
-    Vehicle.SV_States.LeftBlinkers = false
+	Vehicle.SV_States.RightBlinkers = net.ReadBool()
+	Vehicle.SV_States.LeftBlinkers = false
 
-    if Vehicle.SV_States.RightBlinkers then
-        Vehicle:EmitSound("svmod/blinker/switch_on.wav")
-    else
-        Vehicle:EmitSound("svmod/blinker/switch_off.wav")
-    end
+	if Vehicle.SV_States.RightBlinkers then
+		Vehicle:EmitSound("svmod/blinker/switch_on.wav")
+	else
+		Vehicle:EmitSound("svmod/blinker/switch_off.wav")
+	end
 end)
 
 hook.Add("SV_PlayerEnteredVehicle", "SV_AddBlinkerDisablerHook", function(_, veh)
-    if not SVMOD.CFG.Lights.DisableBlinkersOnTurn then return end
+	if not SVMOD.CFG.Lights.DisableBlinkersOnTurn then return end
 
-    hook.Add("VehicleMove", "SV_BlinkerDisabler", function(ply, veh, mv)
-        if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
-            hook.Remove("VehicleMove", "SV_BlinkerDisabler")
-            return
-        end
+	hook.Add("VehicleMove", "SV_BlinkerDisabler", function(ply, veh, mv)
+		if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+			hook.Remove("VehicleMove", "SV_BlinkerDisabler")
+			return
+		end
 
-        if veh:SV_GetLeftBlinkerState() and mv:KeyReleased(IN_MOVELEFT) then
-            SVMOD:SetLeftBlinkerState(false)
-        elseif veh:SV_GetRightBlinkerState() and mv:KeyReleased(IN_MOVERIGHT) then
-            SVMOD:SetRightBlinkerState(false)
-        end
-    end)
+		if veh:SV_GetLeftBlinkerState() and mv:KeyReleased(IN_MOVELEFT) then
+			SVMOD:SetLeftBlinkerState(false)
+		elseif veh:SV_GetRightBlinkerState() and mv:KeyReleased(IN_MOVERIGHT) then
+			SVMOD:SetRightBlinkerState(false)
+		end
+	end)
 end)
 
 hook.Add("SV_PlayerLeaveVehicle", "SV_RemoveBlinkerDisablerHook", function()
-    hook.Remove("VehicleMove", "SV_BlinkerDisabler")
+	hook.Remove("VehicleMove", "SV_BlinkerDisabler")
 end)
