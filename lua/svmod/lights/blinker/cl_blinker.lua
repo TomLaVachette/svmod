@@ -1,9 +1,9 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetLeftBlinkerState(boolean value = false)
-   Type: Client
-   Desc: Sets the state of the left blinker of the vehicle
-		 driven by the player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the state of the left blinker of the vehicle
+-- driven by the player.
+-- @tparam boolean result True to enable the left blinker, false to disable
 function SVMOD:SetLeftBlinkerState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
@@ -17,12 +17,9 @@ function SVMOD:SetLeftBlinkerState(value)
 	net.SendToServer()
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:SetRightBlinkerState(boolean value)
-   Type: Client
-   Desc: Sets the state of the right blinker of the vehicle
-		 driven by the player.
------------------------------------------------------------]]
+-- Sets the state of the right blinker of the vehicle
+-- driven by the player.
+-- @tparam boolean result True to enable the right blinker, false to disable
 function SVMOD:SetRightBlinkerState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end

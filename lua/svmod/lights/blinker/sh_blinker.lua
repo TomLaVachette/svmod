@@ -1,9 +1,8 @@
---[[---------------------------------------------------------
-   Name: Vehicle:SV_GetLeftBlinkerState()
-   Type: Shared
-   Desc: Returns true if the left blinkers are on, false
-		 otherwise.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+-- @shared
+
+-- Gets the state of the left blinkers.
+-- @treturn boolean True if enabled, false if disabled
 function SVMOD.Metatable:SV_GetLeftBlinkerState()
 	if self:SV_IsPassengerSeat() then
 		return self:SV_GetDriverSeat().SV_States.LeftBlinkers
@@ -11,12 +10,8 @@ function SVMOD.Metatable:SV_GetLeftBlinkerState()
 	return self.SV_States.LeftBlinkers
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_GetRightBlinkerState()
-   Type: Shared
-   Desc: Returns true if the right blinkers are on, false
-		 otherwise.
------------------------------------------------------------]]
+-- Gets the state of the right blinkers.
+-- @treturn boolean True if enabled, false if disabled
 function SVMOD.Metatable:SV_GetRightBlinkerState()
 	if self:SV_IsPassengerSeat() then
 		return self:SV_GetDriverSeat().SV_States.RightBlinkers

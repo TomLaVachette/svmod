@@ -1,46 +1,43 @@
---[[---------------------------------------------------------
-   Name: Vehicle:SV_SetFuel()
-   Type: Server
-   Desc: Sets the vehicule fuel in liters.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+-- @serverside
+
+-- Sets the vehicule fuel in liters.
+-- @tparam number fuel Fuel in liters
 util.AddNetworkString("SV_SetFuel")
 function SVMOD.Metatable:SV_SetFuel(value)
-	local Vehicle = self
+	local veh = self
 	if self:SV_IsPassengerSeat() then
-		Vehicle = self:SV_GetDriverSeat()
+		veh = self:SV_GetDriverSeat()
 	end
 
-	local MaxFuel = Vehicle:SV_GetMaxFuel()
+	local MaxFuel = veh:SV_GetMaxFuel()
 
 	value = math.Round(math.Clamp(value, 0, MaxFuel), 2)
 
 	-- Out of fuel sound when we go below 20%
-	if value > 0 and Vehicle:SV_GetPercentFuel() > 20 and (value / MaxFuel * 100) <= 20 then
-		Vehicle:EmitSound("svmod/out_of_fuel.wav")
+	if value > 0 and veh:SV_GetPercentFuel() > 20 and (value / MaxFuel * 100) <= 20 then
+		veh:EmitSound("svmod/out_of_fuel.wav")
 	end
 
-	Vehicle.SV_Fuel = value
+	veh.SV_Fuel = value
 	
 	net.Start("SV_SetFuel")
-	net.WriteEntity(Vehicle)
-	net.WriteFloat(Vehicle.SV_Fuel)
-	net.Send(Vehicle:SV_GetAllPlayers())
+	net.WriteEntity(veh)
+	net.WriteFloat(veh.SV_Fuel)
+	net.Send(veh:SV_GetAllPlayers())
 
 	-- Out of fuel
 	if value <= 0 then
-		Vehicle:EnableEngine(false)
-		Vehicle:StartEngine(false)
-		Vehicle:EmitSound("svmod/out_of_fuel.wav")
+		veh:EnableEngine(false)
+		veh:StartEngine(false)
+		veh:EmitSound("svmod/out_of_fuel.wav")
 
-		hook.Run("SV_OutOfFuel", Vehicle)
+		hook.Run("SV_OutOfFuel", veh)
 	end
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_SetMaxFuel()
-   Type: Server
-   Desc: Sets the vehicule max fuel in liters.
------------------------------------------------------------]]
+-- Sets the vehicule maximum fuel in liters.
+-- @tparam number maxFuel Maximum fuel in leters
 util.AddNetworkString("SV_SetMaxFuel")
 function SVMOD.Metatable:SV_SetMaxFuel(value)
 	local Vehicle = self

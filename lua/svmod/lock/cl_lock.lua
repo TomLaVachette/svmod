@@ -1,8 +1,8 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetLockState(boolean value = false)
-   Type: Client
-   Desc: Sets the lock of the vehicle driven by the player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the lock of the vehicle driven by the player.
+-- @tparam boolean result True to lock, false to unlock
 function SVMOD:SetLockState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
@@ -16,11 +16,7 @@ function SVMOD:SetLockState(value)
 	net.SendToServer()
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:SwitchLockState()
-   Type: Client
-   Desc: Switch the lock of the vehicle driven by the player.
------------------------------------------------------------]]
+-- Switch the lock of the vehicle driven by the player.
 function SVMOD:SwitchLockState()
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end

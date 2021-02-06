@@ -1,8 +1,8 @@
---[[---------------------------------------------------------
-   Name: Vehicle:SV_SendParts()
-   Type: Server
-   Desc: Sends the health parts of the vehicle.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+-- @serverside
+
+-- Sends the health parts of the vehicle.
+-- @internal
 function SVMOD.Metatable:SV_SendParts(ply)
 	net.Start("SV_Parts")
 

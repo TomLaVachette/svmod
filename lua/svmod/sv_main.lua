@@ -1,9 +1,9 @@
---[[---------------------------------------------------------
-   Name: SVMOD:Enable()
-   Type: Server
-   Desc: Enables SVMod. The next vehicles that appear will be
-		 affected by the addon.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @serverside
+
+-- Enables SVMod. The next vehicles that appear will be
+-- affected by the addon.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD:Enable()
 	-- Do not start SVMod if conflict detected
 	if #self:GetConflictList() > 0 then
@@ -24,12 +24,9 @@ function SVMOD:Enable()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:Disable()
-   Type: Server
-   Desc: Disables SVMod. The next vehicles that appear will no
-		 longer be affected by the addon.
------------------------------------------------------------]]
+-- Disables SVMod. The next vehicles that appear will no
+-- longer be affected by the addon.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD:Disable()
 	self.CFG.IsEnabled = false
 

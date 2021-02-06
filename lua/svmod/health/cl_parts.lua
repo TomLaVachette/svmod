@@ -1,4 +1,4 @@
-local function RotateAroundAxis(ang1, ang2)
+local function rotateAroundAxis(ang1, ang2)
 	ang1:RotateAroundAxis(ang1:Forward(), ang2.p)
 	ang1:RotateAroundAxis(ang1:Right(), ang2.r)
 	ang1:RotateAroundAxis(ang1:Up(), ang2.y)
@@ -37,7 +37,7 @@ hook.Add("PostDrawTranslucentRenderables", "SV_WrenchHUD", function()
 				Colour.g = math.floor((p.LastLerp*2) * 255 / 100)
 			end
 
-			cam.Start3D2D(Vehicle:LocalToWorld(p.Position), RotateAroundAxis(Vehicle:GetAngles(), p.Angle), 0.05)
+			cam.Start3D2D(Vehicle:LocalToWorld(p.Position), rotateAroundAxis(Vehicle:GetAngles(), p.Angle), 0.05)
 				draw.RoundedBox(20, 0, 0, 350, 40, ColorAlpha(Colour, 100))
 				if p.LastLerp > 0 then
 					draw.RoundedBox(20, 0, 0, 350 * p.LastLerp/100, 40, Colour)

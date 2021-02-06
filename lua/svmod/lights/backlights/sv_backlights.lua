@@ -1,10 +1,10 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnBackLights")
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnBackLights()
-   Type: Server
-   Desc: Turns on the back lights of a vehicle.
------------------------------------------------------------]]
+-- Turns on the back lights of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnBackLights()
 	if not SVMOD.CFG.Lights.AreReverseLightsEnabled then
 		return false -- Reverse lights disabled
@@ -18,11 +18,8 @@ function SVMOD.Metatable:SV_TurnOnBackLights()
 	self.SV_States.BackLights = true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffBackLights()
-   Type: Server
-   Desc: Turns off the back lights of a vehicle.
------------------------------------------------------------]]
+-- Turns off the back lights of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffBackLights()
 	if not SVMOD.CFG.Lights.AreReverseLightsEnabled then
 		return false -- Reverse lights disabled
@@ -37,11 +34,11 @@ function SVMOD.Metatable:SV_TurnOffBackLights()
 end
 
 -- Local function for redundant code 
-local function GetVehicle(ply)
-	local Vehicle = ply:GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+local function getVehicle(ply)
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
-	return Vehicle
+	return veh
 end
 
 -- Enable back lights
@@ -52,16 +49,16 @@ hook.Add("KeyPress", "SV_BroadcastBackLightsEnabled", function(ply, key)
 	end
 
 	if ply:KeyDown(IN_FORWARD) and not ply:KeyDown(IN_JUMP) then
-		local Vehicle = GetVehicle(ply)
+		local veh = getVehicle(ply)
 
-		if Vehicle and Vehicle:SV_GetBackLightsState() then
-			Vehicle:SV_TurnOffBackLights()
+		if veh and veh:SV_GetBackLightsState() then
+			veh:SV_TurnOffBackLights()
 		end
 	elseif key == IN_BACK or key == IN_JUMP then
-		local Vehicle = GetVehicle(ply)
+		local veh = getVehicle(ply)
 
-		if Vehicle and not Vehicle:SV_GetBackLightsState() then
-			Vehicle:SV_TurnOnBackLights()
+		if veh and not veh:SV_GetBackLightsState() then
+			veh:SV_TurnOnBackLights()
 		end
 	end
 end)
@@ -70,24 +67,24 @@ end)
 hook.Add("KeyRelease", "SV_BroadcastBackLightsDisabled", function(ply, key)
 	if key == IN_FORWARD then
 		if ply:KeyDown(IN_BACK) or ply:KeyDown(IN_JUMP) then
-			local Vehicle = GetVehicle(ply)
+			local veh = getVehicle(ply)
 
-			if Vehicle and not Vehicle:SV_GetBackLightsState() then
-				Vehicle:SV_TurnOnBackLights()
+			if veh and not veh:SV_GetBackLightsState() then
+				veh:SV_TurnOnBackLights()
 			end
 		end
 	elseif key == IN_BACK or key == IN_JUMP then
 		if not ply:KeyDown(IN_BACK) and not ply:KeyDown(IN_JUMP) then
-			local Vehicle = GetVehicle(ply)
+			local veh = getVehicle(ply)
 
-			if Vehicle and Vehicle:SV_GetBackLightsState() then
-				Vehicle:SV_TurnOffBackLights()
+			if veh and veh:SV_GetBackLightsState() then
+				veh:SV_TurnOffBackLights()
 			end
 		end
 	end
 end)
 
-local function DisableBackLights(veh)
+local function disableBackLights(veh)
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
 	if veh:SV_GetBackLightsState() then
@@ -97,9 +94,9 @@ end
 
 -- Disable the back lights if they are activated when the player exits the vehicle
 hook.Add("PlayerLeaveVehicle", "SV_DisableBackLightsOnLeave", function(ply, veh)
-	DisableBackLights(veh)
+	disableBackLights(veh)
 end)
 
 hook.Add("PlayerDisconnected", "SV_DisableBackLightsOnDisconnect", function(ply, veh)
-	DisableBackLights(ply:GetVehicle())
+	disableBackLights(ply:GetVehicle())
 end)

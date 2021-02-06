@@ -1,9 +1,8 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetHornState(boolean value = false)
-   Type: Client
-   Desc: Sets the horn state of the vehicle driven by the
-		 player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the horn state of the vehicle driven by the player.
+-- @tparam boolean result True for honking
 function SVMOD:SetHornState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end

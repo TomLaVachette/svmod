@@ -1,21 +1,16 @@
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_IsLocked()
-   Type: Server
-   Desc: Returns true if the vehicle is locked, false
-		 otherwhise.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+-- @serverside
+
+-- Gets the state of the vehicle's doors
+-- @treturn boolean True if locked, false otherwise
 function SVMOD.Metatable:SV_IsLocked()
 	local Vehicle = self:SV_GetDriverSeat()
 
 	return Vehicle:GetSaveTable().VehicleLocked
 end
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_Lock()
-   Type: Server
-   Desc: Locks the vehicle. Returns true if the operation was
-		 successful, false if the vehicle was already locked.
------------------------------------------------------------]]
+-- Locks the vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_Lock()
 	local Vehicle = self:SV_GetDriverSeat()
 
@@ -30,13 +25,8 @@ function SVMOD.Metatable:SV_Lock()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_Unlock()
-   Type: Server
-   Desc: Unlocks the vehicle. Returns true if the operation
-		 was successful, false if the vehicle was already
-		 unlocked.
------------------------------------------------------------]]
+-- Unlocks the vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_Unlock()
 	local Vehicle = self:SV_GetDriverSeat()
 

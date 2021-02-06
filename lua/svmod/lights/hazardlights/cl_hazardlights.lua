@@ -1,9 +1,9 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetHazardLightsState(int value = false)
-   Type: Client
-   Desc: Sets the state of the hazard lights of the vehicle
-		 driven by the player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the state of the hazard lights of the vehicle
+-- driven by the player.
+-- @tparam boolean result True to enable the hazard lights, false to disable
 function SVMOD:SetHazardLightsState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end

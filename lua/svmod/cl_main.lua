@@ -1,8 +1,8 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetAddonState(boolean value = false)
-   Type: Client
-   Desc: Enables or disables SVMod on the server.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Enables or disables SVMod on the server.
+-- @tparam boolean result True to enable, false to disable
 function SVMOD:SetAddonState(value)
 	if not value then
 		value = false

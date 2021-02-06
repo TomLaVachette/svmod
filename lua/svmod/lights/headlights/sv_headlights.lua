@@ -1,14 +1,15 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnHeadlights")
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_TurnOnHeadlights()
-   Type: Server
-   Desc: Turns on the headlights of a vehicle.
-		 Returns true if the headlights have been switched
-		 on, false otherwise. The operation will fail if the
-		 headlights are already on, if the vehicle has no
-		 headlights, or if the headlights have been disabled.
------------------------------------------------------------]]
+
+-- Turns on the headlights of a vehicle.
+--
+-- The operation will fail if the headlights are
+-- already on, if the vehicle has no headlights,
+-- or if the headlights have been disabled.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnHeadlights()
 	if not self.SV_IsEditMode and #self.SV_Data.Headlights == 0 then
 		return false -- No headlight on this vehicle
@@ -28,14 +29,11 @@ function SVMOD.Metatable:SV_TurnOnHeadlights()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_TurnOffHeadlights()
-   Type: Server
-   Desc: Turns off the headlights of a vehicle.
-		 Returns true if the headlights have been switched
-		 off, false otherwise. The operation will fail if the
-		 headlights are already switched off.
------------------------------------------------------------]]
+-- Turns off the headlights of a vehicle.
+--
+-- The operation will fail if the headlights are
+-- already switched off.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffHeadlights()
 	if not self:SV_GetHeadlightsState() then
 		return false -- Headlights already inactive

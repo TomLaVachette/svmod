@@ -1,16 +1,15 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnLeftBlinker")
 util.AddNetworkString("SV_TurnRightBlinker")
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnLeftBlinker()
-   Type: Server
-   Desc: Turns on the left blinkers of a vehicle.
-		 Returns true if the left blinkers have been switched
-		 on, false otherwise. The operation will fail if the
-		 left blinkers are already on, if the vehicle has no
-		 left blinkers, or if the blinkers have been
-		 disabled.
------------------------------------------------------------]]
+-- Turns on the left blinkers of a vehicle.
+--
+-- The operation will fail if the left blinkers are
+-- already on, if the vehicle has no left blinkers,
+-- or if the blinkers have been disabled.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnLeftBlinker()
 	if not self.SV_IsEditMode and #self.SV_Data.Blinkers.LeftLights == 0 then
 		return false -- No left blinkers on this vehicle
@@ -31,14 +30,12 @@ function SVMOD.Metatable:SV_TurnOnLeftBlinker()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffLeftBlinker()
-   Type: Server
-   Desc: Turns off the left blinkers of a vehicle.
-		 Returns true if the left blinkers have been switched
-		 off, false otherwise. The operation will fail if the
-		 left blinkers are already switched off.
------------------------------------------------------------]]
+
+-- Turns off the left blinkers of a vehicle.
+--
+-- The operation will fail if the left blinkers are
+-- already switched off.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffLeftBlinker()
 	if not self:SV_GetLeftBlinkerState() then
 		return false -- Left blinkers already inactive
@@ -55,16 +52,12 @@ function SVMOD.Metatable:SV_TurnOffLeftBlinker()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnRightBlinker()
-   Type: Server
-   Desc: Turns on the right blinkers of a vehicle.
-		 Returns true if the right blinkers have been
-		 switched on, false otherwise. The operation will
-		 fail if the right blinkers are already on, if the
-		 vehicle has no right blinkers, or if the blinkers
-		 have been disabled.
------------------------------------------------------------]]
+-- Turns on the right blinkers of a vehicle.
+--
+-- The operation will fail if the right blinkers are
+-- already on, if the vehicle has no right blinkers,
+-- or if the blinkers have been disabled.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnRightBlinker()
 	if not self.SV_IsEditMode and #self.SV_Data.Blinkers.RightLights == 0 then
 		return false -- No right blinkers on this vehicle
@@ -85,14 +78,11 @@ function SVMOD.Metatable:SV_TurnOnRightBlinker()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffRightBlinker()
-   Type: Server
-   Desc: Turns off the right blinkers of a vehicle.
-		 Returns true if the right blinkers have been
-		 switched off, false otherwise. The operation will
-		 fail if the right blinkers are already switched off.
------------------------------------------------------------]]
+-- Turns off the right blinkers of a vehicle.
+-- 
+-- The operation will fail if the right blinkers are
+-- already switched off.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffRightBlinker()
 	if not self:SV_GetRightBlinkerState() then
 		return false -- Right blinkers already inactive

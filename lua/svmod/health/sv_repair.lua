@@ -1,3 +1,6 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_StartRepair")
 net.Receive("SV_StartRepair", function(_, ply)
 	local Vehicle = net.ReadEntity()
@@ -16,12 +19,9 @@ net.Receive("SV_StopRepair", function(_, ply)
 	Vehicle:SV_StopRepair(ply)
 end)
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_StartRepair(Player ply)
-   Type: Server
-   Desc: Starts the repair of the vehicle by a player.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Starts the repair of the vehicle by a player.
+-- @tparam Player ply Player who starts the repair
+-- @internal
 function SVMOD.Metatable:SV_StartRepair(ply, partIndex)
 	local PartCount = #self.SV_Data.Parts
 	if PartCount < partIndex then return end
@@ -72,12 +72,9 @@ function SVMOD.Metatable:SV_StartRepair(ply, partIndex)
 	end)
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_StopRepair(Player ply)
-   Type: Server
-   Desc: Stops the repair of the vehicle by a player.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Stops the repair of the vehicle by a player.
+-- @tparam Player ply Player who stops the repair
+-- @internal
 function SVMOD.Metatable:SV_StopRepair(ply)
 	net.Start("SV_StopRepair")
 	net.WriteEntity(ply)

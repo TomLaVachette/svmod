@@ -1,3 +1,6 @@
+-- @class SVMOD
+-- @clientside
+
 local spriteMaterial = Material("sprites/light_ignorez")
 
 local function rotateAroundAxis(ang1, ang2)
@@ -197,12 +200,16 @@ function SVMOD:RenderLights(veh, lights)
 	end
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_DrawSprite()
-   Type: Client
-   Desc: Draw a sprite on a vehicle.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+
+-- Draw a sprite on a vehicle.
+-- @tparam Material material Material
+-- @tparam Vector position World coordinates
+-- @tparam number width Width
+-- @tparam number height Height
+-- @tparam Color color Color
+-- @tparam "pixelvis handle t" handler PixVis handle
+-- @internal
 function SVMOD.Metatable:SV_DrawSprite(material, position, width, height, color, handler)
 	if not handler then
 		handler = util.GetPixelVisibleHandle()
@@ -228,12 +235,13 @@ function SVMOD.Metatable:SV_DrawSprite(material, position, width, height, color,
 	return handler
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_CreateProjectedTexture()
-   Type: Client
-   Desc: Creates a projected texture.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Creates a projected texture.
+-- @tparam Vector position World coordinates
+-- @tparam Angle angle Angle
+-- @tparam Color color Color
+-- @tparam number size Size
+-- @tparam number fov Field of view
+-- @internal
 function SVMOD.Metatable:SV_CreateProjectedTexture(position, angle, color, size, fov)
 	local PTexture = ProjectedTexture()
 
@@ -254,13 +262,8 @@ function SVMOD.Metatable:SV_CreateProjectedTexture(position, angle, color, size,
 	return PTexture
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_ClearProjectedTexture()
-   Type: Client
-   Desc: Cleans the projected textures related to the
-		 vehicle.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Cleans the projected textures related to the vehicle.
+-- @internal
 function SVMOD.Metatable:SV_ClearProjectedTexture()
 	local function ClearProjectedTexture(tab)
 		for _, l in ipairs(tab) do
@@ -278,12 +281,8 @@ function SVMOD.Metatable:SV_ClearProjectedTexture()
 	ClearProjectedTexture(self.SV_Data.Blinkers.RightLights)
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_StartAlphaTimer()
-   Type: Client
-   Desc: Starts all alpha timer for transitions.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Starts all alpha timer for transitions.
+-- @internal
 function SVMOD.Metatable:SV_StartAlphaTimer()
 	local hiddenTime
 
@@ -322,12 +321,8 @@ function SVMOD.Metatable:SV_StartAlphaTimer()
 	end
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_StopAlphaTimer()
-   Type: Client
-   Desc: Stops all alpha timer for transitions.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Stops all alpha timer for transitions.
+-- @internal
 function SVMOD.Metatable:SV_StopAlphaTimer()
 	for _, l in ipairs(self.SV_Data.FlashingLights) do
 		for i, v in ipairs(l) do

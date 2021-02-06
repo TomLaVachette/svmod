@@ -1,3 +1,6 @@
+-- @class SV_Vehicle
+-- @shared
+
 hook.Add("Initialize", "SV_LoadConfiguration", function()
 	-- Load the configuration
 	SVMOD:Load()
@@ -19,13 +22,12 @@ hook.Add("SV_Disabled", "SV_PrintConsole", function()
 	end
 end)
 
---[[---------------------------------------------------------
-   Name: SVMOD:GetAddonState()
-   Type: Shared
-   Desc: Returns true if SVMod is enabled, false otherwise.
-   Note: Can return nil if the addon does not yet know its
-		 status.
------------------------------------------------------------]]
+-- Gets the state of the SVMod.
+--
+-- Can return nil if the addon does not yet know its
+-- status.
+-- @treturn boolean True if enabled, false if disabled, nil if unknown.
+-- @internal
 function SVMOD:GetAddonState()
 	if SERVER then
 		-- From the configuration file

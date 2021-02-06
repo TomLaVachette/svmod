@@ -1,10 +1,10 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnFlashingLights")
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnFlashingLights()
-   Type: Server
-   Desc: Turns on the flashing lights of a vehicle.
------------------------------------------------------------]]
+-- Turns on the flashing lights of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnFlashingLights()
 	if #self.SV_Data.FlashingLights == 0 then
 		return false -- No flashing light on this vehicle
@@ -24,11 +24,8 @@ function SVMOD.Metatable:SV_TurnOnFlashingLights()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffFlashingLights()
-   Type: Server
-   Desc: Turns off the flashing lights of a vehicle.
------------------------------------------------------------]]
+-- Turns off the flashing lights of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffFlashingLights()
 	if not self:SV_GetFlashingLightsState() then
 		return false -- Flashing lights already inactive

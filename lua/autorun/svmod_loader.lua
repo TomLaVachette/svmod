@@ -1,3 +1,13 @@
+-- Includes SVMod methods.
+-- Some of these methods require the player to be in a vehicle to be used,
+-- but do not require the player to retrieve the instance of the vehicle for
+-- convenience.
+-- @class SVMOD
+
+-- Refers to a vehicle modified by the SVMod.
+-- It has additional attributes and methods.
+-- @class SV_Vehicle
+
 SVMOD = {}
 SVMOD.Metatable = {}
 

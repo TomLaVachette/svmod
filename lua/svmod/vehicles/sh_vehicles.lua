@@ -1,9 +1,8 @@
---[[---------------------------------------------------------
-   Name: SVMOD:IsVehicle()
-   Type: Shared
-   Desc: Returns true if the vehicle is a SV vehicle, false
-		 otherwise.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @shared
+
+-- Checks if the entity is a SV_Vehicle or not.
+-- @treturn boolean True if the entity is a SV_Vehicle, false otherwise
 function SVMOD:IsVehicle(veh)
 	return IsValid(veh) and veh.SV_GetDriverSeat and veh:SV_GetDriverSeat().SV_States ~= nil
 end
@@ -50,13 +49,9 @@ hook.Add("SV_Disabled", "SV_Unload", function()
 	SVMOD:UnloadAllVehicles()
 end)
 
---[[---------------------------------------------------------
-   Name: SVMOD:LoadVehicle(Vehicle veh)
-   Type: Shared
-   Desc: Loads a vehicle, which allows it to become an
-		 SV Vehicle.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Loads a vehicle, which allows it to become an SV Vehicle.
+-- @tparam Vehicle Vehicle to be loaded
+-- @internal
 function SVMOD:LoadVehicle(veh)
 	if not IsValid(veh) or not veh:IsVehicle() then return end
 
@@ -85,13 +80,9 @@ function SVMOD:LoadVehicle(veh)
 	end
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:UnloadVehicle(Vehicle veh)
-   Type: Shared
-   Desc: Unloads a vehicle, which allows it to become a basic
-		vehicle.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Unloads a vehicle, which allows it to become a basic vehicle.
+-- @tparam SV_Vehicle SV_Vehicle to be unloaded
+-- @internal
 function SVMOD:UnloadVehicle(veh)
 	hook.Run("SV_UnloadVehicle", veh)
 
@@ -101,12 +92,8 @@ function SVMOD:UnloadVehicle(veh)
 	end
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:LoadAllVehicles()
-   Type: Shared
-   Desc: Loads all vehicles of the game.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Loads all vehicles of the game.
+-- @internal
 function SVMOD:LoadAllVehicles()
 	for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
 		if SERVER then
@@ -120,12 +107,8 @@ function SVMOD:LoadAllVehicles()
 	end
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:UnloadAllVehicles()
-   Type: Shared
-   Desc: Unloads all vehicles of the game.
-   Note: This is an internal function, you should not use it.
------------------------------------------------------------]]
+-- Unloads all vehicles of the game.
+-- @internal
 function SVMOD:UnloadAllVehicles()
 	for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
 		if SERVER then

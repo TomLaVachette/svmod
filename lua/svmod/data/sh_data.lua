@@ -1,13 +1,14 @@
+-- @class SV_Vehicle
+-- @shared
+
 local function GetDataPath(model)
 	return "svmod/" .. string.Replace(model, "/", "_") .. ".txt"
 end
 
---[[---------------------------------------------------------
-   Name: SVMOD:GetData(string model)
-   Type: Shared
-   Desc: Returns a table containing the data of a vehicle
-		 model.
------------------------------------------------------------]]
+-- Gets the data of a vehicle.
+-- @tparam string model Vehicle model
+-- @treturn table Data of a vehicle
+-- @internal
 function SVMOD:GetData(model)
 	if self.Data then
 		return self.Data[string.lower(model)]
@@ -15,6 +16,10 @@ function SVMOD:GetData(model)
 	return nil
 end
 
+-- Updates vehicle data. SVMod will contact the web server
+-- to get the latest releases.
+-- @tparam function callback Function callback
+-- @internal
 function SVMOD:Data_Update(fun)
 	self.Data = {}
 
@@ -75,6 +80,10 @@ function SVMOD:Data_Update(fun)
 	})
 end
 
+-- Checks the data types of the input.
+-- @tparam table data Data to check
+-- @treturn boolean result True if valid, false if not
+-- @internal
 function SVMOD:Data_Check(x)
 	local function checkLights(x)
 		if not istable(x) then
@@ -258,6 +267,9 @@ function SVMOD:Data_Check(x)
 	return nil
 end
 
+-- Loads vehicle data.
+-- @tparam function callback Function callback
+-- @internal
 function SVMOD:Data_Load(fun)
 	for _, veh in ipairs(SVMOD:GetVehicleList()) do
 		local model = string.lower(veh.Model)

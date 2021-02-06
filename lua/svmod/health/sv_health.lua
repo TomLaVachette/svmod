@@ -1,3 +1,6 @@
+-- @class SV_Vehicle
+-- @serverside
+
 hook.Add("SV_LoadVehicle", "SV_LoadVehicle_Health", function(veh)
 	veh:SetMaxHealth(100)
 	veh:SetHealth(100)
@@ -28,82 +31,79 @@ hook.Add("SV_UnloadVehicle", "SV_RemoveFireParticles", function(veh)
 	veh:StopParticles()
 end)
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_SetHealth(number value)
-   Type: Server
-   Desc: Sets the vehicle health.
------------------------------------------------------------]]
+-- Sets the health of the vehicle.
+-- @tparam number health New health value
 function SVMOD.Metatable:SV_SetHealth(value)
-	local Vehicle = self
+	local veh = self
 	if self:SV_IsPassengerSeat() then
-		Vehicle = self:SV_GetDriverSeat()
+		veh = self:SV_GetDriverSeat()
 	end
 
-	if not Vehicle.SV_Data.Parts or #Vehicle.SV_Data.Parts == 0 then return end
+	if not veh.SV_Data.Parts or #veh.SV_Data.Parts == 0 then return end
 
-	value = math.Round(math.Clamp(value, 0, Vehicle:SV_GetMaxHealth()), 2)
+	value = math.Round(math.Clamp(value, 0, veh:SV_GetMaxHealth()), 2)
 
-	local CurrentHealth = Vehicle:SV_GetHealth()
-	local Count = #Vehicle.SV_Data.Parts
-	local Left = CurrentHealth - value
-	local MaxIte = 100
+	local currentHealth = veh:SV_GetHealth()
+	local count = #veh.SV_Data.Parts
+	local left = currentHealth - value
+	local maxIte = 100
 
-	if value == CurrentHealth then
+	if value == currentHealth then
 		return
 	elseif value == 100 then
-		for _, p in ipairs(Vehicle.SV_Data.Parts) do
+		for _, p in ipairs(veh.SV_Data.Parts) do
 			p.Health = 100
 		end
 	elseif value == 0 then
-		for _, p in ipairs(Vehicle.SV_Data.Parts) do
+		for _, p in ipairs(veh.SV_Data.Parts) do
 			p.Health = 0
 		end
-	elseif value < CurrentHealth then
-		while MaxIte > 0 and Left > 0 do
-			local Random = math.random(1, Count)
-			Vehicle.SV_Data.Parts[Random].Health = math.Clamp(Vehicle.SV_Data.Parts[Random].Health - Count, 0, 100)
-			if Vehicle.SV_Data.Parts[Random].Health > 0 then
-				Left = Left - 1
+	elseif value < currentHealth then
+		while maxIte > 0 and left > 0 do
+			local Random = math.random(1, count)
+			veh.SV_Data.Parts[Random].Health = math.Clamp(veh.SV_Data.Parts[Random].Health - count, 0, 100)
+			if veh.SV_Data.Parts[Random].Health > 0 then
+				left = left - 1
 			end
-			MaxIte = MaxIte - 1
+			maxIte = maxIte - 1
 		end
 	else
-		while MaxIte > 0 and Left > 0 do
-			local Random = math.random(1, Count)
-			Vehicle.SV_Data.Parts[Random].Health = math.Clamp(Vehicle.SV_Data.Parts[Random].Health + Count, 0, 100)
-			if Vehicle.SV_Data.Parts[Random].Health < 100 then
-				Left = Left - 1
+		while maxIte > 0 and left > 0 do
+			local Random = math.random(1, count)
+			veh.SV_Data.Parts[Random].Health = math.Clamp(veh.SV_Data.Parts[Random].Health + count, 0, 100)
+			if veh.SV_Data.Parts[Random].Health < 100 then
+				left = left - 1
 			end
-			MaxIte = MaxIte - 1
+			maxIte = maxIte - 1
 		end
 	end
 
-	Vehicle:SetHealth(value)
+	veh:SetHealth(value)
 
-	if Vehicle:SV_GetHealth() == 0 then
-		if not Vehicle.SV_IsExploded then
-			Vehicle:StopParticles()
+	if veh:SV_GetHealth() == 0 then
+		if not veh.SV_IsExploded then
+			veh:StopParticles()
 			
-			Vehicle:EmitSound("ambient/fire/ignite.wav", 100)
+			veh:EmitSound("ambient/fire/ignite.wav", 100)
 
-			ParticleEffectAttach("fire_large_01", PATTACH_ABSORIGIN_FOLLOW, Vehicle, 0)
-			Vehicle:EmitSound("fire_med_loop1", 75)
+			ParticleEffectAttach("fire_large_01", PATTACH_ABSORIGIN_FOLLOW, veh, 0)
+			veh:EmitSound("fire_med_loop1", 75)
 
-			Vehicle.SV_IsExploded = true
+			veh.SV_IsExploded = true
 
-			Vehicle:SV_SetFuel(0)
+			veh:SV_SetFuel(0)
 
 			timer.Simple(5, function()
-				if not SVMOD:IsVehicle(Vehicle) then return end
+				if not SVMOD:IsVehicle(veh) then return end
 
-				Vehicle:StopSound("fire_med_loop1")
+				veh:StopSound("fire_med_loop1")
 
-				local Driver = Vehicle:SV_GetDriverSeat():GetDriver()
+				local Driver = veh:SV_GetDriverSeat():GetDriver()
 
-				for _, ply in ipairs(Vehicle:SV_GetAllPlayers()) do
+				for _, ply in ipairs(veh:SV_GetAllPlayers()) do
 					ply:GetVehicle():SV_ExitVehicle(ply)
 
-					local Position = Vehicle:GetPos()
+					local Position = veh:GetPos()
 					local Angle = math.random(1,359)
 					Position.x = Position.x + 10 * math.cos(Angle)
 					Position.y = Position.y + 10 * math.sin(Angle)
@@ -111,23 +111,23 @@ function SVMOD.Metatable:SV_SetHealth(value)
 					ply:SetPos(Position)
 				end
 
-				util.BlastDamage(Vehicle, Vehicle, Vehicle:GetPos(), 300, 200)
-				Vehicle:EmitSound("ambient/explosions/explode_1.wav", 100)
+				util.BlastDamage(veh, veh, veh:GetPos(), 300, 200)
+				veh:EmitSound("ambient/explosions/explode_1.wav", 100)
 
-				Vehicle:SetHandbrake(false)
+				veh:SetHandbrake(false)
 				
 				if math.random(1, 100) < (SVMOD.CFG.Damage.CarbonisedChance * 100) then
-					Vehicle:Remove()
+					veh:Remove()
 					
 					local CarbonisedVehicle = ents.Create("prop_physics")
-					CarbonisedVehicle:SetModel(Vehicle:GetModel())
+					CarbonisedVehicle:SetModel(veh:GetModel())
 					CarbonisedVehicle:SetMaterial("models/props_foliage/tree_deciduous_01a_trunk")
 					CarbonisedVehicle:SetColor(Color(115, 115, 115, 255))
-					CarbonisedVehicle:SetPos(Vehicle:GetPos())
-					CarbonisedVehicle:SetAngles(Vehicle:GetAngles())
+					CarbonisedVehicle:SetPos(veh:GetPos())
+					CarbonisedVehicle:SetAngles(veh:GetAngles())
 					CarbonisedVehicle:Spawn()
 
-					if not hook.Run("SV_ExplodedVehicle", Vehicle) then
+					if not hook.Run("SV_ExplodedVehicle", veh) then
 						ParticleEffectAttach("fire_large_01", PATTACH_ABSORIGIN_FOLLOW, CarbonisedVehicle, 0)
 						CarbonisedVehicle:EmitSound("fire_med_loop1", 75)
 						timer.Simple(10, function()
@@ -144,40 +144,37 @@ function SVMOD.Metatable:SV_SetHealth(value)
 					end)
 				else
 					timer.Simple(10, function()
-						if IsValid(Vehicle) then
-							Vehicle:StopParticles()
+						if IsValid(veh) then
+							veh:StopParticles()
 						end
 					end)
 
-					hook.Run("SV_ExplodedVehicle", Vehicle)
+					hook.Run("SV_ExplodedVehicle", veh)
 				end
 			end)
 		end
-	elseif Vehicle:SV_GetHealth() < (SVMOD.CFG.Damage.SmokePercent * 100) then
-		if not Vehicle.SV_IsSmoking then
-			ParticleEffectAttach("smoke_burning_engine_01", PATTACH_ABSORIGIN_FOLLOW, Vehicle, 0)
-			Vehicle:EmitSound("ambient/fire/ignite.wav", 100)
+	elseif veh:SV_GetHealth() < (SVMOD.CFG.Damage.SmokePercent * 100) then
+		if not veh.SV_IsSmoking then
+			ParticleEffectAttach("smoke_burning_engine_01", PATTACH_ABSORIGIN_FOLLOW, veh, 0)
+			veh:EmitSound("ambient/fire/ignite.wav", 100)
 
 			-- Slow the vehicle
 			-- Vehicle:SetMaxThrottle(0.3)
 
-			Vehicle.SV_IsSmoking = true
+			veh.SV_IsSmoking = true
 		end
 	else
-		Vehicle.SV_IsExploded = false
-		if Vehicle.SV_IsSmoking then
-			Vehicle:StopParticles()
+		veh.SV_IsExploded = false
+		if veh.SV_IsSmoking then
+			veh:StopParticles()
 
-			Vehicle.SV_IsSmoking = false
+			veh.SV_IsSmoking = false
 		end
 	end
 end
 
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_SetMaxHealth(number value)
-   Type: Server
-   Desc: Sets the vehicle max health.
------------------------------------------------------------]]
+-- Sets the maximum health of the vehicle.
+-- @tparam number health New health value
 function SVMOD.Metatable:SV_SetMaxHealth(value)
 	self:SetMaxHealth(value)
 end

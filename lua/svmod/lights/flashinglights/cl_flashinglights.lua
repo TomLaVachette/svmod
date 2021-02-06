@@ -1,9 +1,9 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetFlashingLightsState(int value = false)
-   Type: Client
-   Desc: Sets the state of the flashing lights of the vehicle
-		 driven by the player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the state of the flashing lights of the vehicle
+-- driven by the player.
+-- @tparam boolean result True to enable the flashing lights, false to disable
 function SVMOD:SetFlashingLightsState(value)
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end

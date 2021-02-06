@@ -137,6 +137,18 @@ function SVMOD:GUI_Home(panel, data)
 
 	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Language"), {
 		{
+			ISO = "EN",
+			Name = "English",
+			Color = Color(59, 217, 85),
+			HoverColor = Color(156, 255, 161),
+			IsSelected = (SVMOD.CFG.Language == "EN"),
+			DoClick = function()
+				SVMOD.CFG.Language = "EN"
+				panel:GetParent():Remove()
+				LocalPlayer():ConCommand("svmod")
+			end
+		},
+		{
 			ISO = "FR",
 			Name = "Français",
 			Color = Color(59, 217, 85),
@@ -149,17 +161,29 @@ function SVMOD:GUI_Home(panel, data)
 			end
 		},
 		{
-			ISO = "EN",
-			Name = "English",
+			ISO = "RU",
+			Name = "русский",
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
-			IsSelected = (SVMOD.CFG.Language == "EN"),
+			IsSelected = (SVMOD.CFG.Language == "RU"),
 			DoClick = function()
-				SVMOD.CFG.Language = "EN"
+				SVMOD.CFG.Language = "RU"
 				panel:GetParent():Remove()
 				LocalPlayer():ConCommand("svmod")
 			end
-		 }
+		},
+		{
+			ISO = "TR",
+			Name = "Türk",
+			Color = Color(59, 217, 85),
+			HoverColor = Color(156, 255, 161),
+			IsSelected = (SVMOD.CFG.Language == "TR"),
+			DoClick = function()
+				SVMOD.CFG.Language = "TR"
+				panel:GetParent():Remove()
+				LocalPlayer():ConCommand("svmod")
+			end
+		}
 	})
 
 	local perfMode = 0

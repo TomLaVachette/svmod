@@ -1,8 +1,8 @@
---[[---------------------------------------------------------
-   Name: SV_Vehicle:SV_GetHeadlightsState()
-   Type: Shared
-   Desc: Returns true if headlights are on, false otherwise.
------------------------------------------------------------]]
+-- @class SV_Vehicle
+-- @shared
+
+-- Gets the state of the headlights.
+-- @treturn boolean True if enabled, false if disabled
 function SVMOD.Metatable:SV_GetHeadlightsState()
 	if self:SV_IsPassengerSeat() then
 		return self:SV_GetDriverSeat().SV_States.Headlights

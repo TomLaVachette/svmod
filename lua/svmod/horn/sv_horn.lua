@@ -1,10 +1,10 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnHorn")
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnHorn()
-   Type: Server
-   Desc: Turns off the right blinker signals of a vehicle.
------------------------------------------------------------]]
+-- Turns off the right blinker signals of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnHorn()
 	if not SVMOD.CFG.Horn.IsEnabled then
 		return false -- Horn disabled
@@ -22,11 +22,8 @@ function SVMOD.Metatable:SV_TurnOnHorn()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffHorn()
-   Type: Server
-   Desc: Turns off the right blinker signals of a vehicle.
------------------------------------------------------------]]
+-- Turns off the right blinker signals of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffHorn()
 	if not self:SV_GetHornState() then
 		return false -- Horn already inactive
@@ -40,15 +37,6 @@ function SVMOD.Metatable:SV_TurnOffHorn()
 	self.SV_States.Horn = false
 
 	return true
-end
-
---[[---------------------------------------------------------
-   Name: Vehicle:SV_GetHornState()
-   Type: Shared
-   Desc: Returns the horn state of the vehicle.
------------------------------------------------------------]]
-function SVMOD.Metatable:SV_GetHornState()
-	return self.SV_States.Horn
 end
 
 util.AddNetworkString("SV_SetHornState")

@@ -1,9 +1,9 @@
---[[---------------------------------------------------------
-   Name: SVMOD:SetHeadlightsState(int value = false)
-   Type: Client
-   Desc: Sets the state of the headlights of the vehicle
-		 driven by the player.
------------------------------------------------------------]]
+-- @class SVMOD
+-- @clientside
+
+-- Sets the state of the headlights of the vehicle
+-- driven by the player.
+-- @tparam boolean result True to enable the headlights, false to disable
 function SVMOD:SetHeadlightsState(value)
 	local veh = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then

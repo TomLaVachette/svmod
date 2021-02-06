@@ -1,10 +1,10 @@
+-- @class SV_Vehicle
+-- @serverside
+
 util.AddNetworkString("SV_TurnHazardLights")
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOnHazardLights()
-   Type: Server
-   Desc: Turns off the left blinker signals of a vehicle.
------------------------------------------------------------]]
+-- Turns off the left blinker signals of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnHazardLights()
 	if #self.SV_Data.Blinkers.LeftLights == 0 and #self.SV_Data.Blinkers.RightLights == 0 then
 		return false -- No blinkers on this vehicle
@@ -24,11 +24,8 @@ function SVMOD.Metatable:SV_TurnOnHazardLights()
 	return true
 end
 
---[[---------------------------------------------------------
-   Name: Vehicle:SV_TurnOffHazardLights()
-   Type: Server
-   Desc: Turns on the left blinker signals of a vehicle.
------------------------------------------------------------]]
+-- Turns on the left blinker signals of a vehicle.
+-- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOffHazardLights()
 	if not self:SV_GetHazardLightsState() then
 		return false -- Hazard already inactive
