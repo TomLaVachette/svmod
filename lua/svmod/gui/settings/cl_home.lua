@@ -1,17 +1,6 @@
 function SVMOD:GUI_Home(panel, data)
 	panel:Clear()
 
-	local function createHorizontalLine()
-		local topHorizontalLine = vgui.Create("DPanel", panel)
-		topHorizontalLine:Dock(TOP)
-		topHorizontalLine:DockMargin(0, 10, 0, 10)
-		topHorizontalLine:SetSize(0, 1)
-		topHorizontalLine.Paint = function(self, w, h)
-			surface.SetDrawColor(39, 52, 58)
-			surface.DrawRect(0, 0, w, h)
-		end
-	end
-
 	local function createStatus(status, text)
 		if not status then
 			status = false
@@ -58,7 +47,7 @@ function SVMOD:GUI_Home(panel, data)
 	titleLabel:SetText(SVMOD:GetLanguage("HOME"))
 	titleLabel:SizeToContents()
 
-	createHorizontalLine()
+	SVMOD:CreateHorizontalLine(panel)
 
 	if data.Status then
 		createStatus(true, SVMOD:GetLanguage("Enabled"))
@@ -110,7 +99,7 @@ function SVMOD:GUI_Home(panel, data)
 		createStatus(false, loadedText .. ", " .. incompatibleText)
 	end
 
-	createHorizontalLine()
+	SVMOD:CreateHorizontalLine(panel)
 
 	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable SVMod"), {
 		{
@@ -237,7 +226,7 @@ function SVMOD:GUI_Home(panel, data)
 		}
 	})
 
-	createHorizontalLine()
+	SVMOD:CreateHorizontalLine(panel)
 
 	local bottomPanel = vgui.Create("DPanel", panel)
 	bottomPanel:Dock(TOP)

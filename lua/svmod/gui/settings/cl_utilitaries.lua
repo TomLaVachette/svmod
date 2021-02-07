@@ -191,9 +191,13 @@ function SVMOD:CreateNumSlidePanel(panel, text, fun)
 	return numSlider
 end
 
-function SVMOD:CreateHorizontalLine(panel)
+function SVMOD:CreateHorizontalLine(panel, dock)
+	if not dock then
+		dock = TOP
+	end
+
 	local topHorizontalLine = vgui.Create("DPanel", panel)
-	topHorizontalLine:Dock(TOP)
+	topHorizontalLine:Dock(dock)
 	topHorizontalLine:DockMargin(0, 10, 0, 10)
 	topHorizontalLine:SetSize(0, 1)
 	topHorizontalLine.Paint = function(self, w, h)

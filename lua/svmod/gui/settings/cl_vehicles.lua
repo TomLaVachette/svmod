@@ -1,21 +1,6 @@
 function SVMOD:GUI_Vehicles(panel, data)
 	panel:Clear()
 
-	local function createHorizontalLine(dock)
-		if not dock then
-			dock = TOP
-		end
-
-		local topHorizontalLine = vgui.Create("DPanel", panel)
-		topHorizontalLine:Dock(dock)
-		topHorizontalLine:DockMargin(0, 10, 0, 10)
-		topHorizontalLine:SetSize(0, 1)
-		topHorizontalLine.Paint = function(self, w, h)
-			surface.SetDrawColor(39, 52, 58)
-			surface.DrawRect(0, 0, w, h)
-		end
-	end
-
 	local function createTitle(name)
 		local headerPanel = vgui.Create("DPanel", panel)
 		headerPanel:Dock(TOP)
@@ -32,7 +17,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 		createHorizontalLine()
 	end
 
-	createTitle(SVMOD:GetLanguage("VEHICLES"))
+	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("VEHICLES"))
 
 	local listView = vgui.Create("DListView", panel)
 	listView:Dock(FILL)
@@ -120,7 +105,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 	bottomPanel:SetSize(0, 30)
 	bottomPanel:SetDrawBackground(false)
 
-	createHorizontalLine(BOTTOM)
+	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
 	local buttonText = SVMOD:GetLanguage("Update")
 

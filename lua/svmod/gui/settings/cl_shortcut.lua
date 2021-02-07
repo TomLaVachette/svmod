@@ -1,17 +1,6 @@
 function SVMOD:GUI_Shortcuts(panel)
 	panel:Clear()
 
-	local function createHorizontalLine()
-		local topHorizontalLine = vgui.Create("DPanel", panel)
-		topHorizontalLine:Dock(TOP)
-		topHorizontalLine:DockMargin(0, 10, 0, 10)
-		topHorizontalLine:SetSize(0, 1)
-		topHorizontalLine.Paint = function(self, w, h)
-			surface.SetDrawColor(39, 52, 58)
-			surface.DrawRect(0, 0, w, h)
-		end
-	end
-
 	local headerPanel = vgui.Create("DPanel", panel)
 	headerPanel:Dock(TOP)
 	headerPanel:SetSize(0, 20)
@@ -24,7 +13,7 @@ function SVMOD:GUI_Shortcuts(panel)
 	titleLabel:SetText(SVMOD:GetLanguage("SHORTCUTS"))
 	titleLabel:SizeToContents()
 
-	createHorizontalLine()
+	SVMOD:CreateHorizontalLine(panel)
 
 	local function createSetting(text, data)
 		local settingPanel = vgui.Create("DPanel", panel)
@@ -96,7 +85,7 @@ function SVMOD:GUI_Shortcuts(panel)
 		button:SetValue(s.Key)
 	end
 
-	createHorizontalLine()
+	SVMOD:CreateHorizontalLine(panel)
 
 	local bottomPanel = vgui.Create("DPanel", panel)
 	bottomPanel:Dock(TOP)

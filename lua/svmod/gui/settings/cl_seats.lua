@@ -1,34 +1,7 @@
 function SVMOD:GUI_Seats(panel, data)
 	panel:Clear()
 
-	local function createHorizontalLine()
-		local topHorizontalLine = vgui.Create("DPanel", panel)
-		topHorizontalLine:Dock(TOP)
-		topHorizontalLine:DockMargin(0, 10, 0, 10)
-		topHorizontalLine:SetSize(0, 1)
-		topHorizontalLine.Paint = function(self, w, h)
-			surface.SetDrawColor(39, 52, 58)
-			surface.DrawRect(0, 0, w, h)
-		end
-	end
-
-	local function createTitle(name)
-		local headerPanel = vgui.Create("DPanel", panel)
-		headerPanel:Dock(TOP)
-		headerPanel:SetSize(0, 20)
-		headerPanel:SetDrawBackground(false)
-	
-		local titleLabel = vgui.Create("DLabel", headerPanel)
-		titleLabel:SetPos(0, 0)
-		titleLabel:SetFont("SV_CalibriLight22")
-		titleLabel:SetColor(Color(178, 95, 245))
-		titleLabel:SetText(name)
-		titleLabel:SizeToContents()
-	
-		createHorizontalLine()
-	end
-
-	createTitle(SVMOD:GetLanguage("SEATS"))
+	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SEATS"))
 
 	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable seat changing from inside the vehicle"), {
 		{
