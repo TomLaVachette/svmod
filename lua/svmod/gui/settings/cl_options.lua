@@ -75,7 +75,7 @@ function SVMOD:GUI_Options(panel, data)
 
 	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("GAMEPLAY"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Automatically disable the blinkers once the vehicle has been rotated"), {
+	local gameplayPanel = SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Automatically disable the blinkers once the vehicle has been rotated"), {
 		{
 			Name = SVMOD:GetLanguage("Enable"),
 			Color = Color(59, 217, 85),
@@ -97,4 +97,21 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		}
 	})
+	gameplayPanel:DockMargin(0, 4, 0, 30)
+
+	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SOUNDS"))
+
+	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Horn volume"), function(val)
+		SVMOD.CFG.Sounds.Horn = val / 100
+		SVMOD:Save()
+	end)
+	slide:SetValue(SVMOD.CFG.Sounds.Horn * 100)
+	slide:SetMaxValue(100)
+
+	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Siren volume"), function(val)
+		SVMOD.CFG.Sounds.Siren = val / 100
+		SVMOD:Save()
+	end)
+	slide:SetValue(SVMOD.CFG.Sounds.Siren * 100)
+	slide:SetMaxValue(100)
 end

@@ -1,4 +1,7 @@
 util.AddNetworkString("SV_Settings")
+util.AddNetworkString("SV_Settings_GetFuelPump")
+util.AddNetworkString("SV_Settings_SetFuelPump")
+util.AddNetworkString("SV_Settings_GetMapCreationID")
 
 concommand.Add("svmod", function(ply)
 	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
@@ -46,6 +49,75 @@ concommand.Add("svmod", function(ply)
 		end
 	
 		net.Send(ply)
+	end)
+end)
+
+net.Receive("SV_Settings_GetFuelPump", function(_, ply)
+	net.Start("SV_Settings_GetFuelPump")
+
+	net.WriteUInt(#SVMOD.CFG["Fuel"]["Pumps"], 5) -- max: 31
+
+	for _, v in ipairs(SVMOD.CFG["Fuel"]["Pumps"]) do
+		net.WriteString(v.Model)
+		net.WriteBool(v.MapCreationID >= 0)
+		net.WriteUInt(v.MapCreationID, 16) -- max: 65535
+		net.WriteVector(v.Position)
+		net.WriteAngle(v.Angle)
+		net.WriteUInt(v.Price, 16) -- max: 65535
+	end
+
+	net.Send(ply)
+end)
+
+net.Receive("SV_Settings_SetFuelPump", function(_, ply)
+	local tab = {}
+
+	local count = net.ReadUInt(5) -- max: 31
+	for i = 1, count do
+		local model = net.ReadString()
+		local isCompiled = net.ReadBool()
+		local mapCreationID = net.ReadUInt(16) -- max: 65535
+		local position = net.ReadVector()
+		local angle = net.ReadAngle()
+		local price = net.ReadUInt(16) -- max: 65535
+
+		if not isCompiled then
+			mapCreationID = -1
+		end
+
+		table.insert(tab, {
+			Model = model,
+			MapCreationID = mapCreationID,
+			Position = position,
+			Angle = angle,
+			Price = price
+		})
+	end
+
+	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+		if hasAccess then
+			SVMOD.CFG["Fuel"]["Pumps"] = tab
+			SVMOD:Save()
+		end
+	end)
+end)
+
+net.Receive("SV_Settings_GetMapCreationID", function(_, ply)
+	local ent = net.ReadEntity()
+
+	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+		if hasAccess then
+			net.Start("SV_Settings_GetMapCreationID")
+
+			if ent:MapCreationID() >= 0 then
+				net.WriteBool(true)
+				net.WriteUInt(ent:MapCreationID(), 16) -- max: 65535
+			else
+				net.WriteBool(false)
+			end
+
+			net.Send(ply)
+		end
 	end)
 end)
 

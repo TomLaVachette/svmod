@@ -64,18 +64,18 @@ function SVMOD:GUI_Contributor(panel, data)
 		label:SizeToContents()
 	end
 	
-	local validButton = SVMOD:CreateButton(subKeyPanel, SVMOD:GetLanguage("Verify"), function()
+	local validButton = SVMOD:CreateButton(subKeyPanel, SVMOD:GetLanguage("Update"), function()
 		SVMOD.CFG.Contributor.Key = keyTextEntry:GetValue()
 
 		http.Fetch("https://api.svmod.com/check_serial.php?serial=" .. keyTextEntry:GetValue(), function(_, _, _, code)
 			if code == 200 then
-				notification.AddLegacy(SVMOD:GetLanguage("Contributor mode enabled") .. ".", NOTIFY_GENERIC, 5)
-
 				SVMOD.CFG.Contributor.IsEnabled = true
 
 				SVMOD:Save()
 
-				panel:GetParent():Remove()
+				if IsValid(panel) then
+					SVMOD:GUI_Contributor(panel, data)
+				end
 			else
 				notification.AddLegacy(SVMOD:GetLanguage("Invalid API key."), NOTIFY_ERROR, 5)
 			end

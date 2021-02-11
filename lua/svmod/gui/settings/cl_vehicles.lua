@@ -19,16 +19,11 @@ function SVMOD:GUI_Vehicles(panel, data)
 
 	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("VEHICLES"))
 
-	local listView = vgui.Create("DListView", panel)
-	listView:Dock(FILL)
+	local listView =  SVMOD:CreateListView(panel)
 	listView:AddColumn(SVMOD:GetLanguage("Name"))
 	listView:AddColumn(SVMOD:GetLanguage("Category"))
 	listView:AddColumn(SVMOD:GetLanguage("Author"))
 	listView:AddColumn(SVMOD:GetLanguage("Last edition"))
-	listView.Paint = function(self, w, h)
-		surface.SetDrawColor(12, 22, 24)
-		surface.DrawRect(0, 0, w, h)
-	end
 
 	listView.OnRowRightClick = function(_, _, panel)
 		if panel:GetColumnText(3) == "-" then
@@ -36,7 +31,10 @@ function SVMOD:GUI_Vehicles(panel, data)
 				local Menu = DermaMenu()
 
 				Menu:AddOption(SVMOD:GetLanguage("Create"), function()
-					SVMOD:Editor_Open(panel.Model)
+					net.Start("SV_Editor_Open")
+					net.WriteString(panel.Model)
+					net.SendToServer()
+					panel:GetParent():GetParent():GetParent():GetParent():Remove()
 				end):SetIcon("icon16/pencil.png")
 
 				Menu:Open()
@@ -46,7 +44,10 @@ function SVMOD:GUI_Vehicles(panel, data)
 
 			if SVMOD.CFG.Contributor.IsEnabled then
 				Menu:AddOption(SVMOD:GetLanguage("Edit"), function()
-					SVMOD:Editor_Open(panel.Model)
+					net.Start("SV_Editor_Open")
+					net.WriteString(panel.Model)
+					net.SendToServer()
+					panel:GetParent():GetParent():GetParent():GetParent():Remove()
 				end):SetIcon("icon16/pencil.png")
 			end
 
@@ -59,14 +60,6 @@ function SVMOD:GUI_Vehicles(panel, data)
 			end):SetIcon("icon16/exclamation.png")
 
 			Menu:Open()
-		end
-	end
-
-	for _, p in ipairs(listView.Columns) do
-		p.Header.Paint = function(self, w, h)
-			draw.SimpleText(self:GetText(), "SV_CalibriLight18", w / 2, h / 2, Color(230, 230, 230), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-
-			return true
 		end
 	end
 
@@ -86,15 +79,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 			else
 				line = listView:AddLine(veh.Name, veh.Category, "-", "-")
 			end
-			line.Model = veh.Model
-
-			line:SetTall(40)
-
-			for _, c in ipairs(line.Columns) do
-				c:SetFont("SV_Calibri18")
-				c:SetColor(Color(160, 160, 160))
-			end
-			
+			line.Model = veh.Model		
 		end
 	end
 	updateVehicleList()
@@ -107,51 +92,11 @@ function SVMOD:GUI_Vehicles(panel, data)
 
 	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
-	local buttonText = SVMOD:GetLanguage("Update")
-
-	local button = vgui.Create("DButton", bottomPanel)
-	button:Dock(RIGHT)
-	button:DockMargin(8, 0, 0, 0)
-	button:SetSize(125, 0)
-	button:SetText("")
-	button.DoClick = function(self)
+	local button = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("Update"), function()
 		SVMOD:Data_Update()
 
 		panel:GetParent():Remove()
-	end
-	button.Paint = function(self, w, h)
-		surface.SetDrawColor(12, 22, 24)
-		surface.DrawRect(0, 0, w, h)
-
-		local color
-
-		if self:IsHovered() then
-			if not self.soundPlayed then
-				surface.PlaySound("garrysmod/ui_hover.wav")
-				self.soundPlayed = true
-			end
-
-			color = Color(237, 197, 255)
-		else
-			self.soundPlayed = false
-
-			color = Color(154, 128, 166)
-		end
-
-		surface.SetDrawColor(color.r, color.g, color.b)
-
-		surface.DrawRect(3, 3, 7, 1)
-		surface.DrawRect(3, 3, 1, 7)
-
-		surface.DrawRect(w - 3 - 7, 3, 7, 1)
-		surface.DrawRect(w - 3, 3, 1, 7)
-
-		surface.DrawRect(3, h - 3, 7, 1)
-		surface.DrawRect(3, h - 3 - 7, 1, 7)
-
-		surface.DrawRect(w - 3 - 7, h - 3, 7, 1)
-		surface.DrawRect(w - 3, h - 3 - 7, 1, 7)
-
-		draw.SimpleText(buttonText, "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-	end
+	end)
+	button:Dock(RIGHT)
+	button:SetSize(125, 0)
 end
