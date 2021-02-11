@@ -58,6 +58,8 @@ net.Receive("SV_Settings", function()
 		SVMOD:GUI_Vehicles(frame:GetCenterPanel(), data)
 	end)
 
+	SVMOD:CreateHorizontalLine(frame:GetLeftPanel())
+
 	if data.HasAccess then
 		frame:CreateMenuButton(SVMOD:GetLanguage("SEATS"), TOP, function()
 			SVMOD:GUI_Seats(frame:GetCenterPanel(), data)

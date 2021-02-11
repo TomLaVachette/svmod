@@ -46,17 +46,17 @@ local function projectedTexturePanel(panel, data)
     local title = SVMOD:CreateTitle(panel, "ANGLES")
     title:DockMargin(0, 30, 0, 0)
 
-    local xAngleNumSlider = createNumSlidePanel(panel, "X Angle", data.Angle.x, -180, 180)
+    local xAngleNumSlider = createNumSlidePanel(panel, "Y Angle", data.Angle.x, -180, 180)
     xAngleNumSlider:SetFunction(function(val)
         data.Angle.x = val
     end)
 
-    local yAngleNumSlider = createNumSlidePanel(panel, "Y Angle", data.Angle.y, -180, 180)
+    local yAngleNumSlider = createNumSlidePanel(panel, "P Angle", data.Angle.y, -180, 180)
     yAngleNumSlider:SetFunction(function(val)
         data.Angle.y = val
     end)
 
-    local zAngleNumSlider = createNumSlidePanel(panel, "Z Angle", data.Angle.z, -180, 180)
+    local zAngleNumSlider = createNumSlidePanel(panel, "R Angle", data.Angle.z, -180, 180)
     zAngleNumSlider:SetFunction(function(val)
         data.Angle.z = val
     end)
@@ -477,6 +477,22 @@ function SVMOD:EDITOR_Lights(panel, data)
                 tab.Data.SpriteCircle.Position.x = -line.Data.SpriteCircle.Position.x
             end
 		end):SetIcon("icon16/arrow_refresh.png")
+
+        if line.Data.Sprite then
+            menu:AddOption("Create Projected texture from Sprite", function()
+                local pos = line.Data.Sprite.Position
+                local index = table.insert(data, {
+                    ProjectedTexture = {
+                        Position = Vector(pos.x, pos.y, pos.z),
+                        Angle = Angle(0, 90, 0),
+                        Color = Color(255, 255, 255),
+                        Size = 1000,
+                        FOV = 110
+                    }
+                })
+                addLight(data[index])
+            end):SetIcon("icon16/lightbulb_add.png")
+        end
 
 		menu:AddOption("Delete", function()
             removeLight(lineID)

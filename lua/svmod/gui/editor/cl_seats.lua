@@ -14,6 +14,10 @@ function SVMOD:EDITOR_Seats(panel, veh)
     bottomPanel:SetSize(0, 30)
     bottomPanel:SetDrawBackground(false)
 
+	local centerPanel = vgui.Create("DPanel", panel)
+    centerPanel:Dock(FILL)
+    centerPanel:SetDrawBackground(false)
+
     local addSeat
 
     local addButton = SVMOD:CreateButton(bottomPanel, "Add", function()
@@ -39,6 +43,8 @@ function SVMOD:EDITOR_Seats(panel, veh)
 		line.Seat:SetParent(veh)
 		line.Seat:SetLocalPos(position)
 		line.Seat:SetLocalAngles(angles)
+		line.Seat:SetColor(Color(255, 255, 255, 150))
+		line.Seat:SetRenderMode(RENDERMODE_TRANSCOLOR)
 	end
 
 	local function removeSeat(index)
@@ -160,59 +166,68 @@ function SVMOD:EDITOR_Seats(panel, veh)
 		addSeat(seat.Position, seat.Angle)
 	end
 
-    SVMOD:CreateTitle(panel, "LOCAL POSITIONS")
-
-	local xPositionNumSlider = createNumSlidePanel(panel, "X Position", 0, -200, 200)
-	local yPositionNumSlider = createNumSlidePanel(panel, "Y Position", 0, -200, 200)
-	local zPositionNumSlider = createNumSlidePanel(panel, "Z Position", 0, -200, 200)
-
-	local title = SVMOD:CreateTitle(panel, "ANGLES")
-	title:DockMargin(0, 30, 0, 0)
-
-	local xAngleNumSlider = createNumSlidePanel(panel, "X Angle", 0, -180, 180)
-	local yAngleNumSlider = createNumSlidePanel(panel, "Y Angle", 0, -180, 180)
-	local zAngleNumSlider = createNumSlidePanel(panel, "Z Angle", 0, -180, 180)
-
 	listView.OnRowSelected = function(_, _, e)
+		centerPanel:Clear()
+
+		local xPositionNumSlider, yPositionNumSlider, zPositionNumSlider
+
+		local title = SVMOD:CreateTitle(centerPanel, "LOCAL POSITIONS")
+		local button = SVMOD:CreateButton(title, "EyePos", function()
+			local trace = LocalPlayer():GetEyeTrace()
+	
+			if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
+				local position = trace.Entity:WorldToLocal(trace.HitPos)
+				e.Seat:SetLocalPos(position)
+
+				xPositionNumSlider:SetValue(position.x)
+				yPositionNumSlider:SetValue(position.y)
+				zPositionNumSlider:SetValue(position.z)
+			end
+		end)
+		button:Dock(RIGHT)
+
 		local currentPos = e.Seat:GetLocalPos()
 		
+		xPositionNumSlider = createNumSlidePanel(centerPanel, "X Position", math.Round(currentPos.x), -200, 200)
 		xPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()
 			e.Seat:SetLocalPos(Vector(val, pos.y, pos.z))
 		end)
-		xPositionNumSlider:SetValue(math.Round(currentPos.x))
 		
+		yPositionNumSlider = createNumSlidePanel(centerPanel, "Y Position", math.Round(currentPos.y), -200, 200)
 		yPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()
 			e.Seat:SetLocalPos(Vector(pos.x, val, pos.z))
 		end)
-		yPositionNumSlider:SetValue(math.Round(currentPos.y))
 		
+		zPositionNumSlider = createNumSlidePanel(centerPanel, "Z Position", math.Round(currentPos.z), -200, 200)
 		zPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()
 			e.Seat:SetLocalPos(Vector(pos.x, pos.y, val))
 		end)
-		zPositionNumSlider:SetValue(math.Round(currentPos.z))
+
+		local title = SVMOD:CreateTitle(centerPanel, "ANGLES")
+		title:DockMargin(0, 30, 0, 0)
 
 		local currentAng = e.Seat:GetLocalAngles()
 
+		local xAngleNumSlider = createNumSlidePanel(centerPanel, "Y Angle", math.Round(currentAng.x), -180, 180)
 		xAngleNumSlider:SetFunction(function(val)
 			local ang = e.Seat:GetLocalAngles()
 			e.Seat:SetLocalAngles(Angle(math.floor(val), ang.y, ang.z))
 		end)
-		xAngleNumSlider:SetValue(math.Round(currentAng.x))
 
+		local yAngleNumSlider = createNumSlidePanel(centerPanel, "P Angle", math.Round(currentAng.y), -180, 180)
 		yAngleNumSlider:SetFunction(function(val)
 			local ang = e.Seat:GetLocalAngles()
 			e.Seat:SetLocalAngles(Angle(ang.x, math.floor(val), ang.z))
 		end)
-		yAngleNumSlider:SetValue(math.Round(currentAng.y))
 
+		local zAngleNumSlider = createNumSlidePanel(centerPanel, "R Angle", math.Round(currentAng.z), -180, 180)
 		zAngleNumSlider:SetFunction(function(val)
 			local ang = e.Seat:GetLocalAngles()
 			e.Seat:SetLocalAngles(Angle(ang.x, ang.y, math.floor(val)))
 		end)
-		zAngleNumSlider:SetValue(math.Round(currentAng.z))
 	end
 
 	listView:SelectFirstItem()

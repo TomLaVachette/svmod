@@ -138,8 +138,12 @@ function SVMOD:Data_Check(x)
 			return "DATA.Fuel.Capacity"
 		elseif x.Fuel.Consumption and not isnumber(x.Fuel.Consumption) then
 			return "DATA.Fuel.Consumption"
-		elseif x.Fuel.GasTankPosition and not isvector(x.Fuel.GasTankPosition) then
-			return "DATA.Fuel.GasTankPosition"
+		elseif not istable(x.Fuel.GasTank) then
+			return "DATA.Fuel.GasTank"
+        elseif x.Fuel.GasTank.Position and not isvector(x.Fuel.GasTank.Position) then
+			return "DATA.Fuel.GasTank.Position"
+        elseif x.Fuel.GasTank.Angle and not isangle(x.Fuel.GasTank.Angle) then
+			return "DATA.Fuel.GasTank.Angle"
         end
 	end
 

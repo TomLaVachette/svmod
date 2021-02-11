@@ -109,7 +109,32 @@ net.Receive("SV_Editor_Open", function()
 	end)
 
     frame:CreateMenuButton(SVMOD:GetLanguage("CLOSE"), BOTTOM, function()
-		frame:Remove()
+		local closeFrame = vgui.Create("DFrame")
+		closeFrame:SetSize(300, 110)
+		closeFrame:Center()
+		closeFrame:ShowCloseButton(false)
+		closeFrame:SetTitle("")
+		closeFrame.Paint = function(self, w, h)
+			surface.SetDrawColor(18, 25, 31)
+			surface.DrawRect(0, 0, w, h)
+	
+			surface.SetDrawColor(178, 95, 245)
+			surface.DrawRect(0, 0, w, 4)
+		end
+		closeFrame:MakePopup()
+
+		local button = SVMOD:CreateButton(closeFrame, SVMOD:GetLanguage("CLOSE AND LOSE ALL MODIFICATIONS"), function()
+			closeFrame:Close()
+			frame:Close()
+		end)
+		button:Dock(TOP)
+		button:SetSize(0, 30)
+
+		local button = SVMOD:CreateButton(closeFrame, SVMOD:GetLanguage("PLEASE NO, CANCEL"), function()
+			closeFrame:Close()
+		end)
+		button:Dock(TOP)
+		button:SetSize(0, 30)
 	end)
 
 	frame.OnRemove = function()

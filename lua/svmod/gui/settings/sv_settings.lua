@@ -2,6 +2,7 @@ util.AddNetworkString("SV_Settings")
 util.AddNetworkString("SV_Settings_GetFuelPump")
 util.AddNetworkString("SV_Settings_SetFuelPump")
 util.AddNetworkString("SV_Settings_GetMapCreationID")
+util.AddNetworkString("SV_Settings_HardReset")
 
 concommand.Add("svmod", function(ply)
 	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
@@ -117,6 +118,22 @@ net.Receive("SV_Settings_GetMapCreationID", function(_, ply)
 			end
 
 			net.Send(ply)
+		end
+	end)
+end)
+
+net.Receive("SV_Settings_HardReset", function()
+	local bool = net.ReadBool()
+	if not bool then -- anti netscan
+		return
+	end
+
+	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+		if hasAccess then
+			SVMOD:Disable()
+			SVMOD:ResetConfiguration()
+			SVMOD:Save()
+			SVMOD:Enable()
 		end
 	end)
 end)

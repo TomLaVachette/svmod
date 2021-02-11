@@ -111,14 +111,16 @@ end
 -- @internal
 function SVMOD:UnloadAllVehicles()
 	for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
-		if SERVER then
-			for _, ply in ipairs(veh:SV_GetAllPlayers()) do
-				ply:ExitVehicle()
+		if SVMOD:IsVehicle(veh) then
+			if SERVER then
+				for _, ply in ipairs(veh:SV_GetAllPlayers()) do
+					ply:ExitVehicle()
+				end
 			end
-		end
 
-		timer.Simple(FrameTime() * 4, function()
-			SVMOD:UnloadVehicle(veh)
-		end)
+			timer.Simple(FrameTime() * 4, function()
+				SVMOD:UnloadVehicle(veh)
+			end)
+		end
 	end
 end

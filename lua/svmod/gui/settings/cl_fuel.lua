@@ -63,16 +63,16 @@ function SVMOD:GUI_Fuel(panel, data)
 
 	local pumpList = SVMOD:CreateListView(panel)
 	pumpList:AddColumn("ID"):SetWidth(10)
-	pumpList:AddColumn("Model")
+	pumpList:AddColumn(SVMOD:GetLanguage("Model"))
 	pumpList:AddColumn("MapCreationID")
-	pumpList:AddColumn("Position")
-	pumpList:AddColumn("Angle"):SetWidth(20)
-	pumpList:AddColumn("Price"):SetWidth(10)
+	pumpList:AddColumn(SVMOD:GetLanguage("Position"))
+	pumpList:AddColumn(SVMOD:GetLanguage("Angle")):SetWidth(20)
+	pumpList:AddColumn(SVMOD:GetLanguage("Price")):SetWidth(10)
 
 	pumpList.OnRowRightClick = function(self, lineID, line)
 		local menu = DermaMenu()
 
-		menu:AddOption("Set entity", function()
+		menu:AddOption(SVMOD:GetLanguage("Set entity you'r looking at"), function()
 			local ent = LocalPlayer():GetEyeTrace().Entity
 
 			if IsValid(ent) then
@@ -102,7 +102,7 @@ function SVMOD:GUI_Fuel(panel, data)
 			end
 		end):SetIcon("icon16/package.png")
 
-		menu:AddOption("Edit price", function()
+		menu:AddOption(SVMOD:GetLanguage("Edit price"), function()
 			local frame = vgui.Create("DFrame")
 			frame:SetSize(300, 110)
 			frame:Center()
@@ -131,8 +131,19 @@ function SVMOD:GUI_Fuel(panel, data)
 			button:SetSize(0, 30)
 		end):SetIcon("icon16/money.png")
 
-		menu:AddOption("Delete", function()
+		menu:AddOption(SVMOD:GetLanguage("Delete"), function()
 			self:RemoveLine(lineID)
+
+			timer.Simple(FrameTime(), function()
+				local index = 1
+				for i = 1, table.Count(pumpList:GetLines()) + 1 do
+					local line = pumpList:GetLine(i)
+					if line then
+						line:SetColumnText(1, index)
+						index = index + 1
+					end
+				end
+			end)
 		end):SetIcon("icon16/cross.png")
 
 		menu:Open()
@@ -173,17 +184,19 @@ function SVMOD:GUI_Fuel(panel, data)
 
 		net.WriteUInt(count, 5) -- max: 31
 
-		for i = 1, count do
+		for i = 1, 30 do
 			local line = pumpList:GetLine(i)
-			local position = string.Split(line:GetColumnText(4), ", ")
-			local angle = string.Split(line:GetColumnText(5), ", ")
+			if line then
+				local position = string.Split(line:GetColumnText(4), ", ")
+				local angle = string.Split(line:GetColumnText(5), ", ")
 
-			net.WriteString(line:GetColumnText(2))
-			net.WriteBool(tonumber(line:GetColumnText(3)) >= 0)
-			net.WriteUInt(tonumber(line:GetColumnText(3)), 16) -- max: 65535
-			net.WriteVector(Vector(position[1], position[2], position[3]))
-			net.WriteAngle(Angle(angle[1], angle[2], angle[3]))
-			net.WriteUInt(tonumber(line:GetColumnText(6)), 16) -- max: 65535
+				net.WriteString(line:GetColumnText(2))
+				net.WriteBool(tonumber(line:GetColumnText(3)) >= 0)
+				net.WriteUInt(tonumber(line:GetColumnText(3)), 16) -- max: 65535
+				net.WriteVector(Vector(position[1], position[2], position[3]))
+				net.WriteAngle(Angle(angle[1], angle[2], angle[3]))
+				net.WriteUInt(tonumber(line:GetColumnText(6)), 16) -- max: 65535
+			end
 		end
 
 		net.SendToServer()
@@ -197,7 +210,7 @@ function SVMOD:GUI_Fuel(panel, data)
 
 	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
-	local button = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("Add"), function()
+	local button = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("ADD"), function()
 		if table.Count(pumpList:GetLines()) < 30 then
 			pumpList:AddLine(table.Count(pumpList:GetLines()) + 1, "?", -1, "0, 0, 0", "0, 0, 0", 0)
 		end

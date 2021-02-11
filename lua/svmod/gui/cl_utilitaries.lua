@@ -67,6 +67,10 @@ function SVMOD:CreateFrame(name)
 		return centerPanel
 	end
 
+	frame.GetLeftPanel = function()
+		return leftPanel
+	end
+
 	frame.CreateMenuButton = function(self, text, dock, fun)
 		local button = vgui.Create("DButton", leftPanel)
 		button:Dock(dock)
@@ -204,8 +208,17 @@ function SVMOD:CreateButton(panel, text, fun)
 	button:SetSize(100, 0)
 	button:SetText("")
 	button.DoClick = function(self)
-		fun()
+		fun(self)
 	end
+
+	button.SetText = function(self, val)
+		self.Text = val
+	end
+	button.GetText = function(self)
+		return self.Text
+	end
+	button:SetText(text)
+
 	button.Paint = function(self, w, h)
 		surface.SetDrawColor(12, 22, 24)
 		surface.DrawRect(0, 0, w, h)
@@ -239,7 +252,7 @@ function SVMOD:CreateButton(panel, text, fun)
 		surface.DrawRect(w - 3 - 7, h - 3, 7, 1)
 		surface.DrawRect(w - 3, h - 3 - 7, 1, 7)
 
-		draw.SimpleText(text, "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		draw.SimpleText(button:GetText(), "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 	end
 
 	return button

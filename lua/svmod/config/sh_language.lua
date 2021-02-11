@@ -145,7 +145,7 @@ SVMOD.Languages = {
 		["TR"] = "Honking"
 	},
 	["Lock/Unlock"] = {
-		["FR"] = "Vérouiller/Déverrouiller",
+		["FR"] = "Verrouiller/Déverrouiller",
 		["RU"] = "Блокировка/разблокировка",
 		["TR"] = "Kilitle / Kilidi Aç"
 	},
@@ -175,9 +175,14 @@ SVMOD.Languages = {
 		["TR"] = "Yanıp sönen ışıkları etkinleştir / devre dışı bırak"
 	},
 	["Reset"] = {
-		["FR"] = "Réintialiser",
+		["FR"] = "Réinitialiser",
 		["RU"] = "Сброс",
 		["TR"] = "Sıfırla"
+	},
+	["Confirm?"] = {
+		["FR"] = "Confirmer ?",
+		["RU"] = "Confirm?",
+		["TR"] = "Confirm?"
 	},
 	["Report menu"] = {
 		["FR"] = "Menu de signalement",
@@ -309,7 +314,7 @@ SVMOD.Languages = {
 		["RU"] = "Возможность смены сиденья изнутри автомобиля",
 		["TR"] = "Aracın içinden koltuk değiştirmeyi etkinleştirin"
 	},
-	["Enable the ability to exclude passengers as drivers"] = {
+	["Enable the ability to exclude passengers as driver"] = {
 		["FR"] = "Activer la possibilité d'exclure les passagers en tant que conducteur",
 		["RU"] = "Возможность исключить пассажиров из числа водителей",
 		["TR"] = "Yolcuları sürücü olarak dışlama yeteneğini etkinleştirin"
@@ -479,6 +484,51 @@ SVMOD.Languages = {
 		["RU"] = "Коэффициент расхода топлива",
 		["TR"] = "Yakıt tüketimi çarpanı"
 	},
+	["GAS PUMP"] = {
+		["FR"] = "POMPE À ESSENCE",
+		["RU"] = "GAS PUMP",
+		["TR"] = "GAS PUMP"
+	},
+	["Model"] = {
+		["FR"] = "Modèle",
+		["RU"] = "Model",
+		["TR"] = "Model"
+	},
+	["Position"] = {
+		["FR"] = "Position",
+		["RU"] = "Position",
+		["TR"] = "Position"
+	},
+	["Angle"] = {
+		["FR"] = "Angle",
+		["RU"] = "Angle",
+		["TR"] = "Angle"
+	},
+	["Price"] = {
+		["FR"] = "Prix",
+		["RU"] = "Price",
+		["TR"] = "Price"
+	},
+	["Set entity you'r looking at"] = {
+		["FR"] = "Choisir l'entité devant-soi",
+		["RU"] = "Set entity you'r looking at",
+		["TR"] = "Set entity you'r looking at"
+	},
+	["Edit price"] = {
+		["FR"] = "Éditer le prix",
+		["RU"] = "Edit price",
+		["TR"] = "Edit price"
+	},
+	["ADD"] = {
+		["FR"] = "AJOUTER",
+		["RU"] = "ADD",
+		["TR"] = "ADD"
+	},
+	["Delete"] = {
+		["FR"] = "Supprimer",
+		["RU"] = "Delete",
+		["TR"] = "Delete"
+	},
 	["Brake"] = {
 		["FR"] = "Freins",
 		["RU"] = "Тормоз",
@@ -500,7 +550,7 @@ SVMOD.Languages = {
 		["TR"] = "Sağ Flaşör"
 	},
 	["CREDITS"] = {
-		["FR"] = "CREDITS",
+		["FR"] = "CRÉDITS",
 		["RU"] = "КРЕДИТЫ",
 		["TR"] = "KREDİ"
 	},
@@ -548,6 +598,16 @@ SVMOD.Languages = {
 		["FR"] = "FERMER",
 		["RU"] = "ЗАКРЫТЬ СТРАНИЦУ",
 		["TR"] = "KAPAT"
+	},
+	["CLOSE AND LOSE ALL MODIFICATIONS"] = {
+		["FR"] = "FERMER ET PERDRE LES MODIFICATIONS",
+		["RU"] = "CLOSE AND LOSE ALL MODIFICATIONS",
+		["TR"] = "CLOSE AND LOSE ALL MODIFICATIONS"
+	},
+	["PLEASE NO, CANCEL"] = {
+		["FR"] = "AH NON, ANNULE",
+		["RU"] = "PLEASE NO, CANCEL",
+		["TR"] = "PLEASE NO, CANCEL"
 	},
 	["VCMod does not exist on this server. Please type « svmod » instead."] = {
 		["FR"] = "VCMod n'est pas présent sur ce serveur. Tapez plutôt « svmod ».",

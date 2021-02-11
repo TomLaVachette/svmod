@@ -34,7 +34,7 @@ function SVMOD:GUI_Seats(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable the ability to exclude passengers as drivers"), {
+	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable the ability to exclude passengers as driver"), {
 		{
 			Name = SVMOD:GetLanguage("Enable"),
 			Color = Color(59, 217, 85),

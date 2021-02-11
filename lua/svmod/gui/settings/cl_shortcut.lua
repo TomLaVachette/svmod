@@ -33,9 +33,9 @@ function SVMOD:GUI_Shortcuts(panel)
 		button:DockMargin(8, 0, 0, 0)
 		button:SetSize(100, 0)
 		button.OnChange = function(self, value)
-			self:SetText(string.upper(input.GetKeyName(value)))
+			self:SetText(string.upper(input.GetKeyName(value) or "NONE"))
 
-			data.Key = self:GetValue()
+			data.Key = self:GetValue() or "NONE"
 
 			SVMOD:Save()
 		end

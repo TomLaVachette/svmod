@@ -81,17 +81,17 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
     local title = SVMOD:CreateTitle(panel, "GAS TANK OPENING ANGLE")
     title:DockMargin(0, 30, 0, 0)
 
-    local xAngleNumSlider = createNumSlidePanel("X Angle", data.GasTank.Angle.x, -200, 200)
+    local xAngleNumSlider = createNumSlidePanel("Y Angle", data.GasTank.Angle.x, -200, 200)
     xAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.x = val
     end)
 
-    local yAngleNumSlider = createNumSlidePanel("Y Angle", data.GasTank.Angle.y, -200, 200)
+    local yAngleNumSlider = createNumSlidePanel("P Angle", data.GasTank.Angle.y, -200, 200)
     yAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.y = val
     end)
 
-    local zAngleNumSlider = createNumSlidePanel("Z Angle", data.GasTank.Angle.z, -200, 200)
+    local zAngleNumSlider = createNumSlidePanel("R Angle", data.GasTank.Angle.z, -200, 200)
     zAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.z = val
     end)

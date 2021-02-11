@@ -238,6 +238,19 @@ function SVMOD:GUI_Home(panel, data)
 		gui.OpenURL("https://discord.svmod.com")
 	end)
 
+	local resetButton = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("Reset"), function(self)
+		if self:GetText() == SVMOD:GetLanguage("Confirm?") then
+			net.Start("SV_Settings_HardReset")
+			net.WriteBool(true) -- anti netscan
+			net.SendToServer()
+
+			panel:GetParent():Remove()
+		else
+			self:SetText(SVMOD:GetLanguage("Confirm?"))
+		end
+	end)
+	resetButton:DockMargin(6, 0, 0, 0)
+
 	surface.SetFont("SV_Calibri18")
 	local firstWidth = surface.GetTextSize("Developed with")
 	local secondWidth = surface.GetTextSize("by TomLaVachette")
@@ -259,8 +272,10 @@ function SVMOD:GUI_Home(panel, data)
 	thirdLabel:SizeToContents()
 
 	timer.Simple(FrameTime(), function()
-		firstLabel:SetPos(bottomPanel:GetSize() - firstWidth - 20 - secondWidth - 5, 4)
-		secondLabel:SetPos(bottomPanel:GetSize() - 14 - secondWidth - 5, 4)
-		thirdLabel:SetPos(bottomPanel:GetSize() - secondWidth - 5, 4)
+		if IsValid(firstLabel) and IsValid(secondLabel) and IsValid(thirdLabel) and IsValid(bottomPanel) then
+			firstLabel:SetPos(bottomPanel:GetSize() - firstWidth - 20 - secondWidth - 5, 4)
+			secondLabel:SetPos(bottomPanel:GetSize() - 14 - secondWidth - 5, 4)
+			thirdLabel:SetPos(bottomPanel:GetSize() - secondWidth - 5, 4)
+		end
 	end)
 end

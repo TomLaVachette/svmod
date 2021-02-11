@@ -111,7 +111,7 @@ function SVMOD:GUI_Lights(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Turning off the hazard lights when the driver exits the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Time to deactivate the hazard lights"), {
 		{
 			Name = SVMOD:GetLanguage("Enable"),
 			Color = Color(59, 217, 85),

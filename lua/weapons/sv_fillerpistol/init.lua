@@ -31,7 +31,7 @@ net.Receive("SV_StartFilling", function(_, ply)
 
             local hitPos = ply:GetEyeTrace().HitPos
 
-            if hitPos:DistToSqr(veh:LocalToWorld(veh.SV_Data.Fuel.GasTankPosition)) < 200 then
+            if hitPos:DistToSqr(veh:LocalToWorld(veh.SV_Data.Fuel.GasTank.Position)) < 200 then
                 local function callback()
                     veh:SV_SetFuel(veh:SV_GetFuel() + 21)
                     veh:SV_SendFuel(ply)

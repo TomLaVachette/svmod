@@ -273,9 +273,9 @@ local function CreateSeatPanel(veh, seats)
 
 	CreateCategory(Panel, Color(255, 255, 255), "Angle")
 
-	local NumSlider_XAngle = CreateNumSlider("X Angle", -180, 180, 0)
-	local NumSlider_YAngle = CreateNumSlider("Y Angle", -180, 180, 0)
-	local NumSlider_ZAngle = CreateNumSlider("Z Angle", -180, 180, 0)
+	local NumSlider_XAngle = CreateNumSlider("Y Angle", -180, 180, 0)
+	local NumSlider_YAngle = CreateNumSlider("P Angle", -180, 180, 0)
+	local NumSlider_ZAngle = CreateNumSlider("R Angle", -180, 180, 0)
 
 	for _, seat in ipairs(seats) do
 		AddSeat(seat.Position, seat.Angle)
@@ -431,9 +431,9 @@ local function CreatePartPanel(veh, parts)
 
 	CreateCategory(Panel, Color(255, 255, 255), "Angle")
 
-	local NumSlider_XAngle = CreateNumSlider("X Angle", -180, 180, 0)
-	local NumSlider_YAngle = CreateNumSlider("Y Angle", -180, 180, 0)
-	local NumSlider_ZAngle = CreateNumSlider("Z Angle", -180, 180, 0)
+	local NumSlider_XAngle = CreateNumSlider("Y Angle", -180, 180, 0)
+	local NumSlider_YAngle = CreateNumSlider("P Angle", -180, 180, 0)
+	local NumSlider_ZAngle = CreateNumSlider("R Angle", -180, 180, 0)
 
 	PartList.OnRowRightClick = function(_, index, e)
 		local Menu = DermaMenu()
@@ -1161,7 +1161,7 @@ local function CreateLightsPanel(veh, lights, copyTo)
 
 			CreateCategory(Panel_PTexture, Color(255, 255, 255), "Angle")
 
-			local NumSlider_XAngle = CreateNumSlider(Panel_PTexture, "X Angle", -180, 180, 0)
+			local NumSlider_XAngle = CreateNumSlider(Panel_PTexture, "Y Angle", -180, 180, 0)
 			NumSlider_XAngle:SetValue(e.Data.ProjectedTexture.Angle.x)
 			NumSlider_XAngle.OnValueChanged = function(self, value)
 				for _, l in ipairs(LightList:GetSelected()) do
@@ -1169,7 +1169,7 @@ local function CreateLightsPanel(veh, lights, copyTo)
 				end
 			end
 
-			local NumSlider_YAngle = CreateNumSlider(Panel_PTexture, "Y Angle", -180, 180, 0)
+			local NumSlider_YAngle = CreateNumSlider(Panel_PTexture, "P Angle", -180, 180, 0)
 			NumSlider_YAngle:SetValue(e.Data.ProjectedTexture.Angle.y)
 			NumSlider_YAngle.OnValueChanged = function(self, value)
 				for _, l in ipairs(LightList:GetSelected()) do
@@ -1177,7 +1177,7 @@ local function CreateLightsPanel(veh, lights, copyTo)
 				end
 			end
 
-			local NumSlider_ZAngle = CreateNumSlider(Panel_PTexture, "Z Angle", -180, 180, 0)
+			local NumSlider_ZAngle = CreateNumSlider(Panel_PTexture, "R Angle", -180, 180, 0)
 			NumSlider_ZAngle:SetValue(e.Data.ProjectedTexture.Angle.z)
 			NumSlider_ZAngle.OnValueChanged = function(self, value)
 				for _, l in ipairs(LightList:GetSelected()) do
