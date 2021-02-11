@@ -44,5 +44,16 @@ SVMOD.CFG.Damage = {
 
 SVMOD.CFG.Fuel = {
 	IsEnabled = true,
-	Multiplier = 1
+	Multiplier = 1,
+	Pumps = {}
 }
+
+function SVMOD:GetFuelPumpByEnt(ent)
+	for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
+		if pump.Entity == ent then
+			return pump
+		end
+	end
+
+	return nil
+end

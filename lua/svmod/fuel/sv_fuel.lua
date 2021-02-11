@@ -36,7 +36,7 @@ function SVMOD.Metatable:SV_SetFuel(value)
 	end
 end
 
--- Sets the vehicule maximum fuel in liters.
+-- Sets the vehicle maximum fuel in liters.
 -- @tparam number maxFuel Maximum fuel in leters
 util.AddNetworkString("SV_SetMaxFuel")
 function SVMOD.Metatable:SV_SetMaxFuel(value)
@@ -55,17 +55,26 @@ function SVMOD.Metatable:SV_SetMaxFuel(value)
 	net.Send(Vehicle:SV_GetAllPlayers())
 end
 
+-- Sends the fuel and the maximum fuel of the vehicle.
+-- @tparam Player The player to send the information to.
 util.AddNetworkString("SV_GetFuel")
+function SVMOD.Metatable:SV_SendFuel(ply)
+	local veh = self
+	if self:SV_IsPassengerSeat() then
+		veh = self:SV_GetDriverSeat()
+	end
+
+	net.Start("SV_GetFuel")
+	net.WriteEntity(veh)
+	net.WriteFloat(veh:SV_GetFuel())
+	net.WriteFloat(veh:SV_GetMaxFuel())
+	net.Send(ply)
+end
+
 hook.Add("PlayerEnteredVehicle", "SV_Fuel_SendFuel", function(ply, veh)
 	if not SVMOD:IsVehicle(veh) then return end
 
-	local Vehicle = veh:SV_GetDriverSeat()
-
-	net.Start("SV_GetFuel")
-	net.WriteEntity(Vehicle)
-	net.WriteFloat(Vehicle:SV_GetFuel())
-	net.WriteFloat(Vehicle:SV_GetMaxFuel())
-	net.Send(ply)
+	veh:SV_SendFuel(ply)
 end)
 
 hook.Add("PlayerEnteredVehicle", "SV_Fuel_StartFuelConsumption", function(ply, veh)
@@ -113,4 +122,8 @@ end)
 
 hook.Add("SV_UnloadVehicle", "SV_Fuel_DisableConsumptionOnRemove", function(veh)
 	DisableFuel(veh)
+end)
+
+concommand.Add("tempfuel", function(ply)
+	ply:GetEyeTrace().Entity:SV_SetFuel(10)
 end)

@@ -5,6 +5,32 @@ function SVMOD:AddPlurial(value)
 	return ""
 end
 
+function SVMOD:RotateAroundAxis(ang1, ang2)
+	ang1:RotateAroundAxis(ang1:Forward(), ang2.p)
+	ang1:RotateAroundAxis(ang1:Right(), ang2.r)
+	ang1:RotateAroundAxis(ang1:Up(), ang2.y)
+
+	return ang1
+end
+
+function SVMOD:DeepCopy(tab)
+	local result = table.Copy(tab)
+
+	for k, v in pairs(result) do
+		if type(v) == "pixelvis_handle_t" then
+			result[k] = nil
+		elseif isvector(v) then
+			result[k] = Vector(v.x, v.y, v.z)
+		elseif isangle(v) then
+			result[k] = Angle(v.x, v.y, v.z)
+		elseif istable(v) then
+			result[k] = SVMOD:DeepCopy(v)
+		end
+	end
+
+	return result
+end
+
 SVMOD.LOG = {
 	Info = Color(102, 181, 255),
 	Alert = Color(255, 186, 102),

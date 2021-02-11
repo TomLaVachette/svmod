@@ -6,9 +6,9 @@ util.AddNetworkString("SV_TurnFlashingLights")
 -- Turns on the flashing lights of a vehicle.
 -- @treturn boolean True if successful, false otherwise
 function SVMOD.Metatable:SV_TurnOnFlashingLights()
-	if #self.SV_Data.FlashingLights == 0 then
+	if not self.SV_IsEditMode and #self.SV_Data.FlashingLights == 0 then
 		return false -- No flashing light on this vehicle
-	elseif not SVMOD.CFG.Lights.AreFlashingLightsEnabled then
+	elseif not SVMOD.CFG.ELS.AreFlashingLightsEnabled then
 		return false -- Flashing lights disabled
 	elseif self:SV_GetFlashingLightsState() then
 		return false -- Flashing lights already active
@@ -56,11 +56,11 @@ net.Receive("SV_SetFlashingLightsState", function(_, ply)
 end)
 
 local function DisableFlashingLights(veh)
-	if not SVMOD.CFG.Lights.TurnOffFlashingLightsOnExit then return end
+	if not SVMOD.CFG.ELS.TurnOffFlashingLightsOnExit then return end
 
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
-	timer.Create("SV_DisableFlashingLights_" .. veh:EntIndex(), SVMOD.CFG.Lights.TimeTurnOffFlashingLights, 1, function()
+	timer.Create("SV_DisableFlashingLights_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffFlashingLights, 1, function()
 		if not SVMOD:IsVehicle(veh) then return end
 		
 		veh:SV_TurnOffFlashingLights()

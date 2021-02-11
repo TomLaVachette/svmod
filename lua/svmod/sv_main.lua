@@ -66,3 +66,21 @@ hook.Add("PlayerConnect", "SV_EnableAddon", function()
 	end
 	hook.Remove("PlayerConnect", "SV_EnableAddon")
 end)
+
+-- concommand.Add("temp", function(ply)
+-- 	local ent = ply:GetEyeTrace().Entity
+
+-- 	local size = 0
+
+-- 	ent:SetSpringLength(0, 499.95)
+-- 	ent:SetSpringLength(1, 499.95)
+-- 	ent:SetSpringLength(2, 499.95)
+-- 	ent:SetSpringLength(3, 499.95)
+
+-- 	timer.Simple(2, function()
+-- 		ent:SetSpringLength(0, 500.12)
+-- 		ent:SetSpringLength(1, 500.12)
+-- 		ent:SetSpringLength(2, 500.12)
+-- 		ent:SetSpringLength(3, 500.12)
+-- 	end)
+-- end)

@@ -229,8 +229,8 @@ SVMOD.Languages = {
 		["RU"] = "Автоматически отключайте мигалки после поворота ",
 		["TR"] = "Araç döndürüldüğünde yanıp sönenleri otomatik olarak devre dışı bırakın"
 	},
-	["Volume"] = {
-		["FR"] = "Volume",
+	["SOUNDS"] = {
+		["FR"] = "SONS",
 		["RU"] = "автомобиля.",
 		["TR"] = "Ses"
 	},
@@ -528,11 +528,6 @@ SVMOD.Languages = {
 		["FR"] = "Clé API invalide.",
 		["RU"] = "Недействительный ключ API.",
 		["TR"] = "Geçersiz API anahtarı."
-	},
-	["Verify"] = {
-		["FR"] = "Vérifier",
-		["RU"] = "Проверить .",
-		["TR"] = "Doğrulayın"
 	},
 	["Enable"] = {
 		["FR"] = "Activer",
