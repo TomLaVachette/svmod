@@ -18,7 +18,8 @@ SVMOD.FCFG.BlacklistedModels = {
 	"models/nova/jeep_seat.mdl",
 	"models/nova/chair_wood01.mdl",
 	"models/nova/chair_office01.mdl",
-	"models/vehicles/prisoner_pod_inner.mdl"
+	"models/vehicles/prisoner_pod_inner.mdl",
+	"models/nova/jalopy_seat.mdl"
 }
 
 SVMOD.FCFG.ConflictList = {
