@@ -1,27 +1,28 @@
 util.AddNetworkString("SV_Editor_Open")
 net.Receive("SV_Editor_Open", function(_, ply)
-	-- if not game.SinglePlayer() then return end
+	if not game.SinglePlayer() then
+		return
+	end
 
-	local Model = net.ReadString()
+	local model = net.ReadString()
 
-	local VehicleList = SVMOD:GetVehicleList()
-	local VehicleData
-	for _, v in pairs(VehicleList) do
-		if v.Model == Model then
-			VehicleData = v
+	local vehData
+	for _, v in pairs(SVMOD:GetVehicleList()) do
+		if v.Model == model then
+			vehData = v
 			break
 		end
 	end
-	if not VehicleData then return end
+	if not vehData then return end
 
-	local Vehicle = ents.Create("prop_vehicle_jeep")
-	duplicator.DoGeneric(Vehicle, VehicleData)
+	local veh = ents.Create("prop_vehicle_jeep")
+	duplicator.DoGeneric(veh, vehData)
 
-	Vehicle:SetModel(VehicleData.Model)
-	Vehicle:SetPos(ply:GetEyeTrace().HitPos)
+	veh:SetModel(vehData.Model)
+	veh:SetPos(ply:GetEyeTrace().HitPos)
 
-	if VehicleData and VehicleData['KeyValues'] then
-		for k, v in pairs(VehicleData['KeyValues']) do
+	if vehData and vehData['KeyValues'] then
+		for k, v in pairs(vehData['KeyValues']) do
 			local kLower = string.lower(k)
 
 			if (kLower == "vehiclescript" or
@@ -30,100 +31,60 @@ net.Receive("SV_Editor_Open", function(_, ply)
 				kLower == "cargovisible" or
 				kLower == "enablegun")
 			then
-				Vehicle:SetKeyValue(k, v)
+				veh:SetKeyValue(k, v)
 			end
 		end
 
-		Vehicle:SetKeyValue("enablegun", "true")
+		veh:SetKeyValue("enablegun", "true")
 	end
 
 	-- IsEditMode is used for bypassing some tests
-	Vehicle.SV_IsEditMode = true
+	veh.SV_IsEditMode = true
 
-	Vehicle:Spawn()
-	Vehicle:Activate()
+	veh:Spawn()
+	veh:Activate()
 
-	hook.Run("PlayerSpawnedVehicle", ply, Vehicle)
+	hook.Run("PlayerSpawnedVehicle", ply, veh)
 
-	Vehicle:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+	veh:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 
-	SVMOD:LoadVehicle(Vehicle)
+	SVMOD:LoadVehicle(veh)
 
 	timer.Simple(1, function()
 		net.Start("SV_Editor_Open")
-		net.WriteEntity(Vehicle)
+		net.WriteEntity(veh)
 		net.Send(ply)
 	end)
 end)
 
 util.AddNetworkString("SV_Editor_ActiveTab")
 net.Receive("SV_Editor_ActiveTab", function(_, ply)
-	-- if not game.SinglePlayer() then return end
+	if not game.SinglePlayer() then return end
 
 	local veh = net.ReadEntity()
 	if not SVMOD:IsVehicle(veh) then
 		return
 	end
 
-	local OldTab = net.ReadString()
-	local NewTab = net.ReadString()
+	local name = net.ReadString()
+
+	veh:SV_TurnOffHeadlights()
+	veh:SV_TurnOffBackLights()
+	veh:SV_TurnOffLeftBlinker()
+	veh:SV_TurnOffRightBlinker()
+	veh:SV_TurnOffFlashingLights()
 	
-	local Actions = {
-		["Headlights"] = {
-			Close = function()
-				veh:SV_TurnOffHeadlights()
-			end,
-			Open = function()
-				veh:SV_TurnOnHeadlights()
-			end
-		},
-		["Brake"] = {
-			Close = function()
-				veh:SV_TurnOffBackLights()
-			end,
-			Open = function()
-				veh:SV_TurnOnBackLights()
-			end
-		},
-		["Reversing"] = {
-			Close = function()
-				veh:SV_TurnOffBackLights()
-			end,
-			Open = function()
-				veh:SV_TurnOnBackLights()
-			end
-		},
-		["Left Blinker"] = {
-			Close = function()
-				veh:SV_TurnOffLeftBlinker()
-			end,
-			Open = function()
-				veh:SV_TurnOnLeftBlinker()
-			end
-		},
-		["Right Blinker"] = {
-			Close = function()
-				veh:SV_TurnOffRightBlinker()
-			end,
-			Open = function()
-				veh:SV_TurnOnRightBlinker()
-			end
-		},
-		["Flashing Lights"] = {
-			Close = function()
-				veh:SV_TurnOffFlashingLights()
-			end,
-			Open = function()
-				veh:SV_TurnOnFlashingLights()
-			end
-		}
+	local actions = {
+		["Headlights"] = "SV_TurnOnHeadlights",
+		["Brake"] = "SV_TurnOnBackLights",
+		["Reversing"] = "SV_TurnOnBackLights",
+		["Left Blinkers"] = "SV_TurnOnLeftBlinker",
+		["Right Blinkers"] = "SV_TurnOnRightBlinker",
+		["Flashing"] = "SV_TurnOnFlashingLights"
 	}
 
-	if Actions[OldTab] then
-		Actions[OldTab].Close()
-	end
-	if Actions[NewTab] then
-		Actions[NewTab].Open()
+	if actions[name] then
+		veh[actions[name]](veh)
 	end
 end)
 
