@@ -19,6 +19,10 @@ function ENT:DropPistol()
 
 		if IsValid(ply) then
 			ply:StripWeapon("sv_fillerpistol")
+			if ply.SV_WeaponBeforePickUpFiller then
+				ply:SelectWeapon(ply.SV_WeaponBeforePickUpFiller)
+				ply.SV_WeaponBeforePickUpFiller = nil
+			end
 
 			ply:EmitSound("svmod/fuel/pick-up.wav")
 		end
@@ -39,6 +43,14 @@ function ENT:Use(ply)
 			self:DropPistol()
 		end
 	else
+		if IsValid(ply:GetActiveWeapon()) then
+			ply.SV_WeaponBeforePickUpFiller = ply:GetActiveWeapon():GetClass()
+		end
+
+		if ply:HasWeapon("sv_fillerpistol") then
+			return
+		end
+
 		self.FillerPistol = ply:Give("sv_fillerpistol")
 		self.FillerPistol:SetNWEntity("SV_FuelPump", self)
 		
@@ -62,6 +74,8 @@ function ENT:Use(ply)
 			"cable/cable2",
 			false
 		)
+
+		ply.SV_CurrentFuelPump = self
 
 		timer.Create("SV_GasPump_" .. self:EntIndex(), 2, 0, function()
 			-- if not IsValid(ply) or self:GetPos():DistToSqr(ply:GetPos()) > 50000 then
