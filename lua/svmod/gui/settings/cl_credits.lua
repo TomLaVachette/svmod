@@ -96,6 +96,14 @@ function SVMOD:GUI_Credits(panel, data)
 
 	addLabel({
 		{
+			Name = "Kaesar",
+			SteamID64 = "76561197995988196",
+			IsFemale = false,
+		}
+	}, "Gasoline pistol modeller")
+	
+	addLabel({
+		{
 			Name = "jycxed",
 			SteamID64 = "76561198119106746",
 			IsFemale = false,

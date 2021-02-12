@@ -80,8 +80,8 @@ net.Receive("SV_StartFilling", function()
     local veh = net.ReadEntity()
 
 	if SVMOD:IsVehicle(veh) then
-		veh.SV_FillingSound = CreateSound(veh, "svmod/fuel/fill-up.wav")
-		veh.SV_FillingSound:Play()
+		-- veh.SV_FillingSound = CreateSound(veh, "svmod/fuel/fill-up.wav")
+		-- veh.SV_FillingSound:Play()
 
 		veh:SV_ShowFillingHUD()
 	end
@@ -91,7 +91,7 @@ net.Receive("SV_StopFilling", function()
 	local veh = net.ReadEntity()
 
 	if SVMOD:IsVehicle(veh) then
-		veh.SV_FillingSound:Stop()
+		-- veh.SV_FillingSound:Stop()
 
 		veh:SV_HideFillingHUD()
 	end

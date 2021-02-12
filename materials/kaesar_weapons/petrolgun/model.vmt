@@ -1,0 +1,29 @@
+"VertexLitGeneric"
+{
+	"$baseTexture"			"kaesar_weapons/petrolgun/model"
+
+	"$bumpMap"				"kaesar_weapons/petrolgun/model_N"
+	
+	"$surfaceprop" "metal"
+	"$model" 1
+	"$halflambert" 1
+	
+	
+	$envmap env_cubemap
+	"$normalmapalphaenvmapmask" "1"	
+	$envmaptint "[0.1 0.1 0.1]"
+	$envmapfresnel 0.1
+
+
+	$phong 1
+
+	$phongexponent 20
+	$phongfresnelranges "[1 2 3]"
+	$phongalbedotint 1
+	$phongboost 0.5
+	
+	$rimlight               1
+	$rimlightexponent      15
+	$rimlightboost         0.25
+	$rimmask 1
+}

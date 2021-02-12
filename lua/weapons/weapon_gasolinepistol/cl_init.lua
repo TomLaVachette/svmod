@@ -19,21 +19,7 @@ local cable = Material( "cable/cable2" )
 -- end
 
 function SWEP:PrimaryAttack()
-    local trace = self:GetOwner():GetEyeTrace()
 
-    local ent = trace.Entity
-
-    if SVMOD:IsVehicle(ent) then
-        if trace.HitPos:DistToSqr(ent:LocalToWorld(ent.SV_Data.Fuel.GasTank.Position)) < 200 then
-            self:StartFilling(ent)
-
-			hook.Add("Think", "SV_FillerPistol_" .. self:EntIndex(), function()
-				if not input.IsMouseDown(MOUSE_LEFT) then
-					self:StopFilling(ent)
-				end
-			end)
-        end
-    end
 end
 
 function SWEP:StartFilling(veh)
@@ -86,54 +72,54 @@ function SWEP:DrawCable()
 	-- end
 end
 
-function SWEP:ViewModelDrawn()
-	if IsValid(self.Owner) then
+-- function SWEP:ViewModelDrawn()
+-- 	if IsValid(self.Owner) then
 		
-		local ZOOM = self.Owner:KeyDown( IN_ZOOM )
+-- 		local ZOOM = self.Owner:KeyDown( IN_ZOOM )
 		
-		self.ViewModelFOV = ZOOM and 30 or 10
+-- 		self.ViewModelFOV = ZOOM and 30 or 10
 		
-		if ZOOM then return end
+-- 		if ZOOM then return end
 		
-		local vm = self.Owner:GetViewModel()	
-		local bm = vm:GetBoneMatrix(0)
-		local pos =  bm:GetTranslation()
-		local ang =  bm:GetAngles()
+-- 		local vm = self.Owner:GetViewModel()	
+-- 		local bm = vm:GetBoneMatrix(0)
+-- 		local pos =  bm:GetTranslation()
+-- 		local ang =  bm:GetAngles()
 		
-		pos = pos + ang:Up() * 220
-		pos = pos + ang:Right() * 2
-		pos = pos + ang:Forward() * -12
+-- 		pos = pos + ang:Up() * 220
+-- 		pos = pos + ang:Right() * 2
+-- 		pos = pos + ang:Forward() * -12
 		
-		ang:RotateAroundAxis(ang:Forward(), -85)
-		ang:RotateAroundAxis(ang:Right(), -20)
-		ang:RotateAroundAxis(ang:Up(), -70)
+-- 		ang:RotateAroundAxis(ang:Forward(), -85)
+-- 		ang:RotateAroundAxis(ang:Right(), -20)
+-- 		ang:RotateAroundAxis(ang:Up(), -70)
 		
-		self.pViewModel:SetPos(pos)
-		self.pViewModel:SetAngles(ang)
-		self.pViewModel:DrawModel()
+-- 		self.pViewModel:SetPos(pos)
+-- 		self.pViewModel:SetAngles(ang)
+-- 		self.pViewModel:DrawModel()
 
-		self:DrawCable()
-	end
-end
+-- 		self:DrawCable()
+-- 	end
+-- end
 
-function SWEP:DrawWorldModel()
-	if not IsValid(self.Owner) then return end
+-- function SWEP:DrawWorldModel()
+-- 	if not IsValid(self.Owner) then return end
 	
-	local id = self.Owner:LookupAttachment("anim_attachment_rh")
-	local attachment = self.Owner:GetAttachment( id )
+-- 	local id = self.Owner:LookupAttachment("anim_attachment_rh")
+-- 	local attachment = self.Owner:GetAttachment( id )
 	
-	if not attachment then return end
+-- 	if not attachment then return end
 
-	local pos = attachment.Pos + attachment.Ang:Forward() * 6 + attachment.Ang:Right() * -1.5 + attachment.Ang:Up() * 2.2
-	local ang = attachment.Ang
-	ang:RotateAroundAxis(attachment.Ang:Up(), 20)
-	ang:RotateAroundAxis(attachment.Ang:Right(), -30)
-	ang:RotateAroundAxis(attachment.Ang:Forward(), 0)
+-- 	local pos = attachment.Pos + attachment.Ang:Forward() * 6 + attachment.Ang:Right() * -1.5 + attachment.Ang:Up() * 2.2
+-- 	local ang = attachment.Ang
+-- 	ang:RotateAroundAxis(attachment.Ang:Up(), 20)
+-- 	ang:RotateAroundAxis(attachment.Ang:Right(), -30)
+-- 	ang:RotateAroundAxis(attachment.Ang:Forward(), 0)
 	
-	self:SetRenderOrigin( pos )
-	self:SetRenderAngles( ang )
+-- 	self:SetRenderOrigin( pos )
+-- 	self:SetRenderAngles( ang )
 	
-	self:DrawModel()
+-- 	self:DrawModel()
 
-	self:DrawCable()
-end
+-- 	self:DrawCable()
+-- end

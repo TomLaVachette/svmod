@@ -1,6 +1,6 @@
 hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
     local function spawnPump(pos, ang, model)
-        local newEnt = ents.Create("sv_fuelpump")
+        local newEnt = ents.Create("sv_gaspump")
         newEnt:SetPos(pos)
         newEnt:SetAngles(ang)
         newEnt:Spawn()

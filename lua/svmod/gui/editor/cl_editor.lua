@@ -20,7 +20,8 @@ net.Receive("SV_Editor_Open", function()
 			Fuel = {
 				Capacity = 60,
 				Consumption = 5,
-				GasTank = {}
+				GasTank = {},
+				GasolinePistol = {}
 			}
 		}
 
@@ -35,7 +36,7 @@ net.Receive("SV_Editor_Open", function()
 	end
 
 	local frame = SVMOD:CreateFrame("SVMOD : EDITOR")
-	frame:SetSize(900, 750)
+	frame:SetSize(900, 930)
     frame:SetPos(10, 10)
     frame:SetAlpha(25)
 

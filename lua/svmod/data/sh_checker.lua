@@ -144,6 +144,12 @@ function SVMOD:Data_Check(x)
 			return "DATA.Fuel.GasTank.Position"
         elseif x.Fuel.GasTank.Angle and not isangle(x.Fuel.GasTank.Angle) then
 			return "DATA.Fuel.GasTank.Angle"
+		elseif not istable(x.Fuel.GasolinePistol) then
+			return "DATA.Fuel.GasolinePistol"
+        elseif x.Fuel.GasolinePistol.Position and not isvector(x.Fuel.GasolinePistol.Position) then
+			return "DATA.Fuel.GasolinePistol.Position"
+        elseif x.Fuel.GasolinePistol.Angle and not isangle(x.Fuel.GasolinePistol.Angle) then
+			return "DATA.Fuel.GasolinePistol.Angle"
         end
 	end
 
@@ -155,14 +161,6 @@ function SVMOD:Data_Check(x)
 			return "DATA.Headlights." .. headlights
 		end
 	end
-
-	-- if not x.Horn then
-	-- 	return "DATA.Horn"
-	-- else
-	-- 	if x.Horn.Sound and not isstring(x.Horn.Sound) then
-	-- 		return "DATA.Horn.Sound"
-	-- 	end
-	-- end	
 
 	if not x.Parts then
 		return "DATA.Parts"

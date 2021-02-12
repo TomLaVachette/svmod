@@ -7,9 +7,11 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
     bottomPanel:SetDrawBackground(false)
 
     veh:SV_ShowFillingHUD()
+    local gasolinePistol = ClientsideModel("models/kaesar/kaesar_weapons/w_petrolgun.mdl")
 
     bottomPanel.OnRemove = function()
         veh:SV_HideFillingHUD()
+        gasolinePistol:Remove()
     end
 
     local xPositionNumSlider
@@ -48,7 +50,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
     data.GasTank.Position = data.GasTank.Position or Vector(0, 0, 0)
     data.GasTank.Angle = data.GasTank.Angle or Angle(0, 0, 0)
 
-    local title = SVMOD:CreateTitle(panel, "GAS TANK OPENING LOCAL POSITION")
+    local title = SVMOD:CreateTitle(panel, "GAS TANK OPENING POSITION")
     title:DockMargin(0, 30, 0, 0)
     local button = SVMOD:CreateButton(title, "EyePos", function()
         local trace = LocalPlayer():GetEyeTrace()
@@ -81,18 +83,83 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
     local title = SVMOD:CreateTitle(panel, "GAS TANK OPENING ANGLE")
     title:DockMargin(0, 30, 0, 0)
 
-    local xAngleNumSlider = createNumSlidePanel("Y Angle", data.GasTank.Angle.x, -200, 200)
+    local xAngleNumSlider = createNumSlidePanel("Y Angle", data.GasTank.Angle.x, -180, 180)
     xAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.x = val
     end)
 
-    local yAngleNumSlider = createNumSlidePanel("P Angle", data.GasTank.Angle.y, -200, 200)
+    local yAngleNumSlider = createNumSlidePanel("P Angle", data.GasTank.Angle.y, -180, 180)
     yAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.y = val
     end)
 
-    local zAngleNumSlider = createNumSlidePanel("R Angle", data.GasTank.Angle.z, -200, 200)
+    local zAngleNumSlider = createNumSlidePanel("R Angle", data.GasTank.Angle.z, -180, 180)
     zAngleNumSlider:SetFunction(function(val)
         data.GasTank.Angle.z = val
     end)
+
+    data.GasolinePistol = data.GasolinePistol or {}
+    data.GasolinePistol.Position = data.GasolinePistol.Position or Vector(0, 0, 0)
+    data.GasolinePistol.Angle = data.GasolinePistol.Angle or Angle(0, 0, 0)
+
+    local xPistolPositionNumSlider, yPistolPositionNumSlider, zPistolPositionNumSlider
+
+    local title = SVMOD:CreateTitle(panel, "GASOLINE PISTOL POSITION")
+    title:DockMargin(0, 30, 0, 0)
+    local button = SVMOD:CreateButton(title, "EyePos", function()
+        local trace = LocalPlayer():GetEyeTrace()
+
+        if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
+            data.GasolinePistol.Position = trace.Entity:WorldToLocal(trace.HitPos)
+
+            xPistolPositionNumSlider:SetValue(data.GasolinePistol.Position.x)
+            yPistolPositionNumSlider:SetValue(data.GasolinePistol.Position.y)
+            zPistolPositionNumSlider:SetValue(data.GasolinePistol.Position.z)
+
+            gasolinePistol:SetPos(veh:LocalToWorld(data.GasolinePistol.Position))
+        end
+    end)
+    button:Dock(RIGHT)
+
+    xPistolPositionNumSlider = createNumSlidePanel("X Position", data.GasolinePistol.Position.x, -200, 200)
+    xPistolPositionNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Position.x = val
+        gasolinePistol:SetPos(veh:LocalToWorld(data.GasolinePistol.Position))
+    end)
+
+    yPistolPositionNumSlider = createNumSlidePanel("Y Position", data.GasolinePistol.Position.y, -200, 200)
+    yPistolPositionNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Position.y = val
+        gasolinePistol:SetPos(veh:LocalToWorld(data.GasolinePistol.Position))
+    end)
+
+    zPistolPositionNumSlider = createNumSlidePanel("Z Position", data.GasolinePistol.Position.z, -200, 200)
+    zPistolPositionNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Position.z = val
+        gasolinePistol:SetPos(veh:LocalToWorld(data.GasolinePistol.Position))
+    end)
+
+    local title = SVMOD:CreateTitle(panel, "GASOLINE PISTOL ANGLE")
+    title:DockMargin(0, 30, 0, 0)
+
+    local xAngleNumSlider = createNumSlidePanel("Y Angle", data.GasolinePistol.Angle.x, -180, 180)
+    xAngleNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Angle.x = val
+        gasolinePistol:SetAngles(veh:LocalToWorldAngles(data.GasolinePistol.Angle))
+    end)
+
+    local yAngleNumSlider = createNumSlidePanel("P Angle", data.GasolinePistol.Angle.y, -180, 180)
+    yAngleNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Angle.y = val
+        gasolinePistol:SetAngles(veh:LocalToWorldAngles(data.GasolinePistol.Angle))
+    end)
+
+    local zAngleNumSlider = createNumSlidePanel("R Angle", data.GasolinePistol.Angle.z, -180, 180)
+    zAngleNumSlider:SetFunction(function(val)
+        data.GasolinePistol.Angle.z = val
+        gasolinePistol:SetAngles(veh:LocalToWorldAngles(data.GasolinePistol.Angle))
+    end)
+
+    gasolinePistol:SetPos(veh:LocalToWorld(data.GasolinePistol.Position))
+    gasolinePistol:SetAngles(veh:LocalToWorldAngles(data.GasolinePistol.Angle))
 end

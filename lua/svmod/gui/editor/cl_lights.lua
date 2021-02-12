@@ -90,27 +90,33 @@ local function projectedTexturePanel(panel, data)
 end
 
 local function spritePanel(panel, data)
+    local xPositionNumSlider, yPositionNumSlider, zPositionNumSlider
+
     local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS")
     local button = SVMOD:CreateButton(title, "EyePos", function()
         local trace = LocalPlayer():GetEyeTrace()
 
         if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
             data.Position = trace.Entity:WorldToLocal(trace.HitPos)
+
+            xPositionNumSlider:SetValue(data.Position.x)
+            yPositionNumSlider:SetValue(data.Position.y)
+            zPositionNumSlider:SetValue(data.Position.z)
         end
     end)
     button:Dock(RIGHT)
 
-    local xPositionNumSlider = createNumSlidePanel(panel, "X Position", data.Position.x, -200, 200)
+    xPositionNumSlider = createNumSlidePanel(panel, "X Position", data.Position.x, -200, 200)
     xPositionNumSlider:SetFunction(function(val)
         data.Position.x = val
     end)
 
-    local yPositionNumSlider = createNumSlidePanel(panel, "Y Position", data.Position.y, -200, 200)
+    yPositionNumSlider = createNumSlidePanel(panel, "Y Position", data.Position.y, -200, 200)
     yPositionNumSlider:SetFunction(function(val)
         data.Position.y = val
     end)
 
-    local zPositionNumSlider = createNumSlidePanel(panel, "Z Position", data.Position.z, -200, 200)
+    zPositionNumSlider = createNumSlidePanel(panel, "Z Position", data.Position.z, -200, 200)
     zPositionNumSlider:SetFunction(function(val)
         data.Position.z = val
     end)
