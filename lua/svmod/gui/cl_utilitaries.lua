@@ -421,6 +421,10 @@ function SVMOD:CreateListView(panel)
 			c:SetColor(Color(160, 160, 160))
 		end
 
+		line.GetIndex = function(self)
+			return tonumber(string.Split(line:GetColumnText(1), " ")[1])
+		end
+
 		return line
 	end
 

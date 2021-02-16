@@ -96,7 +96,7 @@ net.Receive("SV_Editor_Open", function()
 
 	frame:CreateMenuButton(SVMOD:GetLanguage("FLASHING"), TOP, function()
 		activeTab("Flashing")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.FlashingLights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.FlashingLights, true)
 	end)
 
 	frame:CreateMenuButton(SVMOD:GetLanguage("FUEL"), TOP, function()
