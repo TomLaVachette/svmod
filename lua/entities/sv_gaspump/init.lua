@@ -18,7 +18,7 @@ function ENT:Use(ply)
 		return
 	end
 
-	self.NextFire = CurTime() + 2
+	self.NextFire = CurTime() + 1
 
 	if ply:HasWeapon("weapon_gasolinepistol") then
 		if ply.SV_CurrentFuelPump == self then
