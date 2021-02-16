@@ -266,7 +266,7 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 	ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage)
 end)
 
-hook.Add("SV_ExitVehicle", "SV_DealDamageOnLeave", function(ply, veh)
+hook.Add("SV_PlayerLeaveVehicle", "SV_DealDamageOnLeave", function(ply, veh)
 	if not SVMOD.CFG.IsEnabled or not SVMOD:IsVehicle(veh) then
 		return
 	elseif ply.SV_IsSwitchingSeat then
