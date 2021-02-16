@@ -89,7 +89,7 @@ local function projectedTexturePanel(panel, data)
     end)
 end
 
-local function spritePanel(panel, data)
+local function spritePanel(panel, data, hasAnim)
     local xPositionNumSlider, yPositionNumSlider, zPositionNumSlider
 
     local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS")
@@ -148,23 +148,25 @@ local function spritePanel(panel, data)
         data.Height = val
     end)
 
-    local title = SVMOD:CreateTitle(panel, "ANIMATIONS")
-    title:DockMargin(0, 30, 0, 0)
+    if hasAnim then
+        local title = SVMOD:CreateTitle(panel, "ANIMATIONS")
+        title:DockMargin(0, 30, 0, 0)
+    
+        local activeTimeNumSlider = createNumSlidePanel(panel, "Active time", data.ActiveTime or 0, 0, 5)
+        activeTimeNumSlider:SetFunction(function(val)
+            data.ActiveTime = val
+        end)
 
-    local activeTimeNumSlider = createNumSlidePanel(panel, "Active time", data.ActiveTime or 0, 0, 5)
-    activeTimeNumSlider:SetFunction(function(val)
-        data.ActiveTime = val
-    end)
+        local hiddenTimeNumSlider = createNumSlidePanel(panel, "Hidden time", data.HiddenTime or 0, 0, 5)
+        hiddenTimeNumSlider:SetFunction(function(val)
+            data.HiddenTime = val
+        end)
 
-    local hiddenTimeNumSlider = createNumSlidePanel(panel, "Hidden time", data.HiddenTime or 0, 0, 5)
-    hiddenTimeNumSlider:SetFunction(function(val)
-        data.HiddenTime = val
-    end)
-
-    local offsetTimeNumSlider = createNumSlidePanel(panel, "Offset time", data.OffsetTime or 0, 0, 5)
-    offsetTimeNumSlider:SetFunction(function(val)
-        data.OffsetTime = val
-    end)
+        local offsetTimeNumSlider = createNumSlidePanel(panel, "Offset time", data.OffsetTime or 0, 0, 5)
+        offsetTimeNumSlider:SetFunction(function(val)
+            data.OffsetTime = val
+        end)
+    end
 end
 
 local function spriteLinePanel(panel, data)
@@ -249,7 +251,7 @@ local function spriteLinePanel(panel, data)
     end)
 end
 
-local function spriteCirclePanel(panel, data)
+local function spriteCirclePanel(panel, data, hasAnim)
     local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS")
     local button = SVMOD:CreateButton(title, "EyePos", function()
         local trace = LocalPlayer():GetEyeTrace()
@@ -312,26 +314,28 @@ local function spriteCirclePanel(panel, data)
         data.Speed = val
     end)
 
-    local title = SVMOD:CreateTitle(panel, "ANIMATIONS")
-    title:DockMargin(0, 30, 0, 0)
+    if hasAnim then
+        local title = SVMOD:CreateTitle(panel, "ANIMATIONS")
+        title:DockMargin(0, 30, 0, 0)
 
-    local activeTimeNumSlider = createNumSlidePanel(panel, "Active time", data.ActiveTime or 0, 0, 5)
-    activeTimeNumSlider:SetFunction(function(val)
-        data.ActiveTime = val
-    end)
+        local activeTimeNumSlider = createNumSlidePanel(panel, "Active time", data.ActiveTime or 0, 0, 5)
+        activeTimeNumSlider:SetFunction(function(val)
+            data.ActiveTime = val
+        end)
 
-    local hiddenTimeNumSlider = createNumSlidePanel(panel, "Hidden time", data.HiddenTime or 0, 0, 5)
-    hiddenTimeNumSlider:SetFunction(function(val)
-        data.HiddenTime = val
-    end)
+        local hiddenTimeNumSlider = createNumSlidePanel(panel, "Hidden time", data.HiddenTime or 0, 0, 5)
+        hiddenTimeNumSlider:SetFunction(function(val)
+            data.HiddenTime = val
+        end)
 
-    local offsetTimeNumSlider = createNumSlidePanel(panel, "Offset time", data.OffsetTime or 0, 0, 5)
-    offsetTimeNumSlider:SetFunction(function(val)
-        data.OffsetTime = val
-    end)
+        local offsetTimeNumSlider = createNumSlidePanel(panel, "Offset time", data.OffsetTime or 0, 0, 5)
+        offsetTimeNumSlider:SetFunction(function(val)
+            data.OffsetTime = val
+        end)
+    end
 end
 
-function SVMOD:EDITOR_Lights(panel, data)
+function SVMOD:EDITOR_Lights(panel, data, hasAnim)
 	panel:Clear()
 
     local listView = SVMOD:CreateListView(panel)
@@ -359,18 +363,28 @@ function SVMOD:EDITOR_Lights(panel, data)
     --  FUNCTIONS
     -- -------------------
 
+    local function getType(data)
+        if data.ProjectedTexture then
+            return " (projected)"
+        elseif data.SpriteLine then
+            return " (line)"
+        elseif data.SpriteCircle then
+            return " (circle)"
+        end
+
+        return ""
+    end
+
     local function addLight(data)
 		local max = 0
 		for _, line in pairs(listView:GetLines()) do
-			local index = tonumber(line:GetColumnText(1))
+			local index = line:GetIndex()
 			if index > max then
 				max = index
 			end
 		end
 
-        local index
-
-		local line = listView:AddLine(max + 1)
+		local line = listView:AddLine(max + 1 .. getType(data))
         line.Data = data
 
         return line
@@ -378,14 +392,18 @@ function SVMOD:EDITOR_Lights(panel, data)
 
 	local function removeLight(index)
 		local line = listView:GetLine(index)
-		columnText = tonumber(line:GetColumnText(1))
+		columnText = line:GetIndex()
 
-		table.RemoveByValue(data, line.Data)
+        if data[index].ProjectedTexture and IsValid(data[index].ProjectedTexture.Entity) then
+            data[index].ProjectedTexture.Entity:Remove()
+        end
+
+		table.remove(data, index)
 
 		for _, v in pairs(listView:GetLines()) do
-			local index = tonumber(v:GetColumnText(1))
+			local index = v:GetIndex()
 			if index > columnText then
-				v:SetColumnText(1, index - 1)
+				v:SetColumnText(1, index - 1 .. getType(v.Data))
 			end
 		end
 
@@ -394,12 +412,15 @@ function SVMOD:EDITOR_Lights(panel, data)
 
 	local function upLight(index)
 		local line = listView:GetLine(index)
-		lineIndex = tonumber(line:GetColumnText(1))
+		lineIndex = line:GetIndex()
 
 		for _, v in pairs(listView:GetLines()) do
-			local tempIndex = tonumber(v:GetColumnText(1))
+			local tempIndex = v:GetIndex()
 			if tempIndex == lineIndex - 1 then
+                data[lineIndex], data[tempIndex] = data[tempIndex], data[lineIndex]
 				line.Data, v.Data = v.Data, line.Data
+                listView:GetLine(tempIndex):SetColumnText(1, tempIndex .. getType(v.Data))
+                listView:GetLine(lineIndex):SetColumnText(1, lineIndex .. getType(line.Data))
 				break
 			end
 		end
@@ -407,12 +428,15 @@ function SVMOD:EDITOR_Lights(panel, data)
 
 	local function downLight(index)
 		local line = listView:GetLine(index)
-		lineIndex = tonumber(line:GetColumnText(1))
+		lineIndex = line:GetIndex()
 
 		for _, v in pairs(listView:GetLines()) do
-			local tempIndex = tonumber(v:GetColumnText(1))
+			local tempIndex = v:GetIndex()
 			if tempIndex == lineIndex + 1 then
+                data[lineIndex], data[tempIndex] = data[tempIndex], data[lineIndex]
 				line.Data, v.Data = v.Data, line.Data
+                listView:GetLine(tempIndex):SetColumnText(1, tempIndex .. getType(v.Data))
+                listView:GetLine(lineIndex):SetColumnText(1, lineIndex .. getType(line.Data))
 				break
 			end
 		end
@@ -605,11 +629,11 @@ function SVMOD:EDITOR_Lights(panel, data)
         if e.Data.ProjectedTexture then
             projectedTexturePanel(centerPanel, e.Data.ProjectedTexture)
         elseif e.Data.Sprite then
-            spritePanel(centerPanel, e.Data.Sprite)
+            spritePanel(centerPanel, e.Data.Sprite, hasAnim)
         elseif e.Data.SpriteLine then
             spriteLinePanel(centerPanel, e.Data.SpriteLine)
         elseif e.Data.SpriteCircle then
-            spriteCirclePanel(centerPanel, e.Data.SpriteCircle)
+            spriteCirclePanel(centerPanel, e.Data.SpriteCircle, hasAnim)
         end
 	end
 end
