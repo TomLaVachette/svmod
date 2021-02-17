@@ -36,7 +36,7 @@ function ENT:Initialize()
 				veh:SV_SendFuel(self.Player)
 			end
 
-			local result = hook.Run("SV_PayFuelPump", callback, self.Price)
+			local result = hook.Run("SV_PayFuelPump", self.Player, self.Price)
 
 			if result == true then
 				callback()
