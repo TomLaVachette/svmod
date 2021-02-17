@@ -598,29 +598,11 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
     addButton:Dock(RIGHT)
 
     for _, light in ipairs(data) do
-        if light.ProjectedTexture then
-            local tab = addLight({
-                ProjectedTexture = light.ProjectedTexture
-            })
+        if table.Count(light) > 1 then
+            SVMOD:PrintConsole(SVMOD.LOG.Warning, "Light with multiple types, please report it!")
         end
 
-        if light.Sprite then
-            local tab = addLight({
-                Sprite = light.Sprite
-            })
-        end
-
-        if light.SpriteLine then
-            local tab = addLight({
-                SpriteLine = light.SpriteLine
-            })
-        end
-
-        if light.SpriteCircle then
-            local tab = addLight({
-                SpriteCircle = light.SpriteCircle
-            })
-        end
+        addLight(light)
 	end
 
 	listView.OnRowSelected = function(_, _, e)
