@@ -3,7 +3,7 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.2.0"
+SVMOD.FCFG.Version = "1.3.0"
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
 SVMOD.FCFG.ShortcutTime = 0.3

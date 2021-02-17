@@ -134,23 +134,23 @@ function SVMOD:Data_Check(x)
 	if not x.Fuel then
 		return "DATA.Fuel"
 	else
-		if x.Fuel.Capacity and not isnumber(x.Fuel.Capacity) then
-			return "DATA.Fuel.Capacity"
-		elseif x.Fuel.Consumption and not isnumber(x.Fuel.Consumption) then
-			return "DATA.Fuel.Consumption"
-		elseif not istable(x.Fuel.GasTank) then
-			return "DATA.Fuel.GasTank"
-        elseif x.Fuel.GasTank.Position and not isvector(x.Fuel.GasTank.Position) then
-			return "DATA.Fuel.GasTank.Position"
-        elseif x.Fuel.GasTank.Angle and not isangle(x.Fuel.GasTank.Angle) then
-			return "DATA.Fuel.GasTank.Angle"
-		elseif not istable(x.Fuel.GasolinePistol) then
-			return "DATA.Fuel.GasolinePistol"
-        elseif x.Fuel.GasolinePistol.Position and not isvector(x.Fuel.GasolinePistol.Position) then
-			return "DATA.Fuel.GasolinePistol.Position"
-        elseif x.Fuel.GasolinePistol.Angle and not isangle(x.Fuel.GasolinePistol.Angle) then
-			return "DATA.Fuel.GasolinePistol.Angle"
-        end
+		-- if x.Fuel.Capacity and not isnumber(x.Fuel.Capacity) then
+		-- 	return "DATA.Fuel.Capacity"
+		-- elseif x.Fuel.Consumption and not isnumber(x.Fuel.Consumption) then
+		-- 	return "DATA.Fuel.Consumption"
+		-- elseif not istable(x.Fuel.GasTank) then
+		-- 	return "DATA.Fuel.GasTank"
+        -- elseif x.Fuel.GasTank.Position and not isvector(x.Fuel.GasTank.Position) then
+		-- 	return "DATA.Fuel.GasTank.Position"
+        -- elseif x.Fuel.GasTank.Angle and not isangle(x.Fuel.GasTank.Angle) then
+		-- 	return "DATA.Fuel.GasTank.Angle"
+		-- elseif not istable(x.Fuel.GasolinePistol) then
+		-- 	return "DATA.Fuel.GasolinePistol"
+        -- elseif x.Fuel.GasolinePistol.Position and not isvector(x.Fuel.GasolinePistol.Position) then
+		-- 	return "DATA.Fuel.GasolinePistol.Position"
+        -- elseif x.Fuel.GasolinePistol.Angle and not isangle(x.Fuel.GasolinePistol.Angle) then
+		-- 	return "DATA.Fuel.GasolinePistol.Angle"
+        -- end
 	end
 
 	if not x.Headlights then
