@@ -64,6 +64,13 @@ net.Receive("SV_Editor_Open", function()
 		SVMOD:EDITOR_Seats(frame:GetCenterPanel(), veh)
 	end)
 
+	for i, light in ipairs(veh.SV_Data.Headlights) do
+		if light.Sprite and light.ProjectedTexture then
+			table.insert(veh.SV_Data.Headlights, { Sprite = SVMOD:DeepCopy(light.Sprite) })
+			veh.SV_Data.Headlights[i].Sprite = nil
+		end
+	end
+
 	frame:CreateMenuButton(SVMOD:GetLanguage("HEADLIGHTS"), TOP, function()
 		activeTab("Headlights")
 		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Headlights)
