@@ -6,6 +6,6 @@ hook.Add("InitPostEntity", "SV_RegisterCAMIPrivilege", function()
 
 	CAMI.RegisterPrivilege{
 		Name = "SV_EditOptions",
-		MinAccess = "admin"
+		MinAccess = "superadmin"
 	}
 end)
