@@ -117,6 +117,19 @@ end
 local mathCos = math.cos
 local mathSin = math.sin
 
+-- local function bezier(p0, p1, p2, p3, t)
+-- 	local e = p0 + t * (p1 - p0)
+-- 	local f = p1 + t * (p2 - p1)
+-- 	local g = p2 + t * (p3 - p2)
+
+-- 	local h = e + t * (f - e)
+-- 	local i = f + t * (g - f)
+
+-- 	local p = h + t * (i - h)
+
+-- 	return p
+-- end
+
 function SVMOD:RenderLights(veh, lights)
 	for _, v in ipairs(lights) do
 		if v.Sprite then
@@ -136,6 +149,7 @@ function SVMOD:RenderLights(veh, lights)
 
 			local A = spriteLine.Position1
 			local B = spriteLine.Position2
+			local C = spriteLine.Position3 or spriteLine.Position2
 
 			local Vect = B - A
 
@@ -144,12 +158,17 @@ function SVMOD:RenderLights(veh, lights)
 					spriteLine.Handler = {}
 				end
 
+				local t = i * 1 / spriteLine.Count
+
 				spriteLine.Handler[i] = veh:SV_DrawSprite(
 					spriteMaterial,
 					Vector(
-						A.x + (Vect.x / spriteLine.Count) * i,
-						A.y + Vect.y / spriteLine.Count * i,
-						A.z + Vect.z / spriteLine.Count * i
+						(1 - t)^2 * A.x + 2 * (1 - t) * t * B.x + t^2 * C.x,
+						(1 - t)^2 * A.y + 2 * (1 - t) * t * B.y + t^2 * C.y,
+						(1 - t)^2 * A.z + 2 * (1 - t) * t * B.z + t^2 * C.z
+						-- A.x + (Vect.x / spriteLine.Count) * i,
+						-- A.y + (Vect.y / spriteLine.Count) * i,
+						-- A.z + (Vect.z / spriteLine.Count) * i
 					),
 					spriteLine.Width,
 					spriteLine.Height,
