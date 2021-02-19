@@ -29,6 +29,7 @@ function SVMOD:EDITOR_General(panel, veh)
 			parameters = {
 				model = veh:GetModel(),
 				json = util.TableToJSON(tab),
+				version = tostring(SVMOD.FCFG.DataVersion),
 				serial = SVMOD.CFG.Contributor.Key
 			},
 			success = function(code, body)
@@ -37,6 +38,7 @@ function SVMOD:EDITOR_General(panel, veh)
 
 					SVMOD:Data_Update()
 				else
+					print(body)
 					notification.AddLegacy("Invalid API key.", NOTIFY_ERROR, 5)
 				end
 

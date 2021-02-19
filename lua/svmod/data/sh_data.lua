@@ -1,7 +1,7 @@
 -- @class SVMOD
 -- @shared
 
-local function GetDataPath(model)
+local function getDataPath(model)
 	return "svmod/" .. string.Replace(model, "/", "_") .. ".txt"
 end
 
@@ -27,16 +27,17 @@ function SVMOD:Data_Update(fun)
 		file.CreateDir("svmod")
 	end
 
-	local Parameters = {}
+	local parameters = {}
 	for _, veh in ipairs(SVMOD:GetVehicleList()) do
-		local filePath = GetDataPath(veh.Model)
+		local filePath = getDataPath(veh.Model)
 
 		local CRC = ""
 		if file.Exists(filePath, "DATA") then
 			CRC = util.CRC(file.Read(filePath, "DATA"))
 		end
-		table.insert(Parameters, {
+		table.insert(parameters, {
 			model = veh.Model,
+			version = SVMOD.FCFG.DataVersion,
 			crc = CRC
 		})
 	end
@@ -44,7 +45,7 @@ function SVMOD:Data_Update(fun)
 	HTTP({
 		url = "https://api.svmod.com/get_vehicles.php",
 		method = "POST",
-		body = util.TableToJSON(Parameters),
+		body = util.TableToJSON(parameters),
 		success = function(code, body)
 			if code == 200 then
 				local createdCount = 0
@@ -53,7 +54,7 @@ function SVMOD:Data_Update(fun)
 				local JSON = util.JSONToTable(body)
 
 				for _, veh in pairs(JSON) do
-					local filePath = GetDataPath(string.lower(veh["model"]))
+					local filePath = getDataPath(string.lower(veh["model"]))
 
 					if file.Exists(filePath, "DATA") then
 						updatedCount = updatedCount + 1
@@ -86,8 +87,8 @@ end
 function SVMOD:Data_Load(fun)
 	for _, veh in ipairs(SVMOD:GetVehicleList()) do
 		local model = string.lower(veh.Model)
-		if file.Exists(GetDataPath(model), "DATA") then
-			local JSON = util.JSONToTable(file.Read(GetDataPath(model), "DATA"))
+		if file.Exists(getDataPath(model), "DATA") then
+			local JSON = util.JSONToTable(file.Read(getDataPath(model), "DATA"))
 			local checkResult = SVMOD:Data_Check(JSON)
 			if checkResult == nil then
 				self.Data[model] = JSON
