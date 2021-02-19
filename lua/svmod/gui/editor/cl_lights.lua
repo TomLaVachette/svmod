@@ -170,54 +170,110 @@ local function spritePanel(panel, data, hasAnim)
 end
 
 local function spriteLinePanel(panel, data)
+    local xPositionNumSlider1, yPositionNumSlider1, zPositionNumSlider1
+    local xPositionNumSlider2, yPositionNumSlider2, zPositionNumSlider2
+    local xPositionNumSlider3, yPositionNumSlider3, zPositionNumSlider3
+
     local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS 1")
     local button = SVMOD:CreateButton(title, "EyePos", function()
         local trace = LocalPlayer():GetEyeTrace()
 
         if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
             data.Position1 = trace.Entity:WorldToLocal(trace.HitPos)
+
+            xPositionNumSlider1:SetValue(data.Position1.x)
+            yPositionNumSlider1:SetValue(data.Position1.y)
+            zPositionNumSlider1:SetValue(data.Position1.z)
         end
     end)
     button:Dock(RIGHT)
 
-    local xPositionNumSlider = createNumSlidePanel(panel, "X Position", data.Position1.x, -200, 200)
-    xPositionNumSlider:SetFunction(function(val)
+    xPositionNumSlider1 = createNumSlidePanel(panel, "X Position", data.Position1.x, -200, 200)
+    xPositionNumSlider1:SetFunction(function(val)
         data.Position1.x = val
     end)
 
-    local yPositionNumSlider = createNumSlidePanel(panel, "Y Position", data.Position1.y, -200, 200)
-    yPositionNumSlider:SetFunction(function(val)
+    yPositionNumSlider1 = createNumSlidePanel(panel, "Y Position", data.Position1.y, -200, 200)
+    yPositionNumSlider1:SetFunction(function(val)
         data.Position1.y = val
     end)
 
-    local zPositionNumSlider = createNumSlidePanel(panel, "Z Position", data.Position1.z, -200, 200)
-    zPositionNumSlider:SetFunction(function(val)
+    zPositionNumSlider1 = createNumSlidePanel(panel, "Z Position", data.Position1.z, -200, 200)
+    zPositionNumSlider1:SetFunction(function(val)
         data.Position1.z = val
     end)
 
     local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS 2")
-    local button = SVMOD:CreateButton(title, "EyePos", function()
+    title:DockMargin(0, 30, 0, 0)
+    SVMOD:CreateButton(title, "EyePos", function()
         local trace = LocalPlayer():GetEyeTrace()
 
         if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
             data.Position2 = trace.Entity:WorldToLocal(trace.HitPos)
+
+            xPositionNumSlider2:SetValue(data.Position2.x)
+            yPositionNumSlider2:SetValue(data.Position2.y)
+            zPositionNumSlider2:SetValue(data.Position2.z)
+        end
+    end):Dock(RIGHT)
+    SVMOD:CreateButton(title, "Align", function()
+        local trace = LocalPlayer():GetEyeTrace()
+
+        if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
+            local vect = data.Position3 - data.Position1
+            data.Position2.x = data.Position1.x + (vect.x / 2)
+            data.Position2.y = data.Position1.y + (vect.y / 2)
+            data.Position2.z = data.Position1.z + (vect.z / 2)
+
+            xPositionNumSlider2:SetValue(data.Position2.x)
+            yPositionNumSlider2:SetValue(data.Position2.y)
+            zPositionNumSlider2:SetValue(data.Position2.z)
+        end
+    end):Dock(RIGHT)
+
+    xPositionNumSlider2 = createNumSlidePanel(panel, "X Position", data.Position2.x, -200, 200)
+    xPositionNumSlider2:SetFunction(function(val)
+        data.Position2.x = val
+    end)
+
+    yPositionNumSlider2 = createNumSlidePanel(panel, "Y Position", data.Position2.y, -200, 200)
+    yPositionNumSlider2:SetFunction(function(val)
+        data.Position2.y = val
+    end)
+
+    zPositionNumSlider2 = createNumSlidePanel(panel, "Z Position", data.Position2.z, -200, 200)
+    zPositionNumSlider2:SetFunction(function(val)
+        data.Position2.z = val
+    end)
+
+    local title = SVMOD:CreateTitle(panel, "LOCAL POSITIONS 3")
+    title:DockMargin(0, 30, 0, 0)
+    local button = SVMOD:CreateButton(title, "EyePos", function()
+        local trace = LocalPlayer():GetEyeTrace()
+
+        if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
+            data.Position3 = trace.Entity:WorldToLocal(trace.HitPos)
+
+            xPositionNumSlider3:SetValue(data.Position3.x)
+            yPositionNumSlider3:SetValue(data.Position3.y)
+            zPositionNumSlider3:SetValue(data.Position3.z)
         end
     end)
     button:Dock(RIGHT)
 
-    local xPositionNumSlider = createNumSlidePanel(panel, "X Position", data.Position2.x, -200, 200)
-    xPositionNumSlider:SetFunction(function(val)
-        data.Position2.x = val
+    xPositionNumSlider3 = createNumSlidePanel(panel, "X Position", data.Position3.x, -200, 200)
+    xPositionNumSlider3:SetFunction(function(val)
+        data.Position3.x = val
     end)
 
-    local yPositionNumSlider = createNumSlidePanel(panel, "Y Position", data.Position2.y, -200, 200)
-    yPositionNumSlider:SetFunction(function(val)
-        data.Position2.y = val
+    yPositionNumSlider3 = createNumSlidePanel(panel, "Y Position", data.Position3.y, -200, 200)
+    yPositionNumSlider3:SetFunction(function(val)
+        data.Position3.y = val
     end)
 
-    local zPositionNumSlider = createNumSlidePanel(panel, "Z Position", data.Position2.z, -200, 200)
-    zPositionNumSlider:SetFunction(function(val)
-        data.Position2.z = val
+    zPositionNumSlider3 = createNumSlidePanel(panel, "Z Position", data.Position3.z, -200, 200)
+    zPositionNumSlider3:SetFunction(function(val)
+        data.Position3.z = val
     end)
 
     local title = SVMOD:CreateTitle(panel, "OTHERS")
@@ -567,6 +623,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 SpriteLine = {
                     Position1 = Vector(0, 0, 0),
                     Position2 = Vector(0, 0, 0),
+                    Position3 = Vector(0, 0, 0),
                     Color = Color(255, 255, 255),
                     Count = 10,
                     Width = 10,
@@ -613,6 +670,12 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
         elseif e.Data.Sprite then
             spritePanel(centerPanel, e.Data.Sprite, hasAnim)
         elseif e.Data.SpriteLine then
+            if not e.Data.SpriteLine.Position3 then
+                e.Data.SpriteLine.Position3 = Vector(0, 0, 0)
+                e.Data.SpriteLine.Position3.x = e.Data.SpriteLine.Position2.x
+                e.Data.SpriteLine.Position3.y = e.Data.SpriteLine.Position2.y
+                e.Data.SpriteLine.Position3.z = e.Data.SpriteLine.Position2.z
+            end
             spriteLinePanel(centerPanel, e.Data.SpriteLine)
         elseif e.Data.SpriteCircle then
             spriteCirclePanel(centerPanel, e.Data.SpriteCircle, hasAnim)

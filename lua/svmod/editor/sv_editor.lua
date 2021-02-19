@@ -1,6 +1,6 @@
 util.AddNetworkString("SV_Editor_Open")
 net.Receive("SV_Editor_Open", function(_, ply)
-	if not game.SinglePlayer() then
+	if game.IsDedicated() then
 		return
 	end
 
@@ -59,7 +59,9 @@ end)
 
 util.AddNetworkString("SV_Editor_ActiveTab")
 net.Receive("SV_Editor_ActiveTab", function(_, ply)
-	if not game.SinglePlayer() then return end
+	if game.IsDedicated() then
+		return
+	end
 
 	local veh = net.ReadEntity()
 	if not SVMOD:IsVehicle(veh) then
@@ -90,7 +92,9 @@ end)
 
 util.AddNetworkString("SV_Editor_Close")
 net.Receive("SV_Editor_Close", function(_, ply)
-	-- if not game.SinglePlayer() then return end
+	if game.IsDedicated() then
+		return
+	end
 
 	local Entity = net.ReadEntity()
 	

@@ -94,7 +94,7 @@ net.Receive("SV_Settings", function()
 		SVMOD:GUI_Credits(frame:GetCenterPanel(), data)
 	end)
 
-	if game.SinglePlayer() then
+	if not game.IsDedicated() then
 		frame:CreateMenuButton(SVMOD:GetLanguage("CONTRIBUTOR"), BOTTOM, function()
 			SVMOD:GUI_Contributor(frame:GetCenterPanel(), data)
 		end)
