@@ -12,6 +12,8 @@ function SVMOD.Metatable:SV_TurnOnHazardLights()
 		return false -- Hazard disabled
 	elseif self:SV_GetHazardLightsState() then
 		return false -- Hazard already active
+	elseif self:SV_GetHealth() == 0 then
+		return false -- Vehicle destroyed
 	end
 
 	net.Start("SV_TurnHazardLights")

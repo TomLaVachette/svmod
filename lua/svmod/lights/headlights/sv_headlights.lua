@@ -17,6 +17,8 @@ function SVMOD.Metatable:SV_TurnOnHeadlights()
 		return false -- Headlights disabled
 	elseif self:SV_GetHeadlightsState() then
 		return false -- Headlights already active
+	elseif self:SV_GetHealth() == 0 then
+		return false -- Vehicle destroyed
 	end
 
 	net.Start("SV_TurnHeadlights")

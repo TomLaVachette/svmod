@@ -82,6 +82,12 @@ function SVMOD.Metatable:SV_SetHealth(value)
 
 	if veh:SV_GetHealth() == 0 then
 		if not veh.SV_IsExploded then
+			veh:SV_TurnOffHeadlights()
+			veh:SV_TurnOffLeftBlinker()
+			veh:SV_TurnOffRightBlinker()
+			veh:SV_TurnOffHazardLights()
+			veh:SV_TurnOffFlashingLights()
+
 			veh:StopParticles()
 			
 			veh:EmitSound("ambient/fire/ignite.wav", 100)

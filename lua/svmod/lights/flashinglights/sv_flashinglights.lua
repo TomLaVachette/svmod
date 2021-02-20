@@ -12,6 +12,8 @@ function SVMOD.Metatable:SV_TurnOnFlashingLights()
 		return false -- Flashing lights disabled
 	elseif self:SV_GetFlashingLightsState() then
 		return false -- Flashing lights already active
+	elseif self:SV_GetHealth() == 0 then
+		return false -- Vehicle destroyed
 	end
 
 	net.Start("SV_TurnFlashingLights")
