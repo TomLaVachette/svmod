@@ -50,7 +50,9 @@ function SVMOD:ResetConfiguration()
 	}
 end
 
-SVMOD:ResetConfiguration()
+if not SVMOD.CFG then
+	SVMOD:ResetConfiguration()
+end
 
 function SVMOD:GetFuelPumpByEnt(ent)
 	for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do

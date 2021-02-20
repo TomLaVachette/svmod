@@ -1,6 +1,4 @@
-net.Receive("SV_Editor_Open", function()
-	local veh = net.ReadEntity()
-	
+local function openEditor(veh)
 	if not veh.SV_Data then
 		SVMOD.Data[string.lower(veh:GetModel())] = {
 			Author = {},
@@ -40,19 +38,31 @@ net.Receive("SV_Editor_Open", function()
     frame:SetPos(10, 10)
     frame:SetAlpha(25)
 
-    hook.Add("ScoreboardShow", "SV_Editor_Show", function()
-        frame:SetAlpha(255)
-        gui.EnableScreenClicker(true)
+	frame.EnableFocus = function(self)
+		hook.Remove("ScoreboardShow", "SV_Editor_Show")
+		hook.Remove("ScoreboardHide", "SV_Editor_Hide")
 
-        return true
-    end)
+		self:MakePopup()
+	end
 
-    hook.Add("ScoreboardHide", "SV_Editor_Hide", function()
-        frame:SetAlpha(25)
-        gui.EnableScreenClicker(false)
+	frame.DisableFocus = function(self)
+		frame:Remove()
+		openEditor(veh)
+	end
 
-        return true
-    end)
+	hook.Add("ScoreboardShow", "SV_Editor_Show", function()
+		frame:SetAlpha(255)
+		gui.EnableScreenClicker(true)
+
+		return true
+	end)
+
+	hook.Add("ScoreboardHide", "SV_Editor_Hide", function()
+		frame:SetAlpha(25)
+		gui.EnableScreenClicker(false)
+
+		return true
+	end)
 
     frame:CreateMenuButton("GENERAL", TOP, function()
 		activeTab("None")
@@ -133,7 +143,15 @@ net.Receive("SV_Editor_Open", function()
 
 		local button = SVMOD:CreateButton(closeFrame, SVMOD:GetLanguage("CLOSE AND LOSE ALL MODIFICATIONS"), function()
 			closeFrame:Close()
-			frame:Close()
+
+			net.Start("SV_Editor_Close")
+			net.WriteEntity(veh)
+			net.SendToServer()
+	
+			gui.EnableScreenClicker(false)
+	
+			hook.Remove("ScoreboardShow", "SV_Editor_Show")
+			hook.Remove("ScoreboardHide", "SV_Editor_Hide")
 		end)
 		button:Dock(TOP)
 		button:SetSize(0, 30)
@@ -144,15 +162,10 @@ net.Receive("SV_Editor_Open", function()
 		button:Dock(TOP)
 		button:SetSize(0, 30)
 	end)
+end
 
-	frame.OnRemove = function()
-		net.Start("SV_Editor_Close")
-		net.WriteEntity(veh)
-		net.SendToServer()
+net.Receive("SV_Editor_Open", function()
+	local veh = net.ReadEntity()
 
-        gui.EnableScreenClicker(false)
-
-        hook.Remove("ScoreboardShow", "SV_Editor_Show")
-        hook.Remove("ScoreboardHide", "SV_Editor_Hide")
-	end
+	openEditor(veh)
 end)

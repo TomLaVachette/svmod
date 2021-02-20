@@ -53,9 +53,16 @@ function SVMOD:EDITOR_General(panel, veh)
     end)
     addButton:Dock(RIGHT)
 
-    local focusButton = SVMOD:CreateButton(bottomPanel, "FOCUS", function()
-        panel:GetParent():MakePopup()
-        hook.Remove("ScoreboardHide", "SV_Editor_Hide")
+    local focusButton = SVMOD:CreateButton(bottomPanel, "FOCUS", function(btn)
+		local frame = panel:GetParent()
+
+		if btn:GetText() == "UNFOCUS" then
+			frame:DisableFocus()
+			btn:SetText("FOCUS")
+		else
+			frame:EnableFocus()
+			btn:SetText("UNFOCUS")
+		end
     end)
     focusButton:Dock(RIGHT)
     focusButton:DockMargin(0, 0, 10, 0)
