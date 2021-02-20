@@ -117,19 +117,6 @@ end
 local mathCos = math.cos
 local mathSin = math.sin
 
--- local function bezier(p0, p1, p2, p3, t)
--- 	local e = p0 + t * (p1 - p0)
--- 	local f = p1 + t * (p2 - p1)
--- 	local g = p2 + t * (p3 - p2)
-
--- 	local h = e + t * (f - e)
--- 	local i = f + t * (g - f)
-
--- 	local p = h + t * (i - h)
-
--- 	return p
--- end
-
 function SVMOD:RenderLights(veh, lights)
 	for _, v in ipairs(lights) do
 		if v.Sprite then

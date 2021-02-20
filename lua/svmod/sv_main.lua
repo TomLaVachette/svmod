@@ -73,9 +73,9 @@ end)
 -- 	local size = 0
 
 -- 	ent:SetSpringLength(0, 499.95)
--- 	ent:SetSpringLength(1, 499.95)
--- 	ent:SetSpringLength(2, 499.95)
--- 	ent:SetSpringLength(3, 499.95)
+-- 	-- ent:SetSpringLength(1, 499.95)
+-- 	-- ent:SetSpringLength(2, 499.95)
+-- 	-- ent:SetSpringLength(3, 499.95)
 
 -- 	timer.Simple(2, function()
 -- 		ent:SetSpringLength(0, 500.12)

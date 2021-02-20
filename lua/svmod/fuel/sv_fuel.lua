@@ -123,7 +123,3 @@ end)
 hook.Add("SV_UnloadVehicle", "SV_Fuel_DisableConsumptionOnRemove", function(veh)
 	DisableFuel(veh)
 end)
-
--- concommand.Add("tempfuel", function(ply)
--- 	ply:GetEyeTrace().Entity:SV_SetFuel(10)
--- end)
