@@ -446,9 +446,8 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
         return line
 	end
 
-	local function removeLight(index)
-		local line = listView:GetLine(index)
-		columnText = line:GetIndex()
+	local function removeLight(lineID, line)
+		local index = line:GetIndex()
 
         if data[index].ProjectedTexture and IsValid(data[index].ProjectedTexture.Entity) then
             data[index].ProjectedTexture.Entity:Remove()
@@ -457,13 +456,13 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
 		table.remove(data, index)
 
 		for _, v in pairs(listView:GetLines()) do
-			local index = v:GetIndex()
-			if index > columnText then
-				v:SetColumnText(1, index - 1 .. getType(v.Data))
+			local i = v:GetIndex()
+			if i > index then
+				v:SetColumnText(1, i - 1 .. getType(v.Data))
 			end
 		end
 
-		listView:RemoveLine(index)
+		listView:RemoveLine(lineID)
 	end
 
 	local function upLight(index)
@@ -553,6 +552,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 local tab = addLight(data[index])
                 tab.Data.SpriteLine.Position1.x = -line.Data.SpriteLine.Position1.x
                 tab.Data.SpriteLine.Position2.x = -line.Data.SpriteLine.Position2.x
+                tab.Data.SpriteLine.Position3.x = -line.Data.SpriteLine.Position3.x
             end
     
             if line.Data.SpriteCircle then
@@ -581,7 +581,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
         end
 
 		menu:AddOption("Delete", function()
-            removeLight(lineID)
+            removeLight(lineID, line)
         end):SetIcon("icon16/cross.png")
 
 		menu:Open()
