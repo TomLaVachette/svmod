@@ -80,4 +80,52 @@ function SVMOD:EDITOR_General(panel, veh)
 		veh.SV_Data.Author.Name = val
 		veh.SV_Data.Author.SteamID64 = LocalPlayer():SteamID64()
 	end
+
+	local title = SVMOD:CreateTitle(panel, "TOOLS")
+	title:DockMargin(0, 30, 0, 0)
+
+	local blinkerPanel = vgui.Create("DPanel", panel)
+	blinkerPanel:Dock(TOP)
+	blinkerPanel:SetSize(0, 35)
+	blinkerPanel:SetDrawBackground(false)
+
+	local function symmetric(tab)
+		for k, v in pairs(tab) do
+			if istable(v) then
+				symmetric(v)
+			elseif isvector(v) then
+				tab[k].x = -v.x
+			end
+		end
+	end
+
+	local blinkerButton = SVMOD:CreateButton(blinkerPanel, "COPY LEFT BLINKERS TO RIGHT", function()
+        for _, l in ipairs(veh.SV_Data.Blinkers.LeftLights) do
+			local tab = SVMOD:DeepCopy(l)
+			symmetric(tab)
+			table.insert(veh.SV_Data.Blinkers.RightLights, tab)
+		end
+    end)
+	blinkerButton:SetSize(340, 0)
+	blinkerButton:Dock(LEFT)
+
+	local blinkerButton = SVMOD:CreateButton(blinkerPanel, "COPY RIGHT BLINKERS TO LEFT", function()
+        for _, l in ipairs(veh.SV_Data.Blinkers.RightLights) do
+			local tab = SVMOD:DeepCopy(l)
+			symmetric(tab)
+			table.insert(veh.SV_Data.Blinkers.LeftLights, tab)
+		end
+    end)
+	blinkerButton:SetSize(340, 0)
+    blinkerButton:Dock(RIGHT)
+
+	local blinkerButton = SVMOD:CreateButton(panel, "COPY BRAKE TO HEADLIGHTS", function()
+        for _, l in ipairs(veh.SV_Data.Back.BrakeLights) do
+			local tab = SVMOD:DeepCopy(l)
+			table.insert(veh.SV_Data.Headlights, tab)
+		end
+    end)
+	blinkerButton:SetSize(0, 35)
+    blinkerButton:Dock(TOP)
+	blinkerButton:DockMargin(0, 10, 0, 0)
 end
