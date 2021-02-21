@@ -139,7 +139,7 @@ net.Receive("SV_SetRightBlinkerState", function(_, ply)
 	end
 end)
 
-local function DisableHazard(veh)
+local function disableHazard(veh)
 	if not SVMOD.CFG.Lights.TurnOffHazardOnExit then return end
 
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
@@ -161,16 +161,20 @@ local function DisableHazard(veh)
 	end)
 end
 
-hook.Add("PlayerLeaveVehicle", "SV_DisableHazardOnLeave", function(ply, veh)
-	DisableHazard(veh)
+hook.Add("SV_PlayerLeaveVehicle", "SV_DisableHazardOnLeave", function(ply, veh)
+	disableHazard(veh)
 end)
 
-hook.Add("PlayerDisconnected", "SV_DisableHazardOnDisconnect", function(ply, veh)
-	DisableHazard(ply:GetVehicle())
+hook.Add("PlayerDisconnected", "SV_DisableHazardOnDisconnect", function(ply)
+	local veh = ply:GetVehicle()
+
+	if SVMOD:IsVehicle(veh) then
+		disableHazard(veh)
+	end
 end)
 
-hook.Add("PlayerEnteredVehicle", "SV_UndoDisableHazardOnLeave", function(ply, veh)
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+hook.Add("SV_PlayerEnteredVehicle", "SV_UndoDisableHazardOnLeave", function(ply, veh)
+	if not veh:SV_IsDriverSeat() then
 		return
 	end
 

@@ -43,14 +43,14 @@ end
 
 util.AddNetworkString("SV_SetHazardLightsState")
 net.Receive("SV_SetHazardLightsState", function(_, ply)
-	local Vehicle = ply:GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		Vehicle:SV_TurnOnHazardLights()
+	if state then
+		veh:SV_TurnOnHazardLights()
 	else
-		Vehicle:SV_TurnOffHazardLights()
+		veh:SV_TurnOffHazardLights()
 	end
 end)

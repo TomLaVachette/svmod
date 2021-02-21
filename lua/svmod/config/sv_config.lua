@@ -25,8 +25,10 @@ function SVMOD:ResetConfiguration()
 	
 	SVMOD.CFG.ELS = {
 		AreFlashingLightsEnabled = true,
-		TurnOffFlashingLightsOnExit = true,
-		TimeTurnOffFlashingLights = 120
+		TurnOffLightsOnExit = true,
+		TimeTurnOffLights = 120,
+		TurnOffSoundOnExit = true,
+		TimeTurnOffSound = 120
 	}
 	
 	SVMOD.CFG.Horn = {

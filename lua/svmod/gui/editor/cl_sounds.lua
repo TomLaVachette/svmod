@@ -49,7 +49,11 @@ function SVMOD:EDITOR_Sounds(panel, data)
     end)
     reversingComboBox:SetValue(data.ReversingSound or "")
 
-    local sirenComboBox = createComboBoxPanel("Siren", { "", "french_police", "french_firetruck", "french_ambulance" }, function(val)
+    local sirenComboBox = createComboBoxPanel("Siren", {
+        "",
+        "american_police", "american_firetruck", "american_ambulance",
+        "french_police", "french_firetruck", "french_ambulance"
+    }, function(val)
         data.Siren = val
     end)
     sirenComboBox:SetValue(data.Siren or "")

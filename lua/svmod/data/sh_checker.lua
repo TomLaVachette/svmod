@@ -15,7 +15,7 @@ function SVMOD:Data_Check(x)
 			if v.Sprite then
 				if v.ActiveTime and not isnumber(v.ActiveTime) then
 					return "Sprite[" .. i .. "].ActiveTime"
-				elseif v.Color and not iscolor(v.Color) then
+				elseif v.Color and (not v.Color.r or not v.Color.g or not v.Color.b or not v.Color.a) then
 					return "Sprite[" .. i .. "].Color"
 				elseif v.Height and not isnumber(v.Width) then
 					return "Sprite[" .. i .. "].Height"
@@ -31,7 +31,7 @@ function SVMOD:Data_Check(x)
 			elseif v.ProjectedTexture then
 				if v.Angle and not isvector(v.Angle) then
 					return "Sprite[" .. i .. "].Angle"
-				elseif v.Color and not iscolor(v.Color) then
+				elseif v.Color and (not v.Color.r or not v.Color.g or not v.Color.b or not v.Color.a) then
 					return "Sprite[" .. i .. "].Color"
 				elseif v.FOV and not isnumber(v.FOV) then
 					return "Sprite[" .. i .. "].FOV"

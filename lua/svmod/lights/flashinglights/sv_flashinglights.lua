@@ -2,6 +2,8 @@
 -- @serverside
 
 util.AddNetworkString("SV_TurnFlashingLights")
+util.AddNetworkString("SV_TurnFlashingGlow")
+util.AddNetworkString("SV_TurnFlashingSound")
 
 -- Turns on the flashing lights of a vehicle.
 -- @treturn boolean True if successful, false otherwise
@@ -57,30 +59,43 @@ net.Receive("SV_SetFlashingLightsState", function(_, ply)
 	end
 end)
 
-local function DisableFlashingLights(veh)
-	if not SVMOD.CFG.ELS.TurnOffFlashingLightsOnExit then return end
+local function disableFlashingLights(veh)
+	if not veh:SV_IsDriverSeat() then return end
 
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
+	if SVMOD.CFG.ELS.TurnOffLightsOnExit then
+		timer.Create("SV_DisableFlashingLights_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffLights, 1, function()
+			if not SVMOD:IsVehicle(veh) then return end
+			
+			veh:SV_TurnOffFlashingLights()
+		end)
+	end
 
-	timer.Create("SV_DisableFlashingLights_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffFlashingLights, 1, function()
-		if not SVMOD:IsVehicle(veh) then return end
-		
-		veh:SV_TurnOffFlashingLights()
-	end)
+	if SVMOD.CFG.ELS.TurnOffSoundOnExit then
+		timer.Create("SV_DisableFlashingSound_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffSound, 1, function()
+			if not SVMOD:IsVehicle(veh) then return end
+			
+			veh:SV_TurnOffFlashingLights()
+		end)
+	end	
 end
 
-hook.Add("PlayerLeaveVehicle", "SV_DisableFlashingLightsOnLeave", function(ply, veh)
-	DisableFlashingLights(veh)
+hook.Add("SV_PlayerLeaveVehicle", "SV_DisableFlashingLightsOnLeave", function(ply, veh)
+	disableFlashingLights(veh)
 end)
 
 hook.Add("PlayerDisconnected", "SV_DisableFlashingLightsOnDisconnect", function(ply, veh)
-	DisableFlashingLights(ply:GetVehicle())
+	local veh = ply:GetVehicle()
+
+	if SVMOD:IsVehicle(veh) then
+		disableFlashingLights(veh)
+	end
 end)
 
-hook.Add("PlayerEnteredVehicle", "SV_UndoDisableFlashingLightsOnLeave", function(ply, veh)
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+hook.Add("SV_PlayerEnteredVehicle", "SV_UndoDisableFlashingLightsOnLeave", function(ply, veh)
+	if not veh:SV_IsDriverSeat() then
 		return
 	end
 
 	timer.Remove("SV_DisableFlashingLights_" .. veh:EntIndex())
+	timer.Remove("SV_DisableFlashingSound_" .. veh:EntIndex())
 end)

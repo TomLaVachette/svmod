@@ -32,8 +32,10 @@ concommand.Add("svmod", function(ply)
 			net.WriteBool(SVMOD.CFG["Lights"]["AreReverseLightsEnabled"])
 		
 			net.WriteBool(SVMOD.CFG["ELS"]["AreFlashingLightsEnabled"])
-			net.WriteBool(SVMOD.CFG["ELS"]["TurnOffFlashingLightsOnExit"])
-			net.WriteFloat(SVMOD.CFG["ELS"]["TimeTurnOffFlashingLights"])
+			net.WriteBool(SVMOD.CFG["ELS"]["TurnOffLightsOnExit"])
+			net.WriteFloat(SVMOD.CFG["ELS"]["TimeTurnOffLights"])
+			net.WriteBool(SVMOD.CFG["ELS"]["TurnOffSoundOnExit"])
+			net.WriteFloat(SVMOD.CFG["ELS"]["TimeTurnOffSound"])
 		
 			net.WriteBool(SVMOD.CFG["Horn"]["IsEnabled"])
 		

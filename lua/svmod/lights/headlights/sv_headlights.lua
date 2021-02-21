@@ -53,40 +53,48 @@ end
 
 util.AddNetworkString("SV_SetHeadlightsState")
 net.Receive("SV_SetHeadlightsState", function(_, ply)
-	local Vehicle = ply:GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		Vehicle:SV_TurnOnHeadlights()
+	if state then
+		veh:SV_TurnOnHeadlights()
 	else
-		Vehicle:SV_TurnOffHeadlights()
+		veh:SV_TurnOffHeadlights()
 	end
 end)
 
-local function DisableHeadlights(veh)
-	if not SVMOD.CFG.Lights.TurnOffHeadlightsOnExit then return end
-
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
+local function disableHeadlights(veh)
+	if not SVMOD.CFG.Lights.TurnOffHeadlightsOnExit then
+		return
+	elseif not veh:SV_IsDriverSeat() then
+		return
+	end
 
 	timer.Create("SV_DisableHeadlights_" .. veh:EntIndex(), SVMOD.CFG.Lights.TimeTurnOffHeadlights, 1, function()
-		if not SVMOD:IsVehicle(veh) then return end
+		if not SVMOD:IsVehicle(veh) then
+			return
+		end
 		
 		veh:SV_TurnOffHeadlights()
 	end)
 end
 
-hook.Add("PlayerLeaveVehicle", "SV_DisableHeadlightsOnLeave", function(ply, veh)
-	DisableHeadlights(veh)
+hook.Add("SV_PlayerLeaveVehicle", "SV_DisableHeadlightsOnLeave", function(ply, veh)
+	disableHeadlights(veh)
 end)
 
-hook.Add("PlayerDisconnected", "SV_DisableHeadlightsOnDisconnect", function(ply, veh)
-	DisableHeadlights(ply:GetVehicle())
+hook.Add("PlayerDisconnected", "SV_DisableHeadlightsOnDisconnect", function(ply)
+	local veh = ply:GetVehicle()
+
+	if SVMOD:IsVehicle(veh) then
+		disableHeadlights(veh)
+	end
 end)
 
-hook.Add("PlayerEnteredVehicle", "SV_UndoDisableHeadlightsOnLeave", function(ply, veh)
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+hook.Add("SV_PlayerEnteredVehicle", "SV_UndoDisableHeadlightsOnLeave", function(ply, veh)
+	if not veh:SV_IsDriverSeat() then
 		return
 	end
 

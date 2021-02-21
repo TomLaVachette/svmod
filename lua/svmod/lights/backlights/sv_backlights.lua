@@ -85,7 +85,7 @@ hook.Add("KeyRelease", "SV_BroadcastBackLightsDisabled", function(ply, key)
 end)
 
 local function disableBackLights(veh)
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
+	if not veh:SV_IsDriverSeat() then return end
 
 	if veh:SV_GetBackLightsState() then
 		veh:SV_TurnOffBackLights()
@@ -97,6 +97,10 @@ hook.Add("PlayerLeaveVehicle", "SV_DisableBackLightsOnLeave", function(ply, veh)
 	disableBackLights(veh)
 end)
 
-hook.Add("PlayerDisconnected", "SV_DisableBackLightsOnDisconnect", function(ply, veh)
-	disableBackLights(ply:GetVehicle())
+hook.Add("PlayerDisconnected", "SV_DisableBackLightsOnDisconnect", function(ply)
+	local veh = ply:GetVehicle()
+
+	if not SVMOD:IsVehicle(veh) then
+		disableBackLights(veh)
+	end
 end)
