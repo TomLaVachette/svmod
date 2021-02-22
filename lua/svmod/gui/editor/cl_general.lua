@@ -43,7 +43,7 @@ function SVMOD:EDITOR_General(panel, veh)
 				end
 
                 if IsValid(panel:GetParent()) then
-                    panel:GetParent():Remove()
+                    panel:GetParent():ManualClose()
                 end
 			end,
 			failed = function()

@@ -50,6 +50,19 @@ local function openEditor(veh)
 		openEditor(veh)
 	end
 
+	frame.ManualClose = function(self)
+		self:Remove()
+		
+		net.Start("SV_Editor_Close")
+		net.WriteEntity(veh)
+		net.SendToServer()
+
+		gui.EnableScreenClicker(false)
+
+		hook.Remove("ScoreboardShow", "SV_Editor_Show")
+		hook.Remove("ScoreboardHide", "SV_Editor_Hide")
+	end
+
 	hook.Add("ScoreboardShow", "SV_Editor_Show", function()
 		frame:SetAlpha(255)
 		gui.EnableScreenClicker(true)
@@ -143,16 +156,7 @@ local function openEditor(veh)
 
 		local button = SVMOD:CreateButton(closeFrame, language.GetPhrase("svmod.editor.close_and_lose"), function()
 			closeFrame:Close()
-			frame:Close()
-
-			net.Start("SV_Editor_Close")
-			net.WriteEntity(veh)
-			net.SendToServer()
-	
-			gui.EnableScreenClicker(false)
-	
-			hook.Remove("ScoreboardShow", "SV_Editor_Show")
-			hook.Remove("ScoreboardHide", "SV_Editor_Hide")
+			frame:ManuelClose()
 		end)
 		button:Dock(TOP)
 		button:SetSize(0, 30)
