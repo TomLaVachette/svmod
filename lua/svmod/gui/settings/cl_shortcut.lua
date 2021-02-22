@@ -10,7 +10,7 @@ function SVMOD:GUI_Shortcuts(panel)
 	titleLabel:SetPos(0, 0)
 	titleLabel:SetFont("SV_CalibriLight22")
 	titleLabel:SetColor(Color(178, 95, 245))
-	titleLabel:SetText(SVMOD:GetLanguage("SHORTCUTS"))
+	titleLabel:SetText(language.GetPhrase("svmod.shortcuts.shortcuts"))
 	titleLabel:SizeToContents()
 
 	SVMOD:CreateHorizontalLine(panel)
@@ -81,7 +81,7 @@ function SVMOD:GUI_Shortcuts(panel)
 	end
 
 	for i, s in ipairs(SVMOD.Shortcuts) do
-		local button = createSetting(SVMOD:GetLanguage(s.Name), s)
+		local button = createSetting(language.GetPhrase(s.Name), s)
 		button:SetValue(s.Key)
 	end
 
@@ -93,7 +93,7 @@ function SVMOD:GUI_Shortcuts(panel)
 	bottomPanel:SetSize(0, 30)
 	bottomPanel:SetDrawBackground(false)
 
-	local buttonText = SVMOD:GetLanguage("Reset")
+	local buttonText = language.GetPhrase("svmod.reset")
 
 	local button = vgui.Create("DButton", bottomPanel)
 	button:Dock(RIGHT)

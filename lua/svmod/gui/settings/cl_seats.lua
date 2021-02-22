@@ -1,11 +1,11 @@
 function SVMOD:GUI_Seats(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SEATS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.seats.seats"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable seat changing from inside the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.seats.move"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.IsSwitchEnabled == true),
@@ -19,7 +19,7 @@ function SVMOD:GUI_Seats(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.IsSwitchEnabled == false),
@@ -34,9 +34,9 @@ function SVMOD:GUI_Seats(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable the ability to exclude passengers as driver"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.seats.kick"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.IsKickEnabled == true),
@@ -50,7 +50,7 @@ function SVMOD:GUI_Seats(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.IsKickEnabled == false),
@@ -65,9 +65,9 @@ function SVMOD:GUI_Seats(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable the ability to lock/unlock the vehicle from the inside"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.seats.lock"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.IsLockEnabled == true),
@@ -81,7 +81,7 @@ function SVMOD:GUI_Seats(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.IsLockEnabled == false),

@@ -30,7 +30,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
         return numSlider
     end
 
-    SVMOD:CreateTitle(panel, SVMOD:GetLanguage("FUEL"))
+    SVMOD:CreateTitle(panel, language.GetPhrase("svmod.fuel.fuel"))
 
     local capacityNumSlider = SVMOD:CreateNumSlidePanel(panel, "Capacity", function(val)
         data.Capacity = val

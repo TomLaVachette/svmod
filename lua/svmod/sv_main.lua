@@ -7,7 +7,7 @@
 function SVMOD:Enable()
 	-- Do not start SVMod if conflict detected
 	if #self:GetConflictList() > 0 then
-		self:PrintConsole(SVMOD.LOG.Error, SVMOD:GetLanguage("Unable to start SVMod: conflict detected."))
+		self:PrintConsole(SVMOD.LOG.Error, language.GetPhrase("svmod.cannot_start_conflict"))
 		self.CFG.IsEnabled = false
 		return false
 	end

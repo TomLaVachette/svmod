@@ -32,7 +32,7 @@ function SVMOD:EDITOR_Sounds(panel, data)
         return comboBox
     end
 
-    SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SOUNDS"))
+    SVMOD:CreateTitle(panel, language.GetPhrase("svmod.sounds.sounds"))
 
     local blinkersComboBox = createComboBoxPanel("Blinkers", { "light", "normal" }, function(val)
         data.Blinkers = val

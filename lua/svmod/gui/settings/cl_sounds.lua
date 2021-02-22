@@ -1,11 +1,11 @@
 function SVMOD:GUI_Sounds(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SOUNDS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.sounds.horn"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable the vehicle horn"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.sounds.enable_horn"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.HornIsEnabled == true),
@@ -19,7 +19,7 @@ function SVMOD:GUI_Sounds(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.HornIsEnabled == false),

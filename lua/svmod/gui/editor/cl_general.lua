@@ -78,10 +78,10 @@ function SVMOD:EDITOR_General(panel, veh)
 	local label = vgui.Create("DLabel", authorPanel)
 	label:SetPos(2, 4)
 	label:SetFont("SV_Calibri18")
-	label:SetText(SVMOD:GetLanguage("Author"))
+	label:SetText(language.GetPhrase("svmod.vehicles.author"))
 	label:SizeToContents()
 
-	authorTextBox = SVMOD:CreateTextboxPanel(authorPanel, "Author")
+	authorTextBox = SVMOD:CreateTextboxPanel(authorPanel, language.GetPhrase("svmod.vehicles.author"))
 	authorTextBox:SetValue(veh.SV_Data.Author.Name or "")
 	authorTextBox.OnValueChange = function(self, val)
 		veh.SV_Data.Author.Name = val

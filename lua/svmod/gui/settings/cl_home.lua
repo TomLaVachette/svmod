@@ -44,33 +44,33 @@ function SVMOD:GUI_Home(panel, data)
 	titleLabel:SetPos(0, 0)
 	titleLabel:SetFont("SV_CalibriLight22")
 	titleLabel:SetColor(Color(178, 95, 245))
-	titleLabel:SetText(SVMOD:GetLanguage("HOME"))
+	titleLabel:SetText(language.GetPhrase("svmod.home.home"))
 	titleLabel:SizeToContents()
 
 	SVMOD:CreateHorizontalLine(panel)
 
 	if data.Status then
-		createStatus(true, SVMOD:GetLanguage("Enabled"))
+		createStatus(true, language.GetPhrase("svmod.enabled"))
 	else
-		createStatus(false, SVMOD:GetLanguage("Disabled"))
+		createStatus(false, language.GetPhrase("svmod.disabled"))
 	end
 
 	if SVMOD.FCFG.Version == SVMOD.FCFG.LastVersion then
-		createStatus(true, SVMOD:GetLanguage("Addon is up to date"))
+		createStatus(true, language.GetPhrase("svmod.home.addon_up_to_date"))
 	else
-		createStatus(false, SVMOD:GetLanguage("Addon not on the latest version") .. " (" .. SVMOD.FCFG.Version .. " - " .. SVMOD.FCFG.LastVersion .. ")")
+		createStatus(false, language.GetPhrase("svmod.home.addon_not_up_to_date") .. " (" .. SVMOD.FCFG.Version .. " - " .. SVMOD.FCFG.LastVersion .. ")")
 	end
 
 	if SVMOD.Data and #data.LastVehicleUpdate > 0 then
-		createStatus(true, SVMOD:GetLanguage("Vehicle data up to date"))
+		createStatus(true, language.GetPhrase("svmod.home.vehicle_up_to_date"))
 	else
-		createStatus(false, SVMOD:GetLanguage("Vehicle data not updated"))
+		createStatus(false, language.GetPhrase("svmod.home.vehicle_not_up_to_date"))
 	end
 
 	if #data.ConflictList == 0 then
-		createStatus(true, SVMOD:GetLanguage("No conflict detected"))
+		createStatus(true, language.GetPhrase("svmod.home.no_conflict"))
 	else
-		createStatus(false, SVMOD:GetLanguage("Conflict detected with") .. " : " .. data.ConflictList)
+		createStatus(false, language.GetPhrase("svmod.home.conflict_detected") .. " : " .. data.ConflictList)
 	end
 
 	local vehicleLoadedCount = 0
@@ -81,16 +81,16 @@ function SVMOD:GUI_Home(panel, data)
 	
 	local loadedText
 	if vehicleLoadedCount > 1 then
-		loadedText = string.format(SVMOD:GetLanguage("%s vehicles loaded"), vehicleLoadedCount)
+		loadedText = string.format(language.GetPhrase("svmod.home.vehicle_plurial_loaded"), vehicleLoadedCount)
 	else
-		loadedText = string.format(SVMOD:GetLanguage("%s vehicle loaded"), vehicleLoadedCount)
+		loadedText = string.format(language.GetPhrase("svmod.home.vehicle_loaded"), vehicleLoadedCount)
 	end
 
 	local incompatibleText
 	if vehicleIncompatibleCount > 1 then
-		incompatibleText = string.format(SVMOD:GetLanguage("%s incompatibles"), vehicleIncompatibleCount)
+		incompatibleText = string.format(language.GetPhrase("svmod.home.vehicle_plurial_incompatible"), vehicleIncompatibleCount)
 	else
-		incompatibleText = string.format(SVMOD:GetLanguage("%s incompatible"), vehicleIncompatibleCount)
+		incompatibleText = string.format(language.GetPhrase("svmod.home.vehicle_incompatible"), vehicleIncompatibleCount)
 	end
 
 	if vehicleIncompatibleCount == 0 then
@@ -101,9 +101,9 @@ function SVMOD:GUI_Home(panel, data)
 
 	SVMOD:CreateHorizontalLine(panel)
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable SVMod"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.home.enable_svmod"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.Status == true),
@@ -113,64 +113,13 @@ function SVMOD:GUI_Home(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.Status == false),
 			DoClick = function()
 				SVMOD:SetAddonState(false)
 				panel:GetParent():Remove()
-			end
-		}
-	})
-
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Language"), {
-		{
-			ISO = "EN",
-			Name = "English",
-			Color = Color(59, 217, 85),
-			HoverColor = Color(156, 255, 161),
-			IsSelected = (SVMOD.CFG.Language == "EN"),
-			DoClick = function()
-				SVMOD.CFG.Language = "EN"
-				panel:GetParent():Remove()
-				LocalPlayer():ConCommand("svmod")
-			end
-		},
-		{
-			ISO = "FR",
-			Name = "Français",
-			Color = Color(59, 217, 85),
-			HoverColor = Color(156, 255, 161),
-			IsSelected = (SVMOD.CFG.Language == "FR"),
-			DoClick = function()
-				SVMOD.CFG.Language = "FR"
-				panel:GetParent():Remove()
-				LocalPlayer():ConCommand("svmod")
-			end
-		},
-		{
-			ISO = "RU",
-			Name = "русский",
-			Color = Color(59, 217, 85),
-			HoverColor = Color(156, 255, 161),
-			IsSelected = (SVMOD.CFG.Language == "RU"),
-			DoClick = function()
-				SVMOD.CFG.Language = "RU"
-				panel:GetParent():Remove()
-				LocalPlayer():ConCommand("svmod")
-			end
-		},
-		{
-			ISO = "TR",
-			Name = "Türk",
-			Color = Color(59, 217, 85),
-			HoverColor = Color(156, 255, 161),
-			IsSelected = (SVMOD.CFG.Language == "TR"),
-			DoClick = function()
-				SVMOD.CFG.Language = "TR"
-				panel:GetParent():Remove()
-				LocalPlayer():ConCommand("svmod")
 			end
 		}
 	})
@@ -184,9 +133,9 @@ function SVMOD:GUI_Home(panel, data)
 		end
 	end
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Performance"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.home.performance"), {
 		{
-			Name = SVMOD:GetLanguage("High"),
+			Name = language.GetPhrase("svmod.home.high"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (perfMode == 2),
@@ -199,7 +148,7 @@ function SVMOD:GUI_Home(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Normal"),
+			Name = language.GetPhrase("svmod.home.normal"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (perfMode == 1),
@@ -212,7 +161,7 @@ function SVMOD:GUI_Home(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Low"),
+			Name = language.GetPhrase("svmod.home.low"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (perfMode == 0),
@@ -234,30 +183,30 @@ function SVMOD:GUI_Home(panel, data)
 	bottomPanel:SetSize(0, 30)
 	bottomPanel:SetDrawBackground(false)
 
-	local discordButton = SVMOD:CreateButton(bottomPanel, "Support", function()
+	local discordButton = SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.home.support"), function()
 		gui.OpenURL("https://discord.svmod.com")
 	end)
 
-	local resetButton = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("Reset"), function(self)
-		if self:GetText() == SVMOD:GetLanguage("Confirm?") then
+	local resetButton = SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.reset"), function(self)
+		if self:GetText() == language.GetPhrase("svmod.home.confirm") then
 			net.Start("SV_Settings_HardReset")
 			net.WriteBool(true) -- anti netscan
 			net.SendToServer()
 
 			panel:GetParent():Remove()
 		else
-			self:SetText(SVMOD:GetLanguage("Confirm?"))
+			self:SetText(language.GetPhrase("svmod.home.confirm"))
 		end
 	end)
 	resetButton:DockMargin(6, 0, 0, 0)
 
 	surface.SetFont("SV_Calibri18")
-	local firstWidth = surface.GetTextSize("Developed with")
-	local secondWidth = surface.GetTextSize("by TomLaVachette")
+	local firstWidth = surface.GetTextSize(language.GetPhrase("svmod.home.developped_with"))
+	local secondWidth = surface.GetTextSize(language.GetPhrase("svmod.home.by"))
 
 	local firstLabel = vgui.Create("DLabel", bottomPanel)
 	firstLabel:SetFont("SV_Calibri18")
-	firstLabel:SetText(SVMOD:GetLanguage("Developed with"))
+	firstLabel:SetText(language.GetPhrase("svmod.home.developped_with"))
 	firstLabel:SizeToContents()
 
 	local secondLabel = vgui.Create("DLabel", bottomPanel)
@@ -268,7 +217,7 @@ function SVMOD:GUI_Home(panel, data)
 
 	local thirdLabel = vgui.Create("DLabel", bottomPanel)
 	thirdLabel:SetFont("SV_Calibri18")
-	thirdLabel:SetText(SVMOD:GetLanguage("by TomLaVachette"))
+	thirdLabel:SetText(language.GetPhrase("by TomLaVachette"))
 	thirdLabel:SizeToContents()
 
 	timer.Simple(FrameTime(), function()

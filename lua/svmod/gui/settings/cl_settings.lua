@@ -44,60 +44,60 @@ net.Receive("SV_Settings", function()
 	frame:SetSize(900, 650)
 	frame:MakePopup()
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("HOME"), TOP, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.home.home"), TOP, function()
 		SVMOD:GUI_Home(frame:GetCenterPanel(), data)
 	end)
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("SHORTCUTS"), TOP, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.shortcuts.shortcuts"), TOP, function()
 		SVMOD:GUI_Shortcuts(frame:GetCenterPanel(), data)
 	end)
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("OPTIONS"), TOP, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.options.options"), TOP, function()
 		SVMOD:GUI_Options(frame:GetCenterPanel(), data)
 	end)
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("VEHICLES"), TOP, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.vehicles.vehicles"), TOP, function()
 		SVMOD:GUI_Vehicles(frame:GetCenterPanel(), data)
 	end)
 
 	SVMOD:CreateHorizontalLine(frame:GetLeftPanel())
 
 	if data.HasAccess then
-		frame:CreateMenuButton(SVMOD:GetLanguage("SEATS"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.seats.seats"), TOP, function()
 			SVMOD:GUI_Seats(frame:GetCenterPanel(), data)
 		end)
 
-		frame:CreateMenuButton(SVMOD:GetLanguage("LIGHTS"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.lights.lights"), TOP, function()
 			SVMOD:GUI_Lights(frame:GetCenterPanel(), data)
 		end)
 
-		frame:CreateMenuButton(SVMOD:GetLanguage("ELS"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.els.els"), TOP, function()
 			SVMOD:GUI_ELS(frame:GetCenterPanel(), data)
 		end)
 
-		frame:CreateMenuButton(SVMOD:GetLanguage("SOUNDS"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.sounds.sounds"), TOP, function()
 			SVMOD:GUI_Sounds(frame:GetCenterPanel(), data)
 		end)
 
-		frame:CreateMenuButton(SVMOD:GetLanguage("DAMAGE"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.damage.damage"), TOP, function()
 			SVMOD:GUI_Damage(frame:GetCenterPanel(), data)
 		end)
 
-		frame:CreateMenuButton(SVMOD:GetLanguage("FUEL"), TOP, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.fuel.fuel"), TOP, function()
 			SVMOD:GUI_Fuel(frame:GetCenterPanel(), data)
 		end)
 	end
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("CLOSE"), BOTTOM, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.close"), BOTTOM, function()
 		frame:Remove()
 	end)
 
-	frame:CreateMenuButton(SVMOD:GetLanguage("CREDITS"), BOTTOM, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.credits"), BOTTOM, function()
 		SVMOD:GUI_Credits(frame:GetCenterPanel(), data)
 	end)
 
 	if not game.IsDedicated() then
-		frame:CreateMenuButton(SVMOD:GetLanguage("CONTRIBUTOR"), BOTTOM, function()
+		frame:CreateMenuButton(language.GetPhrase("svmod.contributor.contributor"), BOTTOM, function()
 			SVMOD:GUI_Contributor(frame:GetCenterPanel(), data)
 		end)
 	end

@@ -1,6 +1,6 @@
 SVMOD.Shortcuts = {
 	{
-		Name = "Honking",
+		Name = "svmod.shortcuts.honking",
 		DefaultKey = KEY_R,
 		Key = KEY_R,
 		BypassTimer = true,
@@ -12,7 +12,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Lock/Unlock",
+		Name = "svmod.shortcuts.lock",
 		DefaultKey = KEY_LALT,
 		Key = KEY_LALT,
 		ReleasedFunction = function(veh)
@@ -24,7 +24,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Enable/Disable headlights",
+		Name = "svmod.shortcuts.headlights",
 		DefaultKey = KEY_F,
 		Key = KEY_F,
 		PressedFunction = function(veh)
@@ -36,7 +36,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Enable/Disable left blinkers",
+		Name = "svmod.shortcuts.left_blinkers",
 		DefaultKey = MOUSE_LEFT,
 		Key = MOUSE_LEFT,
 		PressedFunction = function(veh)
@@ -48,7 +48,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Enable/Disable right blinkers",
+		Name = "svmod.shortcuts.right_blinkers",
 		DefaultKey = MOUSE_RIGHT,
 		Key = MOUSE_RIGHT,
 		PressedFunction = function(veh)
@@ -60,7 +60,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Enable/Disable hazard lights",
+		Name = "svmod.shortcuts.hazard",
 		DefaultKey = KEY_COMMA,
 		Key = KEY_COMMA,
 		PressedFunction = function(veh)
@@ -72,7 +72,7 @@ SVMOD.Shortcuts = {
 		end
 	},
 	{
-		Name = "Enable/Disable flashing lights",
+		Name = "svmod.shortcuts.flashing",
 		DefaultKey = KEY_LSHIFT,
 		Key = KEY_LSHIFT,
 		PressedFunction = function(veh)

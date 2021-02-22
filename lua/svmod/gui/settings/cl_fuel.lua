@@ -1,11 +1,11 @@
 function SVMOD:GUI_Fuel(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("FUEL"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.fuel.fuel"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable fuel consumption on vehicles"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.fuel.enable_fuel"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.FuelIsEnabled == true),
@@ -19,7 +19,7 @@ function SVMOD:GUI_Fuel(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.FuelIsEnabled == false),
@@ -34,7 +34,7 @@ function SVMOD:GUI_Fuel(panel, data)
 		}
 	})
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Fuel consumption multiplier"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.fuel.consumption_multiplier"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("Fuel")
 		net.WriteString("Multiplier")
@@ -46,33 +46,21 @@ function SVMOD:GUI_Fuel(panel, data)
 	slide:SetMaxValue(200)
 	slide:SetUnit("%")
 
-	local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("GAS PUMP"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.fuel.gas_pump"))
 	title:DockMargin(0, 30, 0, 0)
-
-	-- local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Price"), function(val)
-	-- 	net.Start("SV_Settings")
-	-- 	net.WriteString("Fuel")
-	-- 	net.WriteString("Price")
-	-- 	net.WriteUInt(1, 2) -- float
-	-- 	net.WriteFloat(val)
-	-- 	net.SendToServer()
-	-- end)
-	-- slide:SetValue(data.FuelPrice)
-	-- slide:SetMaxValue(300)
-	-- slide:SetUnit("u")
 
 	local pumpList = SVMOD:CreateListView(panel)
 	pumpList:AddColumn("ID"):SetWidth(10)
-	pumpList:AddColumn(SVMOD:GetLanguage("Model"))
+	pumpList:AddColumn(language.GetPhrase("svmod.fuel.model"))
 	pumpList:AddColumn("MapCreationID")
-	pumpList:AddColumn(SVMOD:GetLanguage("Position"))
-	pumpList:AddColumn(SVMOD:GetLanguage("Angle")):SetWidth(20)
-	pumpList:AddColumn(SVMOD:GetLanguage("Price")):SetWidth(10)
+	pumpList:AddColumn(language.GetPhrase("svmod.fuel.position"))
+	pumpList:AddColumn(language.GetPhrase("svmod.fuel.angles")):SetWidth(20)
+	pumpList:AddColumn(language.GetPhrase("svmod.fuel.price")):SetWidth(10)
 
 	pumpList.OnRowRightClick = function(self, lineID, line)
 		local menu = DermaMenu()
 
-		menu:AddOption(SVMOD:GetLanguage("Set entity you'r looking at"), function()
+		menu:AddOption(language.GetPhrase("svmod.fuel.looking_at"), function()
 			local ent = LocalPlayer():GetEyeTrace().Entity
 
 			if IsValid(ent) then
@@ -102,7 +90,7 @@ function SVMOD:GUI_Fuel(panel, data)
 			end
 		end):SetIcon("icon16/package.png")
 
-		menu:AddOption(SVMOD:GetLanguage("Edit price"), function()
+		menu:AddOption(language.GetPhrase("svmod.fuel.edit_price"), function()
 			local frame = vgui.Create("DFrame")
 			frame:SetSize(300, 110)
 			frame:Center()
@@ -117,21 +105,21 @@ function SVMOD:GUI_Fuel(panel, data)
 			end
 			frame:MakePopup()
 
-			local slide = SVMOD:CreateNumSlidePanel(frame, SVMOD:GetLanguage("Price"), function(val)
+			local slide = SVMOD:CreateNumSlidePanel(frame, #Price, function(val)
 				line:SetColumnText(6, math.Round(val))
 			end)
 			slide:SetValue(tonumber(line:GetColumnText(6)))
 			slide:SetMaxValue(300)
 			slide:SetUnit("u")
 
-			local button = SVMOD:CreateButton(frame, SVMOD:GetLanguage("CLOSE"), function()
+			local button = SVMOD:CreateButton(frame, #CLOSE, function()
 				frame:Close()
 			end)
 			button:Dock(BOTTOM)
 			button:SetSize(0, 30)
 		end):SetIcon("icon16/money.png")
 
-		menu:AddOption(SVMOD:GetLanguage("Delete"), function()
+		menu:AddOption(language.GetPhrase("svmod.fuel.delete"), function()
 			self:RemoveLine(lineID)
 
 			timer.Simple(FrameTime(), function()
@@ -210,7 +198,7 @@ function SVMOD:GUI_Fuel(panel, data)
 
 	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
-	local button = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("ADD"), function()
+	local button = SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.fuel.add"), function()
 		if table.Count(pumpList:GetLines()) < 30 then
 			pumpList:AddLine(table.Count(pumpList:GetLines()) + 1, "?", -1, "0, 0, 0", "0, 0, 0", 0)
 		end

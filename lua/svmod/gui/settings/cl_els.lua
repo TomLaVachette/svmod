@@ -1,11 +1,11 @@
 function SVMOD:GUI_ELS(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("FLASHING LIGHTS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.els.flashing"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable flashing lights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.els.enable_flashing"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.AreFlashingLightsEnabled == true),
@@ -19,7 +19,7 @@ function SVMOD:GUI_ELS(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.AreFlashingLightsEnabled == false),
@@ -34,12 +34,12 @@ function SVMOD:GUI_ELS(panel, data)
 		}
 	})
 
-	local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("LIGHTS"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.els.lights"))
 	title:DockMargin(0, 30, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Turning off the flashing lights when the driver exits the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.els.disable_lights"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.TurnOffLightsOnExit == true),
@@ -53,7 +53,7 @@ function SVMOD:GUI_ELS(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.TurnOffLightsOnExit == false),
@@ -68,7 +68,7 @@ function SVMOD:GUI_ELS(panel, data)
 		}
 	})
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Time to deactivate the flashing lights"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.els.time_lights"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("ELS")
 		net.WriteString("TimeTurnOffLights")
@@ -78,14 +78,14 @@ function SVMOD:GUI_ELS(panel, data)
 	end)
 	slide:SetValue(data.TimeTurnOffLights)
 	slide:SetMaxValue(300)
-	slide:SetUnit(SVMOD:GetLanguage("seconds"))
+	slide:SetUnit(language.GetPhrase("svmod.seconds"))
 
-	local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SOUND"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.els.sounds"))
 	title:DockMargin(0, 30, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Turning off the flashing sound when the driver exits the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.els.disable_sound"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.TurnOffSoundOnExit == true),
@@ -99,7 +99,7 @@ function SVMOD:GUI_ELS(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.TurnOffSoundOnExit == false),
@@ -114,7 +114,7 @@ function SVMOD:GUI_ELS(panel, data)
 		}
 	})
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Time to deactivate the flashing sound"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.els.time_sound"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("ELS")
 		net.WriteString("TimeTurnOffSound")
@@ -124,5 +124,5 @@ function SVMOD:GUI_ELS(panel, data)
 	end)
 	slide:SetValue(data.TimeTurnOffSound)
 	slide:SetMaxValue(300)
-	slide:SetUnit(SVMOD:GetLanguage("seconds"))
+	slide:SetUnit(language.GetPhrase("svmod.seconds"))
 end

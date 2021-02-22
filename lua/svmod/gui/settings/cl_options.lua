@@ -1,11 +1,11 @@
 function SVMOD:GUI_Options(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("PERFORMANCE"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.options.performance"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Draw the projected lights of the headlights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.projected"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (SVMOD.CFG.Lights.DrawProjectedLights == true),
@@ -15,7 +15,7 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (SVMOD.CFG.Lights.DrawProjectedLights == false),
@@ -26,9 +26,9 @@ function SVMOD:GUI_Options(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable shadows cast from the projected lights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.shadow"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (SVMOD.CFG.Lights.DrawShadows == true),
@@ -38,7 +38,7 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (SVMOD.CFG.Lights.DrawShadows == false),
@@ -49,9 +49,9 @@ function SVMOD:GUI_Options(panel, data)
 		}
 	})
 
-	local settingPanel = SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Draw smoke from damaged vehicles"), {
+	local settingPanel = SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.smoke"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (SVMOD.CFG.Damage.DrawSmoke == true),
@@ -61,7 +61,7 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (SVMOD.CFG.Damage.DrawSmoke == false),
@@ -73,11 +73,11 @@ function SVMOD:GUI_Options(panel, data)
 	})
 	settingPanel:DockMargin(0, 4, 0, 30)
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("GAMEPLAY"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.options.gameplay"))
 
-	local gameplayPanel = SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Automatically disable the blinkers once the vehicle has been rotated"), {
+	local gameplayPanel = SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.disable_blinkers"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (SVMOD.CFG.Lights.DisableBlinkersOnTurn == true),
@@ -87,7 +87,7 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (SVMOD.CFG.Lights.DisableBlinkersOnTurn == false),
@@ -99,16 +99,16 @@ function SVMOD:GUI_Options(panel, data)
 	})
 	gameplayPanel:DockMargin(0, 4, 0, 30)
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("SOUNDS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.options.sounds"))
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Horn volume"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.options.horn"), function(val)
 		SVMOD.CFG.Sounds.Horn = val / 100
 		SVMOD:Save()
 	end)
 	slide:SetValue(SVMOD.CFG.Sounds.Horn * 100)
 	slide:SetMaxValue(100)
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Siren volume"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.options.siren"), function(val)
 		SVMOD.CFG.Sounds.Siren = val / 100
 		SVMOD:Save()
 	end)

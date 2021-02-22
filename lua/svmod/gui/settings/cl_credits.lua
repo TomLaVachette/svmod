@@ -1,7 +1,7 @@
 function SVMOD:GUI_Credits(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("CREDITS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.credits"))
 
 	local function addLabel(authors, text)
 		local creditPanel = vgui.Create("DPanel", panel)

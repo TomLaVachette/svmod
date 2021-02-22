@@ -1,11 +1,11 @@
 function SVMOD:GUI_Lights(panel, data)
 	panel:Clear()
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("HEADLIGHTS"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.lights.headlights"))
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable headlights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.lights.enable_headlights"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.AreHeadlightsEnabled == true),
@@ -19,7 +19,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.AreHeadlightsEnabled == false),
@@ -34,9 +34,9 @@ function SVMOD:GUI_Lights(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Turning off the headlights when the driver exits the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.lights.disable_headlights"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.TurnOffHeadlightsOnExit == true),
@@ -50,7 +50,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.TurnOffHeadlightsOnExit == false),
@@ -65,7 +65,7 @@ function SVMOD:GUI_Lights(panel, data)
 		}
 	})
 
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Time to deactivate the headlights"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.lights.time_headlights"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("Lights")
 		net.WriteString("TimeTurnOffHeadlights")
@@ -75,14 +75,14 @@ function SVMOD:GUI_Lights(panel, data)
 	end)
 	slide:SetValue(data.TimeTurnOffHeadlights)
 	slide:SetMaxValue(300)
-	slide:SetUnit(SVMOD:GetLanguage("seconds"))
+	slide:SetUnit(language.GetPhrase("svmod.seconds"))
 
-	local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("BLINKERS AND HAZARD LIGHTS"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.lights.blinkers"))
 	title:DockMargin(0, 30, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Turning off the hazard lights when the driver exits the vehicle"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.lights.enable_blinkers"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.AreHazardLightsEnabled == true),
@@ -96,7 +96,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.AreHazardLightsEnabled == false),
@@ -111,9 +111,9 @@ function SVMOD:GUI_Lights(panel, data)
 		}
 	})
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Time to deactivate the hazard lights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.lights.disable_blinkers"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.TurnOffHazardOnExit == true),
@@ -127,7 +127,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.TurnOffHazardOnExit == false),
@@ -142,7 +142,7 @@ function SVMOD:GUI_Lights(panel, data)
 		}
 	})
 	
-	local slide = SVMOD:CreateNumSlidePanel(panel, SVMOD:GetLanguage("Time to deactivate the hazard lights"), function(val)
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.lights.time_blinkers"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("Lights")
 		net.WriteString("TimeTurnOffHazard")
@@ -152,14 +152,14 @@ function SVMOD:GUI_Lights(panel, data)
 	end)
 	slide:SetValue(data.TimeTurnOffHazard)
 	slide:SetMaxValue(300)
-	slide:SetUnit(SVMOD:GetLanguage("seconds"))
+	slide:SetUnit(language.GetPhrase("svmod.seconds"))
 
-	local title = SVMOD:CreateTitle(panel, SVMOD:GetLanguage("REVERSE LIGHTS"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.els.reverse"))
 	title:DockMargin(0, 30, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, SVMOD:GetLanguage("Enable reverse lights"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.els.enable_reverse"), {
 		{
-			Name = SVMOD:GetLanguage("Enable"),
+			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
 			HoverColor = Color(156, 255, 161),
 			IsSelected = (data.AreReverseLightsEnabled == true),
@@ -173,7 +173,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		},
 		{
-			Name = SVMOD:GetLanguage("Disable"),
+			Name = language.GetPhrase("svmod.disable"),
 			Color = Color(173, 48, 43),
 			HoverColor = Color(224, 62, 56),
 			IsSelected = (data.AreReverseLightsEnabled == false),

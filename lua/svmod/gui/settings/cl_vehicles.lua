@@ -17,20 +17,20 @@ function SVMOD:GUI_Vehicles(panel, data)
 		createHorizontalLine()
 	end
 
-	SVMOD:CreateTitle(panel, SVMOD:GetLanguage("VEHICLES"))
+	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.vehicles.vehicles"))
 
 	local listView =  SVMOD:CreateListView(panel)
-	listView:AddColumn(SVMOD:GetLanguage("Name"))
-	listView:AddColumn(SVMOD:GetLanguage("Category"))
-	listView:AddColumn(SVMOD:GetLanguage("Author"))
-	listView:AddColumn(SVMOD:GetLanguage("Last edition"))
+	listView:AddColumn(language.GetPhrase("svmod.vehicles.name"))
+	listView:AddColumn(language.GetPhrase("svmod.vehicles.category"))
+	listView:AddColumn(language.GetPhrase("svmod.vehicles.author"))
+	listView:AddColumn(language.GetPhrase("svmod.vehicles.last_edition"))
 
 	listView.OnRowRightClick = function(_, _, panel)
 		if panel:GetColumnText(3) == "-" then
 			if SVMOD.CFG.Contributor.IsEnabled then
 				local Menu = DermaMenu()
 
-				Menu:AddOption(SVMOD:GetLanguage("Create"), function()
+				Menu:AddOption(language.GetPhrase("svmod.vehicles.create"), function()
 					net.Start("SV_Editor_Open")
 					net.WriteString(panel.Model)
 					net.SendToServer()
@@ -43,7 +43,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 			local Menu = DermaMenu()
 
 			if SVMOD.CFG.Contributor.IsEnabled then
-				Menu:AddOption(SVMOD:GetLanguage("Edit"), function()
+				Menu:AddOption(language.GetPhrase("svmod.vehicles.edit"), function()
 					net.Start("SV_Editor_Open")
 					net.WriteString(panel.Model)
 					net.SendToServer()
@@ -51,13 +51,13 @@ function SVMOD:GUI_Vehicles(panel, data)
 				end):SetIcon("icon16/pencil.png")
 			end
 
-			Menu:AddOption(SVMOD:GetLanguage("Author profile"), function()
+			Menu:AddOption(language.GetPhrase("svmod.vehicles.author_profile"), function()
 				gui.OpenURL("http://steamcommunity.com/profiles/" .. panel.Data.Author.SteamID64)
 			end):SetIcon("icon16/user.png")
 
-			Menu:AddOption(SVMOD:GetLanguage("Report"), function()
-				SVMOD:OpenReportMenu(panel.Model, panel.Data.Timestamp)
-			end):SetIcon("icon16/exclamation.png")
+			-- Menu:AddOption(language.GetPhrase("Report"), function()
+			-- 	SVMOD:OpenReportMenu(panel.Model, panel.Data.Timestamp)
+			-- end):SetIcon("icon16/exclamation.png")
 
 			Menu:Open()
 		end
@@ -92,7 +92,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 
 	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
-	local button = SVMOD:CreateButton(bottomPanel, SVMOD:GetLanguage("Update"), function()
+	local button = SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.update"), function()
 		SVMOD:Data_Update()
 
 		panel:GetParent():Remove()
