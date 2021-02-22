@@ -68,7 +68,7 @@ end)
 local function disableHeadlights(veh)
 	if not SVMOD.CFG.Lights.TurnOffHeadlightsOnExit then
 		return
-	elseif not veh:SV_IsDriverSeat() then
+	elseif not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
 		return
 	end
 
@@ -81,20 +81,18 @@ local function disableHeadlights(veh)
 	end)
 end
 
-hook.Add("SV_PlayerLeaveVehicle", "SV_DisableHeadlightsOnLeave", function(ply, veh)
+hook.Add("PlayerLeaveVehicle", "SV_DisableHeadlightsOnLeave", function(ply, veh)
 	disableHeadlights(veh)
 end)
 
 hook.Add("PlayerDisconnected", "SV_DisableHeadlightsOnDisconnect", function(ply)
 	local veh = ply:GetVehicle()
 
-	if SVMOD:IsVehicle(veh) then
-		disableHeadlights(veh)
-	end
+	disableHeadlights(veh)
 end)
 
-hook.Add("SV_PlayerEnteredVehicle", "SV_UndoDisableHeadlightsOnLeave", function(ply, veh)
-	if not veh:SV_IsDriverSeat() then
+hook.Add("PlayerEnteredVehicle", "SV_UndoDisableHeadlightsOnLeave", function(ply, veh)
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
 		return
 	end
 

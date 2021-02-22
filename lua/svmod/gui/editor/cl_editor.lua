@@ -156,7 +156,7 @@ local function openEditor(veh)
 
 		local button = SVMOD:CreateButton(closeFrame, language.GetPhrase("svmod.editor.close_and_lose"), function()
 			closeFrame:Close()
-			frame:ManuelClose()
+			frame:ManualClose()
 		end)
 		button:Dock(TOP)
 		button:SetSize(0, 30)

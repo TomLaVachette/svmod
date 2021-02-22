@@ -105,36 +105,40 @@ end
 
 util.AddNetworkString("SV_SetLeftBlinkerState")
 net.Receive("SV_SetLeftBlinkerState", function(_, ply)
-	local Vehicle = ply:GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+		return
+	end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		if not Vehicle:SV_GetLeftBlinkerState() then
-			Vehicle:SV_TurnOnLeftBlinker()
+	if state then
+		if not veh:SV_GetLeftBlinkerState() then
+			veh:SV_TurnOnLeftBlinker()
 		end
 	else
-		if Vehicle:SV_GetLeftBlinkerState() then
-			Vehicle:SV_TurnOffLeftBlinker()
+		if veh:SV_GetLeftBlinkerState() then
+			veh:SV_TurnOffLeftBlinker()
 		end
 	end
 end)
 
 util.AddNetworkString("SV_SetRightBlinkerState")
 net.Receive("SV_SetRightBlinkerState", function(_, ply)
-	local Vehicle = ply:GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local veh = ply:GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+		return
+	end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		if not Vehicle:SV_GetRightBlinkerState() then
-			Vehicle:SV_TurnOnRightBlinker()
+	if state then
+		if not veh:SV_GetRightBlinkerState() then
+			veh:SV_TurnOnRightBlinker()
 		end
 	else
-		if Vehicle:SV_GetRightBlinkerState() then
-			Vehicle:SV_TurnOffRightBlinker()
+		if veh:SV_GetRightBlinkerState() then
+			veh:SV_TurnOffRightBlinker()
 		end
 	end
 end)
@@ -142,7 +146,9 @@ end)
 local function disableHazard(veh)
 	if not SVMOD.CFG.Lights.TurnOffHazardOnExit then return end
 
-	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
+		return
+	end
 
 	timer.Create("SV_DisableHazard_" .. veh:EntIndex(), SVMOD.CFG.Lights.TimeTurnOffHazard, 1, function()
 		if not SVMOD:IsVehicle(veh) then return end
@@ -161,20 +167,18 @@ local function disableHazard(veh)
 	end)
 end
 
-hook.Add("SV_PlayerLeaveVehicle", "SV_DisableHazardOnLeave", function(ply, veh)
+hook.Add("PlayerLeaveVehicle", "SV_DisableHazardOnLeave", function(ply, veh)
 	disableHazard(veh)
 end)
 
 hook.Add("PlayerDisconnected", "SV_DisableHazardOnDisconnect", function(ply)
 	local veh = ply:GetVehicle()
 
-	if SVMOD:IsVehicle(veh) then
-		disableHazard(veh)
-	end
+	disableHazard(veh)
 end)
 
-hook.Add("SV_PlayerEnteredVehicle", "SV_UndoDisableHazardOnLeave", function(ply, veh)
-	if not veh:SV_IsDriverSeat() then
+hook.Add("PlayerEnteredVehicle", "SV_UndoDisableHazardOnLeave", function(ply, veh)
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then
 		return
 	end
 

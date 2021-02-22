@@ -17,41 +17,57 @@ function SVMOD:SetFlashingLightsState(value)
 	net.SendToServer()
 end
 
+local function startFlashingSound(veh)
+	print(veh, veh.SV_Data)
+	if veh.SV_Data.Sounds.Siren and #veh.SV_Data.Sounds.Siren > 0 then
+		veh.SV_FlashingLightSound = CreateSound(veh, "svmod/siren/" .. veh.SV_Data.Sounds.Siren .. ".wav")
+		veh.SV_FlashingLightSound:SetSoundLevel(75)
+		veh.SV_FlashingLightSound:Play()
+		veh.SV_FlashingLightSound:ChangePitch(100, 0)
+		timer.Simple(0.1, function()
+			if veh.SV_FlashingLightSound then
+				veh.SV_FlashingLightSound:ChangeVolume(SVMOD.CFG.Sounds.Siren, 0)
+			end
+		end)
+	end
+end
+
+local function stopFlashingSound(veh)
+	if veh.SV_FlashingLightSound then
+		veh.SV_FlashingLightSound:Stop()
+	end
+end
+
 net.Receive("SV_TurnFlashingLights", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		Vehicle.SV_States.FlashingLights = true
-
-		Vehicle:EmitSound("svmod/headlight/switch_on.wav")
-
-		if Vehicle.SV_Data.Sounds.Siren and #Vehicle.SV_Data.Sounds.Siren > 0 then
-			Vehicle.SV_FlashingLightSound = CreateSound(Vehicle, "svmod/siren/" .. Vehicle.SV_Data.Sounds.Siren .. ".wav")
-			Vehicle.SV_FlashingLightSound:SetSoundLevel(75)
-			Vehicle.SV_FlashingLightSound:Play()
-			Vehicle.SV_FlashingLightSound:ChangePitch(100, 0)
-			timer.Simple(0.1, function()
-				if Vehicle.SV_FlashingLightSound then
-					Vehicle.SV_FlashingLightSound:ChangeVolume(SVMOD.CFG.Sounds.Siren, 0)
-				end
-			end)
-		end
+	if state then
+		veh.SV_States.FlashingLights = true
+		veh:EmitSound("svmod/headlight/switch_on.wav")
+		startFlashingSound(veh)
 	else
-		Vehicle.SV_States.FlashingLights = false
+		veh.SV_States.FlashingLights = false
+		veh:EmitSound("svmod/headlight/switch_off.wav")
+		stopFlashingSound(veh)
+	end
+end)
 
-		Vehicle:EmitSound("svmod/headlight/switch_off.wav")
+net.Receive("SV_TurnFlashingSound", function()
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
+	
+	local state = net.ReadBool()
 
-		if Vehicle.SV_FlashingLightSound then
-			Vehicle.SV_FlashingLightSound:Stop()
-		end
+	if state then
+		startFlashingSound(veh)
+	else
+		stopFlashingSound(veh)
 	end
 end)
 
 hook.Add("SV_UnloadVehicle", "SV_TurnOffFlashingLightsOnRemove", function(veh)
-	if veh.SV_FlashingLightSound then
-		veh.SV_FlashingLightSound:Stop()
-	end
+	stopFlashingSound(veh)
 end)

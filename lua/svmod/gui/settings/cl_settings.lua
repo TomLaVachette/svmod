@@ -21,9 +21,8 @@ net.Receive("SV_Settings", function()
 		data.AreReverseLightsEnabled = net.ReadBool()
 
 		data.AreFlashingLightsEnabled = net.ReadBool()
-		data.TurnOffLightsOnExit = net.ReadBool()
-		data.TimeTurnOffLights = net.ReadFloat()
-		data.TurnOffSoundOnExit = net.ReadBool()
+		data.TurnOffFlashingLightsOnExit = net.ReadBool()
+		data.TimeTurnOffFlashingLights = net.ReadFloat()
 		data.TimeTurnOffSound = net.ReadFloat()
 
 		data.HornIsEnabled = net.ReadBool()
