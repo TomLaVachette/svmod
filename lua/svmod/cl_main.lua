@@ -21,9 +21,20 @@ end)
 net.Receive("SV_SetAddonState", function()
 	SVMOD.IsEnabled = net.ReadBool()
 
-	http.Fetch("https://api.svmod.com/get_version.php", function(body, _, _, code)
-		SVMOD.FCFG.LastVersion = body
-	end)
+	local IPAddress = 
+
+	HTTP({
+		url = "https://api.svmod.com/get_version.php",
+		method = "GET",
+		parameters = {
+			server = game.GetIPAddress()
+		},
+		success = function(code, body)
+			if code == 200 then
+				SVMOD.FCFG.LastVersion = body
+			end
+		end
+	})
 
 	if SVMOD.IsEnabled then
 		hook.Run("SV_Enabled")

@@ -24,7 +24,7 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
                 pump.Entity = spawnPump(pos, ang, model)
             end
         else
-            pump.Entity = spawnPump(pump.Position, pump.Angle, pump.Model)
+            pump.Entity = spawnPump(pump.Position, pump.Angles, pump.Model)
         end
     end
 end)

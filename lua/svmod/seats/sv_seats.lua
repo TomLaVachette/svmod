@@ -76,7 +76,7 @@ function SVMOD.Metatable:SV_CreateSeat(index)
 
 	seat:SetParent(self)
 	seat:SetLocalPos(self.SV_Data.Seats[index].Position)
-	seat:SetLocalAngles(self.SV_Data.Seats[index].Angle)
+	seat:SetLocalAngles(self.SV_Data.Seats[index].Angles)
 
 	seat:SetCollisionGroup(COLLISION_GROUP_WORLD)
 

@@ -82,7 +82,7 @@ function ENT:Use(ply)
 	end
 end
 
-function ENT:AttachVehicle(veh, ply)
+function ENT:AttachVehicle(veh, ply, index)
 	local pumpData = SVMOD:GetFuelPumpByEnt(ply.SV_CurrentFuelPump)
 	if not pumpData then
 		self:Remove()
@@ -95,10 +95,10 @@ function ENT:AttachVehicle(veh, ply)
 			return
 		end
 	end
-	
+
 	self:SetParent(veh)
-	self:SetPos(veh:LocalToWorld(veh.SV_Data.Fuel.GasolinePistol.Position))
-	self:SetAngles(veh:LocalToWorldAngles(veh.SV_Data.Fuel.GasolinePistol.Angle))
+	self:SetPos(veh:LocalToWorld(veh.SV_Data.Fuel.GasTank[index].GasolinePistol.Position))
+	self:SetAngles(veh:LocalToWorldAngles(veh.SV_Data.Fuel.GasTank[index].GasolinePistol.Angles))
 
 	self.Player = ply
 	self.Pump = ply.SV_CurrentFuelPump

@@ -163,7 +163,7 @@ function SVMOD:EDITOR_Seats(panel, veh)
     -- -------------------
 
     for _, seat in ipairs(veh.SV_Data.Seats) do
-		addSeat(seat.Position, seat.Angle)
+		addSeat(seat.Position, seat.Angles)
 	end
 
 	listView.OnRowSelected = function(_, _, e)

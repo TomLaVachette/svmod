@@ -3,11 +3,6 @@ surface.CreateFont('HudHintTextLarge40', {
 	size = 40
 })
 
-surface.CreateFont('HudHintTextLarge25', {
-	font = 'HudHintTextLarge',
-	size = 25
-})
-
 -- hook.Add("SV_PlayerEnteredVehicle", "SV_EnableHUD", function(ply, veh)
 --	 hook.Add("HUDPaint", "SV_HUDPaint", function()
 --		 local Vehicle = LocalPlayer():GetVehicle()

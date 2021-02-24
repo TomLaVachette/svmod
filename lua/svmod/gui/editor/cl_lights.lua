@@ -46,19 +46,19 @@ local function projectedTexturePanel(panel, data)
     local title = SVMOD:CreateTitle(panel, "ANGLES")
     title:DockMargin(0, 30, 0, 0)
 
-    local xAngleNumSlider = createNumSlidePanel(panel, "Y Angle", data.Angle.x, -180, 180)
+    local xAngleNumSlider = createNumSlidePanel(panel, "Y Angle", data.Angles.x, -180, 180)
     xAngleNumSlider:SetFunction(function(val)
-        data.Angle.x = val
+        data.Angles.x = val
     end)
 
-    local yAngleNumSlider = createNumSlidePanel(panel, "P Angle", data.Angle.y, -180, 180)
+    local yAngleNumSlider = createNumSlidePanel(panel, "P Angle", data.Angles.y, -180, 180)
     yAngleNumSlider:SetFunction(function(val)
-        data.Angle.y = val
+        data.Angles.y = val
     end)
 
-    local zAngleNumSlider = createNumSlidePanel(panel, "R Angle", data.Angle.z, -180, 180)
+    local zAngleNumSlider = createNumSlidePanel(panel, "R Angle", data.Angles.z, -180, 180)
     zAngleNumSlider:SetFunction(function(val)
-        data.Angle.z = val
+        data.Angles.z = val
     end)
 
     local title = SVMOD:CreateTitle(panel, "OTHERS")

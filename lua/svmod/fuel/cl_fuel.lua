@@ -58,16 +58,18 @@ function SVMOD.Metatable:SV_ShowFillingHUD()
             col.g = math.floor((lastLerp * 200) * 255 / 100)
         end
 
-		local pos = self:LocalToWorld(self.SV_Data.Fuel.GasTank.Position or Vector(0, 0, 0))
-		local ang = SVMOD:RotateAroundAxis(self:GetAngles(), self.SV_Data.Fuel.GasTank.Angle or Angle(0, 0, 0))
+		for _, v in ipairs(self.SV_Data.Fuel.GasTank) do
+			local pos = self:LocalToWorld(v.GasHole.Position or Vector(0, 0, 0))
+			local ang = SVMOD:RotateAroundAxis(self:GetAngles(), v.GasHole.Angles or Angle(0, 0, 0))
 
-        cam.Start3D2D(pos, ang, 0.05)
-            draw.RoundedBox(20, 0, 0, 70, 200, ColorAlpha(col, 100))
-            if fuel > 0 then
-                draw.RoundedBox(20, 0, 200 - (200 * lastLerp), 70, 200 * lastLerp, col)
-            end
-            draw.DrawText(math.Round(lastLerp * 100) .. "%", "SVModFont", 35, math.Clamp(200 - 200 * lastLerp, 5, 180), Color(0, 0, 0), TEXT_ALIGN_CENTER)
-        cam.End3D2D()
+			cam.Start3D2D(pos, ang, 0.05)
+				draw.RoundedBox(20, 0, 0, 70, 200, ColorAlpha(col, 100))
+				if fuel > 0 then
+					draw.RoundedBox(20, 0, 200 - (200 * lastLerp), 70, 200 * lastLerp, col)
+				end
+				draw.DrawText(math.Round(lastLerp * 100) .. "%", "SVModFont", 35, math.Clamp(200 - 200 * lastLerp, 5, 180), Color(0, 0, 0), TEXT_ALIGN_CENTER)
+			cam.End3D2D()
+			end
     end)
 end
 

@@ -190,7 +190,7 @@ function SVMOD:RenderLights(veh, lights)
 			if SVMOD.CFG.Lights.DrawProjectedLights and not v.ProjectedTexture.Entity then
 				v.ProjectedTexture.Entity = veh:SV_CreateProjectedTexture(
 					v.ProjectedTexture.Position,
-					v.ProjectedTexture.Angle,
+					v.ProjectedTexture.Angles,
 					v.ProjectedTexture.Color,
 					v.ProjectedTexture.Size,
 					v.ProjectedTexture.FOV
@@ -198,7 +198,7 @@ function SVMOD:RenderLights(veh, lights)
 			end
 
 			if v.ProjectedTexture.Entity then
-				v.ProjectedTexture.Entity:SetAngles(rotateAroundAxis(veh:GetAngles(), v.ProjectedTexture.Angle or Angle(0, 0, 0)))
+				v.ProjectedTexture.Entity:SetAngles(rotateAroundAxis(veh:GetAngles(), v.ProjectedTexture.Angles or Angle(0, 0, 0)))
 				v.ProjectedTexture.Entity:SetPos(veh:LocalToWorld(v.ProjectedTexture.Position or Vector(0, 0, 0)))
 				v.ProjectedTexture.Entity:Update()
 			end

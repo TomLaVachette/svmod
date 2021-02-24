@@ -64,7 +64,7 @@ net.Receive("SV_Settings_GetFuelPump", function(_, ply)
 		net.WriteBool(v.MapCreationID >= 0)
 		net.WriteUInt(v.MapCreationID, 16) -- max: 65535
 		net.WriteVector(v.Position)
-		net.WriteAngle(v.Angle)
+		net.WriteAngle(v.Angles)
 		net.WriteUInt(v.Price, 16) -- max: 65535
 	end
 
@@ -91,7 +91,7 @@ net.Receive("SV_Settings_SetFuelPump", function(_, ply)
 			Model = model,
 			MapCreationID = mapCreationID,
 			Position = position,
-			Angle = angle,
+			Angles = angle,
 			Price = price
 		})
 	end

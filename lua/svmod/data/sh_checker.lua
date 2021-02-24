@@ -29,8 +29,8 @@ function SVMOD:Data_Check(x)
 					return "Sprite[" .. i .. "].Width"
 				end
 			elseif v.ProjectedTexture then
-				if v.Angle and not isvector(v.Angle) then
-					return "Sprite[" .. i .. "].Angle"
+				if v.Angles and not isvector(v.Angles) then
+					return "Sprite[" .. i .. "].Angles"
 				elseif v.Color and (not v.Color.r or not v.Color.g or not v.Color.b or not v.Color.a) then
 					return "Sprite[" .. i .. "].Color"
 				elseif v.FOV and not isnumber(v.FOV) then
@@ -52,8 +52,8 @@ function SVMOD:Data_Check(x)
 		end
 
 		for i, v in ipairs(x) do
-			if v.Angle and not isangle(v.Angle) then
-				return "Sprite[" .. i .. "].Angle"
+			if v.Angles and not isangle(v.Angles) then
+				return "Sprite[" .. i .. "].Angles"
 			elseif v.Health and not isnumber(v.Health) then
 				return "Sprite[" .. i .. "].Health"
 			elseif v.LastLerp and not isnumber(v.LastLerp) then
@@ -74,8 +74,8 @@ function SVMOD:Data_Check(x)
 		end
 
 		for i, v in ipairs(x) do
-			if v.Angle and not isangle(v.Angle) then
-				return "Sprite[" .. i .. "].Angle"
+			if v.Angles and not isangle(v.Angles) then
+				return "Sprite[" .. i .. "].Angles"
 			elseif v.Position and not isvector(v.Position) then
 				return "Sprite[" .. i .. "].Position"
 			end
@@ -134,23 +134,29 @@ function SVMOD:Data_Check(x)
 	if not x.Fuel then
 		return "DATA.Fuel"
 	else
-		-- if x.Fuel.Capacity and not isnumber(x.Fuel.Capacity) then
-		-- 	return "DATA.Fuel.Capacity"
-		-- elseif x.Fuel.Consumption and not isnumber(x.Fuel.Consumption) then
-		-- 	return "DATA.Fuel.Consumption"
-		-- elseif not istable(x.Fuel.GasTank) then
-		-- 	return "DATA.Fuel.GasTank"
-        -- elseif x.Fuel.GasTank.Position and not isvector(x.Fuel.GasTank.Position) then
-		-- 	return "DATA.Fuel.GasTank.Position"
-        -- elseif x.Fuel.GasTank.Angle and not isangle(x.Fuel.GasTank.Angle) then
-		-- 	return "DATA.Fuel.GasTank.Angle"
-		-- elseif not istable(x.Fuel.GasolinePistol) then
-		-- 	return "DATA.Fuel.GasolinePistol"
-        -- elseif x.Fuel.GasolinePistol.Position and not isvector(x.Fuel.GasolinePistol.Position) then
-		-- 	return "DATA.Fuel.GasolinePistol.Position"
-        -- elseif x.Fuel.GasolinePistol.Angle and not isangle(x.Fuel.GasolinePistol.Angle) then
-		-- 	return "DATA.Fuel.GasolinePistol.Angle"
-        -- end
+		if x.Fuel.Capacity and not isnumber(x.Fuel.Capacity) then
+			return "DATA.Fuel.Capacity"
+		elseif x.Fuel.Consumption and not isnumber(x.Fuel.Consumption) then
+			return "DATA.Fuel.Consumption"
+		elseif not istable(x.Fuel.GasTank) then
+			return "DATA.Fuel.GasTank"
+		end
+
+		for i, v in ipairs(x.Fuel.GasTank) do
+			if not istable(v.GasHole) then
+				return "DATA.Fuel.GasTank.GasHole"
+			elseif v.Position and not isvector(v.GasHole.Position) then
+				return "DATA.Fuel.GasTank.GasHole.Position"
+			elseif v.Angles and not isangle(v.GasHole.Angles) then
+				return "DATA.Fuel.GasTank.GasHole.Angles"
+			elseif not istable(v.GasolinePistol) then
+				return "DATA.Fuel.GasTank.GasolinePistol"
+			elseif v.GasolinePistol.Position and not isvector(v.GasolinePistol.Position) then
+				return "DATA.Fuel.GasTank.GasolinePistol.Position"
+			elseif v.GasolinePistol.Angles and not isangle(v.GasolinePistol.Angles) then
+				return "DATA.Fuel.GasTank.GasolinePistol.Angles"
+			end
+		end
 	end
 
 	if not x.Headlights then
