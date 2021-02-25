@@ -109,12 +109,12 @@ function SVMOD.Metatable:SV_SetHealth(value)
 				for _, ply in ipairs(veh:SV_GetAllPlayers()) do
 					ply:GetVehicle():SV_ExitVehicle(ply)
 
-					local Position = veh:GetPos()
-					local Angle = math.random(1,359)
-					Position.x = Position.x + 10 * math.cos(Angle)
-					Position.y = Position.y + 10 * math.sin(Angle)
-					Position.z = Position.z + 50
-					ply:SetPos(Position)
+					local pos = veh:GetPos()
+					local ang = math.random(1,359)
+					pos.x = pos.x + 10 * math.cos(ang)
+					pos.y = pos.y + 10 * math.sin(ang)
+					pos.z = pos.z + 50
+					ply:SetPos(pos)
 				end
 
 				util.BlastDamage(veh, veh, veh:GetPos(), 300, 200)

@@ -570,7 +570,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 local index = table.insert(data, {
                     ProjectedTexture = {
                         Position = Vector(pos.x, pos.y, pos.z),
-                        Angle = Angle(0, 90, 0),
+                        Angles = Angle(0, 90, 0),
                         Color = Color(255, 255, 255),
                         Size = 1000,
                         FOV = 110
@@ -594,7 +594,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
             local index = table.insert(data, {
                 ProjectedTexture = {
                     Position = Vector(0, 0, 0),
-                    Angle = Angle(0, 90, 0),
+                    Angles = Angle(0, 90, 0),
                     Color = Color(255, 255, 255),
                     Size = 1000,
                     FOV = 110

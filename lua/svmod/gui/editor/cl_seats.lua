@@ -123,7 +123,7 @@ function SVMOD:EDITOR_Seats(panel, veh)
 			if IsValid(line.Seat) then
 				veh.SV_Data.Seats[index] = {
 					Position = line.Seat:GetLocalPos(),
-					Angle = line.Seat:GetLocalAngles()
+					Angles = line.Seat:GetLocalAngles()
 				}
 				line.Seat:Remove()
 			end
