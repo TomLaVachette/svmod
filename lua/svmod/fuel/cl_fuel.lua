@@ -30,11 +30,11 @@ end)
 function SVMOD.Metatable:SV_ShowFillingHUD()
 	local lastLerp, startLerp
 
-    hook.Add("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex(), function()
-        if not IsValid(self) then
-            hook.Remove("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex())
-            return
-        end
+	hook.Add("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex(), function()
+		if not IsValid(self) then
+			hook.Remove("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex())
+			return
+		end
 
 		local fuel = self:SV_GetFuel()
 		local maxFuel = self:SV_GetMaxFuel()
@@ -51,12 +51,12 @@ function SVMOD.Metatable:SV_ShowFillingHUD()
 
 		lastLerp = Lerp(SysTime() - startLerp, lastLerp, percent)
 
-        local col = Color(255, 255, 0)
-        if lastLerp > 0.5 then
-            col.r = math.floor(255 - (lastLerp * 200 - 100) * 255 / 100)
-        else
-            col.g = math.floor((lastLerp * 200) * 255 / 100)
-        end
+		local col = Color(255, 255, 0)
+		if lastLerp > 0.5 then
+			col.r = math.floor(255 - (lastLerp * 200 - 100) * 255 / 100)
+		else
+			col.g = math.floor((lastLerp * 200) * 255 / 100)
+		end
 
 		for _, v in ipairs(self.SV_Data.Fuel.GasTank) do
 			local pos = self:LocalToWorld(v.GasHole.Position or Vector(0, 0, 0))
@@ -70,16 +70,16 @@ function SVMOD.Metatable:SV_ShowFillingHUD()
 				draw.DrawText(math.Round(lastLerp * 100) .. "%", "SVModFont", 35, math.Clamp(200 - 200 * lastLerp, 5, 180), Color(0, 0, 0), TEXT_ALIGN_CENTER)
 			cam.End3D2D()
 			end
-    end)
+	end)
 end
 
 -- Hides the interface to view a vehicle's fuel level.
 function SVMOD.Metatable:SV_HideFillingHUD()
-    hook.Remove("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex())
+	hook.Remove("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex())
 end
 
 net.Receive("SV_StartFilling", function()
-    local veh = net.ReadEntity()
+	local veh = net.ReadEntity()
 
 	if SVMOD:IsVehicle(veh) then
 		-- veh.SV_FillingSound = CreateSound(veh, "svmod/fuel/fill-up.wav")

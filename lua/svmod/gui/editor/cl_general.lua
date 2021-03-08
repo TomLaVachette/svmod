@@ -1,15 +1,15 @@
 function SVMOD:EDITOR_General(panel, veh)
 	panel:Clear()
 
-    local bottomPanel = vgui.Create("DPanel", panel)
-    bottomPanel:Dock(BOTTOM)
-    bottomPanel:SetSize(0, 30)
-    bottomPanel:SetDrawBackground(false)
+	local bottomPanel = vgui.Create("DPanel", panel)
+	bottomPanel:Dock(BOTTOM)
+	bottomPanel:SetSize(0, 30)
+	bottomPanel:SetDrawBackground(false)
 
-    local authorTextBox
+	local authorTextBox
 
-    local addButton = SVMOD:CreateButton(bottomPanel, "SAVE", function()
-        local tab = table.Copy(veh.SV_Data)
+	local addButton = SVMOD:CreateButton(bottomPanel, "SAVE", function()
+		local tab = table.Copy(veh.SV_Data)
 
 		tab.Timestamp = nil
 
@@ -42,18 +42,18 @@ function SVMOD:EDITOR_General(panel, veh)
 					notification.AddLegacy("Invalid API key.", NOTIFY_ERROR, 5)
 				end
 
-                if IsValid(panel:GetParent()) then
-                    panel:GetParent():ManualClose()
-                end
+				if IsValid(panel:GetParent()) then
+					panel:GetParent():ManualClose()
+				end
 			end,
 			failed = function()
 				notification.AddLegacy("Server does not respond.", NOTIFY_ERROR, 5)
 			end
 		})
-    end)
-    addButton:Dock(RIGHT)
+	end)
+	addButton:Dock(RIGHT)
 
-    local focusButton = SVMOD:CreateButton(bottomPanel, "FOCUS", function(btn)
+	local focusButton = SVMOD:CreateButton(bottomPanel, "FOCUS", function(btn)
 		local frame = panel:GetParent()
 
 		if btn:GetText() == "UNFOCUS" then
@@ -63,13 +63,13 @@ function SVMOD:EDITOR_General(panel, veh)
 			frame:EnableFocus()
 			btn:SetText("UNFOCUS")
 		end
-    end)
-    focusButton:Dock(RIGHT)
-    focusButton:DockMargin(0, 0, 10, 0)
+	end)
+	focusButton:Dock(RIGHT)
+	focusButton:DockMargin(0, 0, 10, 0)
 
-    SVMOD:CreateTitle(panel, "INFORMATIONS")
+	SVMOD:CreateTitle(panel, "INFORMATIONS")
 
-    local authorPanel = vgui.Create("DPanel", panel)
+	local authorPanel = vgui.Create("DPanel", panel)
 	authorPanel:Dock(TOP)
 	authorPanel:DockMargin(0, 4, 0, 4)
 	authorPanel:SetSize(0, 30)
@@ -107,32 +107,32 @@ function SVMOD:EDITOR_General(panel, veh)
 	end
 
 	local blinkerButton = SVMOD:CreateButton(blinkerPanel, "COPY LEFT BLINKERS TO RIGHT", function()
-        for _, l in ipairs(veh.SV_Data.Blinkers.LeftLights) do
+		for _, l in ipairs(veh.SV_Data.Blinkers.LeftLights) do
 			local tab = SVMOD:DeepCopy(l)
 			symmetric(tab)
 			table.insert(veh.SV_Data.Blinkers.RightLights, tab)
 		end
-    end)
+	end)
 	blinkerButton:SetSize(340, 0)
 	blinkerButton:Dock(LEFT)
 
 	local blinkerButton = SVMOD:CreateButton(blinkerPanel, "COPY RIGHT BLINKERS TO LEFT", function()
-        for _, l in ipairs(veh.SV_Data.Blinkers.RightLights) do
+		for _, l in ipairs(veh.SV_Data.Blinkers.RightLights) do
 			local tab = SVMOD:DeepCopy(l)
 			symmetric(tab)
 			table.insert(veh.SV_Data.Blinkers.LeftLights, tab)
 		end
-    end)
+	end)
 	blinkerButton:SetSize(340, 0)
-    blinkerButton:Dock(RIGHT)
+	blinkerButton:Dock(RIGHT)
 
 	local blinkerButton = SVMOD:CreateButton(panel, "COPY BRAKE TO HEADLIGHTS", function()
-        for _, l in ipairs(veh.SV_Data.Back.BrakeLights) do
+		for _, l in ipairs(veh.SV_Data.Back.BrakeLights) do
 			local tab = SVMOD:DeepCopy(l)
 			table.insert(veh.SV_Data.Headlights, tab)
 		end
-    end)
+	end)
 	blinkerButton:SetSize(0, 35)
-    blinkerButton:Dock(TOP)
+	blinkerButton:Dock(TOP)
 	blinkerButton:DockMargin(0, 10, 0, 0)
 end

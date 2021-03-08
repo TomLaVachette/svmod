@@ -35,8 +35,8 @@ local function openEditor(veh)
 
 	local frame = SVMOD:CreateFrame("SVMOD : EDITOR")
 	frame:SetSize(900, 930)
-    frame:SetPos(10, 10)
-    frame:SetAlpha(25)
+	frame:SetPos(10, 10)
+	frame:SetAlpha(25)
 
 	frame.EnableFocus = function(self)
 		hook.Remove("ScoreboardShow", "SV_Editor_Show")
@@ -77,7 +77,7 @@ local function openEditor(veh)
 		return true
 	end)
 
-    frame:CreateMenuButton(language.GetPhrase("svmod.home.home"), TOP, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.home.home"), TOP, function()
 		activeTab("None")
 		SVMOD:EDITOR_General(frame:GetCenterPanel(), veh)
 	end)
@@ -139,7 +139,7 @@ local function openEditor(veh)
 		SVMOD:EDITOR_Sounds(frame:GetCenterPanel(), veh.SV_Data.Sounds)
 	end)
 
-    frame:CreateMenuButton(language.GetPhrase("svmod.close"), BOTTOM, function()
+	frame:CreateMenuButton(language.GetPhrase("svmod.close"), BOTTOM, function()
 		local closeFrame = vgui.Create("DFrame")
 		closeFrame:SetSize(300, 110)
 		closeFrame:Center()

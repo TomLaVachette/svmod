@@ -1,35 +1,35 @@
 function SVMOD:EDITOR_Seats(panel, veh)
 	panel:Clear()
 
-    local listView = SVMOD:CreateListView(panel)
-    listView:SetWidth(100, 0)
-    listView:SetHideHeaders(true)
-    listView:Dock(LEFT)
-    listView:DockMargin(0, 0, 20, 0)
-    listView:AddColumn("ID")
+	local listView = SVMOD:CreateListView(panel)
+	listView:SetWidth(100, 0)
+	listView:SetHideHeaders(true)
+	listView:Dock(LEFT)
+	listView:DockMargin(0, 0, 20, 0)
+	listView:AddColumn("ID")
 	listView:SetMultiSelect(false)
 
-    local bottomPanel = vgui.Create("DPanel", panel)
-    bottomPanel:Dock(BOTTOM)
-    bottomPanel:SetSize(0, 30)
-    bottomPanel:SetDrawBackground(false)
+	local bottomPanel = vgui.Create("DPanel", panel)
+	bottomPanel:Dock(BOTTOM)
+	bottomPanel:SetSize(0, 30)
+	bottomPanel:SetDrawBackground(false)
 
 	local centerPanel = vgui.Create("DPanel", panel)
-    centerPanel:Dock(FILL)
-    centerPanel:SetDrawBackground(false)
+	centerPanel:Dock(FILL)
+	centerPanel:SetDrawBackground(false)
 
-    local addSeat
+	local addSeat
 
-    local addButton = SVMOD:CreateButton(bottomPanel, "Add", function()
-        addSeat(Vector(0, 0, 0), Angle(0, 0, 0))
-    end)
-    addButton:Dock(RIGHT)
+	local addButton = SVMOD:CreateButton(bottomPanel, "Add", function()
+		addSeat(Vector(0, 0, 0), Angle(0, 0, 0))
+	end)
+	addButton:Dock(RIGHT)
 
-    -- -------------------
-    --  FUNCTIONS
-    -- -------------------
+	-- -------------------
+	--  FUNCTIONS
+	-- -------------------
 
-    addSeat = function(position, angles)
+	addSeat = function(position, angles)
 		local max = 0
 		for _, line in pairs(listView:GetLines()) do
 			local index = tonumber(line:GetColumnText(1))
@@ -102,19 +102,19 @@ function SVMOD:EDITOR_Seats(panel, veh)
 		return numSlider
 	end
 
-    -- -------------------
-    --  HOOKS
-    -- -------------------
+	-- -------------------
+	--  HOOKS
+	-- -------------------
 
-    hook.Add("PreDrawHalos", "SV_Editor_Halo", function()
-        local seats = {}
+	hook.Add("PreDrawHalos", "SV_Editor_Halo", function()
+		local seats = {}
 
 		local _, line = listView:GetSelectedLine()
 		if line and IsValid(line.Seat) then
 			table.insert(seats, line.Seat)
 		end
 
-        halo.Add(seats, Color(255, 0, 0), 2, 2, 1, true, true)
+		halo.Add(seats, Color(255, 0, 0), 2, 2, 1, true, true)
 	end)
 
 	listView.OnRemove = function()
@@ -159,10 +159,10 @@ function SVMOD:EDITOR_Seats(panel, veh)
 	end
 
 	-- -------------------
-    --  PANELS
-    -- -------------------
+	--  PANELS
+	-- -------------------
 
-    for _, seat in ipairs(veh.SV_Data.Seats) do
+	for _, seat in ipairs(veh.SV_Data.Seats) do
 		addSeat(seat.Position, seat.Angles)
 	end
 

@@ -120,7 +120,7 @@ function ENT:SpawnRope()
 		return
 	end
 
-    local a, b = self.Pump:GetModelBounds()
+	local a, b = self.Pump:GetModelBounds()
 
 	self.Rope = constraint.Rope(
 		self,

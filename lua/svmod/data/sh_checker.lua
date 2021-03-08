@@ -191,13 +191,13 @@ function SVMOD:Data_Check(x)
 	else
 		if x.Sounds.Blinkers and not isstring(x.Sounds.Blinkers) then
 			return "DATA.Sounds.Blinkers"
-        elseif x.Sounds.Horn and not isstring(x.Sounds.Horn) then
-            return "DATA.Sounds.Horn"
-        elseif x.Sounds.Reversing and not isstring(x.Sounds.Reversing) then
-            return "DATA.Sounds.Reversing"
-        elseif x.Sounds.Siren and not isstring(x.Sounds.Siren) then
-            return "DATA.Sounds.Siren"
-        end
+		elseif x.Sounds.Horn and not isstring(x.Sounds.Horn) then
+			return "DATA.Sounds.Horn"
+		elseif x.Sounds.Reversing and not isstring(x.Sounds.Reversing) then
+			return "DATA.Sounds.Reversing"
+		elseif x.Sounds.Siren and not isstring(x.Sounds.Siren) then
+			return "DATA.Sounds.Siren"
+		end
 	end
 
 	return nil
