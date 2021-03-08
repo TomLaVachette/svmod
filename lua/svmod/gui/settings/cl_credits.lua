@@ -9,7 +9,7 @@ function SVMOD:GUI_Credits(panel, data)
 		creditPanel:DockMargin(0, 4, 0, 4)
 		creditPanel:SetSize(0, 30)
 		creditPanel:SetDrawBackground(false)
-	
+
 		for i, author in ipairs(authors) do
 			local authorPanel = vgui.Create("DPanel", creditPanel)
 			authorPanel:Dock(LEFT)
@@ -25,10 +25,10 @@ function SVMOD:GUI_Credits(panel, data)
 			leftLabel:SetFont("SV_Calibri18")
 			leftLabel:SetText(name)
 			leftLabel:SizeToContents()
-	
+
 			surface.SetFont("SV_Calibri18")
 			local width = surface.GetTextSize(name)
-	
+
 			if author.SteamID64 then
 				local steamButton = vgui.Create("DImageButton", authorPanel)
 				steamButton:SetPos(2 + width + 5, 5)
@@ -101,7 +101,7 @@ function SVMOD:GUI_Credits(panel, data)
 			IsFemale = false,
 		}
 	}, "Gasoline pistol modeller")
-	
+
 	addLabel({
 		{
 			Name = "jycxed",

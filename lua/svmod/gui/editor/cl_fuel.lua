@@ -61,7 +61,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
         numSlider:SetMaxValue(maxValue)
         numSlider:SetUnit(" ")
         numSlider:SetRealTime(true)
-    
+
         return numSlider
     end
 
@@ -283,7 +283,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
             e.Data.GasolinePistol.Angles.z = val
             gasolinePistol:SetAngles(veh:LocalToWorldAngles(e.Data.GasolinePistol.Angles))
         end)
-    
+
         title.OnRemove = function()
             gasolinePistol:Remove()
         end

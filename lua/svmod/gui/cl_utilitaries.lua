@@ -85,36 +85,36 @@ function SVMOD:CreateFrame(name)
 		button.Paint = function(self, w, h)
 			surface.SetDrawColor(12, 22, 24)
 			surface.DrawRect(0, 0, w, h)
-	
+
 			local color
-	
+
 			if self:IsHovered() then
 				if not self.soundPlayed then
 					surface.PlaySound("garrysmod/ui_hover.wav")
 					self.soundPlayed = true
 				end
-	
+
 				surface.SetDrawColor(237, 197, 255)
 				color = Color(237, 197, 255)
 			else
 				self.soundPlayed = false
-	
+
 				surface.SetDrawColor(154, 128, 166)
 				color = Color(154, 128, 166)
 			end
-	
+
 			surface.DrawRect(3, 3, 7, 1)
 			surface.DrawRect(3, 3, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, 3, 7, 1)
 			surface.DrawRect(w - 3, 3, 1, 7)
-	
+
 			surface.DrawRect(3, h - 3, 7, 1)
 			surface.DrawRect(3, h - 3 - 7, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, h - 3, 7, 1)
 			surface.DrawRect(w - 3, h - 3 - 7, 1, 7)
-	
+
 			draw.SimpleText(text, "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 
@@ -157,15 +157,15 @@ function SVMOD:CreateSettingPanel(panel, text, panels)
 		button.Paint = function(self, w, h)
 			surface.SetDrawColor(12, 22, 24)
 			surface.DrawRect(0, 0, w, h)
-	
+
 			local color
-	
+
 			if self:IsHovered() then
 				if not self.soundPlayed then
 					surface.PlaySound("garrysmod/ui_hover.wav")
 					self.soundPlayed = true
 				end
-	
+
 				if p.IsSelected then
 					color = p.HoverColor
 				else
@@ -182,19 +182,19 @@ function SVMOD:CreateSettingPanel(panel, text, panels)
 			end
 
 			surface.SetDrawColor(color.r, color.g, color.b)
-	
+
 			surface.DrawRect(3, 3, 7, 1)
 			surface.DrawRect(3, 3, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, 3, 7, 1)
 			surface.DrawRect(w - 3, 3, 1, 7)
-	
+
 			surface.DrawRect(3, h - 3, 7, 1)
 			surface.DrawRect(3, h - 3 - 7, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, h - 3, 7, 1)
 			surface.DrawRect(w - 3, h - 3 - 7, 1, 7)
-	
+
 			draw.SimpleText(p.Name, "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
@@ -337,7 +337,7 @@ function SVMOD:CreateNumSlidePanel(panel, text, fun)
 					local cursorX, _ = self:LocalCursorPos()
 
 					local cursor = math.Clamp(cursorX / width, 0, 1)
-					
+
 					local val = math.Round(cursor * (self:GetMaxValue() - self:GetMinValue()) + self:GetMinValue())
 
 					if numSlider:GetRealTime() and numSlider:GetValue() ~= val then

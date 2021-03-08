@@ -64,7 +64,7 @@ function SVMOD.Metatable:SV_CreateSeat(index)
 				self.SV_Data.Seats[index].Entity = nil
 			end
 		end)
-		
+
 		return self
 	end
 
@@ -180,7 +180,7 @@ hook.Add("PlayerEnteredVehicle", "SV_PlayerEnteredVehicle", function(ply, seat)
 	end
 
 	ply:SetEyeAngles(Angle(0, 90, 0))
-	
+
 	-- Update last driver
 	if seat:SV_IsDriverSeat() then
 		seat.SV_LastDriver = ply
@@ -329,7 +329,7 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 		if seat:SV_IsDriverSeat() then
 			seat.SV_LastDriver = ply
 		end
-		
+
 		ply:SetEyeAngles(EyeAngle)
 	end
 end)

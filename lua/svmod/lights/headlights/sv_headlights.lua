@@ -25,7 +25,7 @@ function SVMOD.Metatable:SV_TurnOnHeadlights()
 	net.WriteEntity(self)
 	net.WriteBool(true)
 	net.Broadcast()
-	
+
 	self.SV_States.Headlights = true
 
 	return true
@@ -45,7 +45,7 @@ function SVMOD.Metatable:SV_TurnOffHeadlights()
 	net.WriteEntity(self)
 	net.WriteBool(false)
 	net.Broadcast()
-	
+
 	self.SV_States.Headlights = false
 
 	return true
@@ -76,7 +76,7 @@ local function disableHeadlights(veh)
 		if not SVMOD:IsVehicle(veh) then
 			return
 		end
-		
+
 		veh:SV_TurnOffHeadlights()
 	end)
 end

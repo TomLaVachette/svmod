@@ -58,7 +58,7 @@ end)
 net.Receive("SV_TurnFlashingSound", function()
 	local veh = net.ReadEntity()
 	if not SVMOD:IsVehicle(veh) then return end
-	
+
 	local state = net.ReadBool()
 
 	if state then

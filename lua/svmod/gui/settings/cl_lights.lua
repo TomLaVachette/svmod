@@ -141,7 +141,7 @@ function SVMOD:GUI_Lights(panel, data)
 			end
 		}
 	})
-	
+
 	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.lights.time_blinkers"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("Lights")

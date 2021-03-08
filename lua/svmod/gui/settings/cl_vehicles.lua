@@ -6,14 +6,14 @@ function SVMOD:GUI_Vehicles(panel, data)
 		headerPanel:Dock(TOP)
 		headerPanel:SetSize(0, 20)
 		headerPanel:SetDrawBackground(false)
-	
+
 		local titleLabel = vgui.Create("DLabel", headerPanel)
 		titleLabel:SetPos(0, 0)
 		titleLabel:SetFont("SV_CalibriLight22")
 		titleLabel:SetColor(Color(178, 95, 245))
 		titleLabel:SetText(name)
 		titleLabel:SizeToContents()
-	
+
 		createHorizontalLine()
 	end
 
@@ -79,7 +79,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 			else
 				line = listView:AddLine(veh.Name, veh.Category, "-", "-")
 			end
-			line.Model = veh.Model		
+			line.Model = veh.Model
 		end
 	end
 	updateVehicleList()

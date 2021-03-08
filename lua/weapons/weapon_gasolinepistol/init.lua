@@ -13,7 +13,7 @@ function SWEP:Equip(ply)
     end
 
     local a, b = pump:GetModelBounds()
-	
+
     self.Rope = constraint.Rope(
         ply,
         pump,
@@ -47,22 +47,22 @@ function SWEP:PrimaryAttack()
         for i, v in ipairs(ent.SV_Data.Fuel.GasTank) do
             if trace.HitPos:DistToSqr(ent:LocalToWorld(ent.SV_Data.Fuel.GasTank[i].GasolinePistol.Position)) < 200 then
                 self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-    
+
                 timer.Simple(0.45, function()
                     if not IsValid(self) then
                         return
                     end
-    
+
                     if self:GetOwner().SV_WeaponBeforePickUpFiller then
                         self:GetOwner():SelectWeapon(self:GetOwner().SV_WeaponBeforePickUpFiller)
                     end
-    
+
                     self:Remove()
-    
+
                     if not IsValid(ent) then
                         return
                     end
-    
+
                     local fillerPistol = ents.Create("sv_gasolinepistol")
                     fillerPistol:AttachVehicle(ent, self:GetOwner(), i)
                     fillerPistol:Spawn()

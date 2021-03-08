@@ -83,7 +83,7 @@ function SVMOD.Metatable:SV_TurnOnRightBlinker()
 end
 
 -- Turns off the right blinkers of a vehicle.
--- 
+--
 -- The operation will fail if the right blinkers are
 -- already switched off.
 -- @treturn boolean True if successful, false otherwise
@@ -152,7 +152,7 @@ local function disableHazard(veh)
 
 	timer.Create("SV_DisableHazard_" .. veh:EntIndex(), SVMOD.CFG.Lights.TimeTurnOffHazard, 1, function()
 		if not SVMOD:IsVehicle(veh) then return end
-		
+
 		if veh:SV_GetHazardLightsState() then
 			veh:SV_TurnOffHazardLights()
 		end

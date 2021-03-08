@@ -31,6 +31,6 @@ function SVMOD.Metatable:SV_GetPercentFuel()
 	if MaxFuel == 0 then
 		return 0
 	end
-	
+
 	return self:SV_GetFuel() / MaxFuel * 100
 end

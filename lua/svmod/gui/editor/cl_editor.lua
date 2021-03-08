@@ -52,7 +52,7 @@ local function openEditor(veh)
 
 	frame.ManualClose = function(self)
 		self:Remove()
-		
+
 		net.Start("SV_Editor_Close")
 		net.WriteEntity(veh)
 		net.SendToServer()
@@ -81,7 +81,7 @@ local function openEditor(veh)
 		activeTab("None")
 		SVMOD:EDITOR_General(frame:GetCenterPanel(), veh)
 	end)
-	
+
 	frame:CreateMenuButton(language.GetPhrase("svmod.seats.seats"), TOP, function()
 		activeTab("None")
 		SVMOD:EDITOR_Seats(frame:GetCenterPanel(), veh)
@@ -148,7 +148,7 @@ local function openEditor(veh)
 		closeFrame.Paint = function(self, w, h)
 			surface.SetDrawColor(18, 25, 31)
 			surface.DrawRect(0, 0, w, h)
-	
+
 			surface.SetDrawColor(178, 95, 245)
 			surface.DrawRect(0, 0, w, 4)
 		end

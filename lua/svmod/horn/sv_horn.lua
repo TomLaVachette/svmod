@@ -16,7 +16,7 @@ function SVMOD.Metatable:SV_TurnOnHorn()
 	net.WriteEntity(self)
 	net.WriteBool(true)
 	net.Broadcast()
-	
+
 	self.SV_States.Horn = true
 
 	return true
@@ -33,7 +33,7 @@ function SVMOD.Metatable:SV_TurnOffHorn()
 	net.WriteEntity(self)
 	net.WriteBool(false)
 	net.Broadcast()
-	
+
 	self.SV_States.Horn = false
 
 	return true

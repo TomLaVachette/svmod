@@ -33,7 +33,7 @@ function SVMOD.Metatable:SV_TurnOffBackLights()
 	self.SV_States.BackLights = false
 end
 
--- Local function for redundant code 
+-- Local function for redundant code
 local function getVehicle(ply)
 	local veh = ply:GetVehicle()
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end

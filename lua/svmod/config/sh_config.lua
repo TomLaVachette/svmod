@@ -54,13 +54,13 @@ function SVMOD:Load()
 
 	if Config then
 		Config = util.JSONToTable(Config)
-		
+
 		if Config then
 			self.CFG = Config
 
 			if CLIENT and self.CFG.Shortcuts then
 				for i, s in ipairs(self.CFG.Shortcuts) do
-					self.Shortcuts[i].Key = s 
+					self.Shortcuts[i].Key = s
 				end
 			end
 		end

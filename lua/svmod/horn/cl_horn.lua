@@ -34,7 +34,7 @@ net.Receive("SV_TurnHorn", function()
 				Vehicle.SV_HornSound:ChangeVolume(SVMOD.CFG.Sounds.Horn * 2, 0)
 			end
 		end)
-		
+
 	else
 		Vehicle.SV_States.Horn = false
 

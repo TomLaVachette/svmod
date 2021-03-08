@@ -62,7 +62,7 @@ function SVMOD:GUI_Contributor(panel, data)
 		label:SetText(language.GetPhrase("svmod.contributor.contributor_disabled"))
 		label:SizeToContents()
 	end
-	
+
 	local validButton = SVMOD:CreateButton(subKeyPanel, language.GetPhrase("svmod.update"), function()
 		SVMOD.CFG.Contributor.Key = keyTextEntry:GetValue()
 

@@ -11,7 +11,7 @@ function SVMOD:GUI_Home(panel, data)
 		statusPanel:DockMargin(0, 2, 0, 0)
 		statusPanel:SetSize(0, 30)
 		statusPanel:SetDrawBackground(false)
-	
+
 		local checkedPanel = vgui.Create("DImage", statusPanel)
 		checkedPanel:SetPos(0, 0)
 		checkedPanel:SetSize(24, 24)
@@ -22,7 +22,7 @@ function SVMOD:GUI_Home(panel, data)
 			checkedPanel:SetImageColor(Color(255, 112, 112))
 			checkedPanel:SetImage("vgui/svmod/invalid.png")
 		end
-	
+
 		local statusLabel = vgui.Create("DLabel", statusPanel)
 		statusLabel:SetPos(35, 2)
 		statusLabel:SetFont("SV_Calibri18")
@@ -78,7 +78,7 @@ function SVMOD:GUI_Home(panel, data)
 		vehicleLoadedCount = table.Count(SVMOD.Data)
 	end
 	local vehicleIncompatibleCount = table.Count(SVMOD:GetVehicleList()) - vehicleLoadedCount
-	
+
 	local loadedText
 	if vehicleLoadedCount > 1 then
 		loadedText = string.format(language.GetPhrase("svmod.home.vehicle_plurial_loaded"), vehicleLoadedCount)

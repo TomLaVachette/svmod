@@ -12,7 +12,7 @@ function SVMOD:EDITOR_Sounds(panel, data)
         comboBoxPanel:DockMargin(0, 4, 0, 4)
         comboBoxPanel:SetSize(0, 30)
         comboBoxPanel:SetDrawBackground(false)
-    
+
         local label = vgui.Create("DLabel", comboBoxPanel)
         label:SetPos(2, 4)
         label:SetFont("SV_Calibri18")

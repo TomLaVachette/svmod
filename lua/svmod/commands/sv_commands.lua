@@ -13,7 +13,7 @@ concommand.Add("sv_lock", function(ply)
 			if not SVMOD:IsVehicle(veh) then
 				return
 			end
-		
+
 			veh:SV_Lock()
 		end
 	end)
@@ -26,7 +26,7 @@ concommand.Add("sv_unlock", function(ply)
 			if not SVMOD:IsVehicle(veh) then
 				return
 			end
-		
+
 			veh:SV_Unlock()
 		end
 	end)
@@ -37,7 +37,7 @@ concommand.Add("sv_repair", function(ply)
 		if hasAccess then
 			local veh = ply:GetEyeTrace().Entity
 			if not SVMOD:IsVehicle(veh) then return end
-		
+
 			veh:SV_SetHealth(100)
 		end
 	end)

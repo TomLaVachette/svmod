@@ -99,7 +99,7 @@ function SVMOD:GUI_Fuel(panel, data)
 			frame.Paint = function(self, w, h)
 				surface.SetDrawColor(18, 25, 31)
 				surface.DrawRect(0, 0, w, h)
-		
+
 				surface.SetDrawColor(178, 95, 245)
 				surface.DrawRect(0, 0, w, 4)
 			end

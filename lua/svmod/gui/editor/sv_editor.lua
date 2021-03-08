@@ -75,7 +75,7 @@ net.Receive("SV_Editor_ActiveTab", function(_, ply)
 	veh:SV_TurnOffLeftBlinker()
 	veh:SV_TurnOffRightBlinker()
 	veh:SV_TurnOffFlashingLights()
-	
+
 	local actions = {
 		["Headlights"] = "SV_TurnOnHeadlights",
 		["Brake"] = "SV_TurnOnBackLights",
@@ -97,7 +97,7 @@ net.Receive("SV_Editor_Close", function(_, ply)
 	end
 
 	local Entity = net.ReadEntity()
-	
+
 	if IsValid(Entity) then
 		Entity:Remove()
 	end

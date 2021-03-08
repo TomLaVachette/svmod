@@ -151,7 +151,7 @@ local function spritePanel(panel, data, hasAnim)
     if hasAnim then
         local title = SVMOD:CreateTitle(panel, "ANIMATIONS")
         title:DockMargin(0, 30, 0, 0)
-    
+
         local activeTimeNumSlider = createNumSlidePanel(panel, "Active time", data.ActiveTime or 0, 0, 5)
         activeTimeNumSlider:SetFunction(function(val)
             data.ActiveTime = val
@@ -536,7 +536,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 local tab = addLight(data[index])
                 tab.Data.ProjectedTexture.Position.x = -line.Data.ProjectedTexture.Position.x
             end
-    
+
             if line.Data.Sprite then
                 local index = table.insert(data, {
                     Sprite = SVMOD:DeepCopy(line.Data.Sprite)
@@ -544,7 +544,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 local tab = addLight(data[index])
                 tab.Data.Sprite.Position.x = -line.Data.Sprite.Position.x
             end
-    
+
             if line.Data.SpriteLine then
                 local index = table.insert(data, {
                     SpriteLine = SVMOD:DeepCopy(line.Data.SpriteLine)
@@ -554,7 +554,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
                 tab.Data.SpriteLine.Position2.x = -line.Data.SpriteLine.Position2.x
                 tab.Data.SpriteLine.Position3.x = -line.Data.SpriteLine.Position3.x
             end
-    
+
             if line.Data.SpriteCircle then
                 local index = table.insert(data, {
                     SpriteCircle = SVMOD:DeepCopy(line.Data.SpriteCircle)
@@ -602,7 +602,7 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
             })
             addLight(data[index])
         end):SetIcon("icon16/lightbulb.png")
-            
+
         menu:AddOption("Sprite", function()
             local index = table.insert(data, {
                 Sprite = {

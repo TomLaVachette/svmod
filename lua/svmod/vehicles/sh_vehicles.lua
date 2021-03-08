@@ -60,7 +60,7 @@ function SVMOD:LoadVehicle(veh)
 		for k, v in pairs(SVMOD.Metatable) do
 			veh[k] = v
 		end
-		
+
 		-- Get configuration and call InitEntity on driver seat ONLY
 		if veh:GetModel() ~= "models/nova/airboat_seat.mdl" then
 			veh.SV_Data = table.Copy(SVMOD:GetData(veh:GetModel()))

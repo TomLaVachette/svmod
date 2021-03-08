@@ -174,7 +174,7 @@ function SVMOD:EDITOR_Seats(panel, veh)
 		local title = SVMOD:CreateTitle(centerPanel, "LOCAL POSITIONS")
 		local button = SVMOD:CreateButton(title, "EyePos", function()
 			local trace = LocalPlayer():GetEyeTrace()
-	
+
 			if IsValid(trace.Entity) and trace.Entity:IsVehicle() then
 				local position = trace.Entity:WorldToLocal(trace.HitPos)
 				e.Seat:SetLocalPos(position)
@@ -187,19 +187,19 @@ function SVMOD:EDITOR_Seats(panel, veh)
 		button:Dock(RIGHT)
 
 		local currentPos = e.Seat:GetLocalPos()
-		
+
 		xPositionNumSlider = createNumSlidePanel(centerPanel, "X Position", math.Round(currentPos.x), -200, 200)
 		xPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()
 			e.Seat:SetLocalPos(Vector(val, pos.y, pos.z))
 		end)
-		
+
 		yPositionNumSlider = createNumSlidePanel(centerPanel, "Y Position", math.Round(currentPos.y), -200, 200)
 		yPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()
 			e.Seat:SetLocalPos(Vector(pos.x, val, pos.z))
 		end)
-		
+
 		zPositionNumSlider = createNumSlidePanel(centerPanel, "Z Position", math.Round(currentPos.z), -200, 200)
 		zPositionNumSlider:SetFunction(function(val)
 			local pos = e.Seat:GetLocalPos()

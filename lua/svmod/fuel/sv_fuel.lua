@@ -20,7 +20,7 @@ function SVMOD.Metatable:SV_SetFuel(value)
 	end
 
 	veh.SV_Fuel = value
-	
+
 	net.Start("SV_SetFuel")
 	net.WriteEntity(veh)
 	net.WriteFloat(veh.SV_Fuel)
@@ -48,7 +48,7 @@ function SVMOD.Metatable:SV_SetMaxFuel(value)
 	value = math.Round(math.Clamp(value, 0, 300), 2)
 
 	Vehicle.SV_MaxFuel = value
-	
+
 	net.Start("SV_SetMaxFuel")
 	net.WriteEntity(Vehicle)
 	net.WriteFloat(Vehicle:SV_GetMaxFuel())
@@ -88,7 +88,7 @@ hook.Add("PlayerEnteredVehicle", "SV_Fuel_StartFuelConsumption", function(ply, v
 		if veh:SV_GetPercentFuel() == 0 then
 			veh:EnableEngine(false)
 			veh:StartEngine(false)
-	
+
 			return
 		end
 	end)

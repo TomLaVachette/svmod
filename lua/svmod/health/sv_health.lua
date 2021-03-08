@@ -89,7 +89,7 @@ function SVMOD.Metatable:SV_SetHealth(value)
 			veh:SV_TurnOffFlashingLights()
 
 			veh:StopParticles()
-			
+
 			veh:EmitSound("ambient/fire/ignite.wav", 100)
 
 			ParticleEffectAttach("fire_large_01", PATTACH_ABSORIGIN_FOLLOW, veh, 0)
@@ -121,10 +121,10 @@ function SVMOD.Metatable:SV_SetHealth(value)
 				veh:EmitSound("ambient/explosions/explode_1.wav", 100)
 
 				veh:SetHandbrake(false)
-				
+
 				if math.random(1, 100) < (SVMOD.CFG.Damage.CarbonisedChance * 100) then
 					veh:Remove()
-					
+
 					local CarbonisedVehicle = ents.Create("prop_physics")
 					CarbonisedVehicle:SetModel(veh:GetModel())
 					CarbonisedVehicle:SetMaterial("models/props_foliage/tree_deciduous_01a_trunk")
@@ -278,7 +278,7 @@ hook.Add("SV_PlayerLeaveVehicle", "SV_DealDamageOnLeave", function(ply, veh)
 	elseif ply.SV_IsSwitchingSeat then
 		return
 	end
-	
+
 	local speed = veh:SV_GetSpeed()
 	if speed < 30 then
 		return

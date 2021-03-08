@@ -21,7 +21,7 @@ end)
 net.Receive("SV_SetAddonState", function()
 	SVMOD.IsEnabled = net.ReadBool()
 
-	local IPAddress = 
+	local IPAddress =
 
 	HTTP({
 		url = "https://api.svmod.com/get_version.php",

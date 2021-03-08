@@ -50,7 +50,7 @@ net.Receive("SV_SetAddonState", function(_, ply)
 	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
 		if hasAccess then
 			local state = net.ReadBool()
-			
+
 			if state then
 				SVMOD:Enable()
 			else

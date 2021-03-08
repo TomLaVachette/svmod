@@ -22,7 +22,7 @@ concommand.Add("svmod", function(ply)
 			net.WriteBool(SVMOD.CFG["Seats"]["IsSwitchEnabled"])
 			net.WriteBool(SVMOD.CFG["Seats"]["IsKickEnabled"])
 			net.WriteBool(SVMOD.CFG["Seats"]["IsLockEnabled"])
-		
+
 			net.WriteBool(SVMOD.CFG["Lights"]["AreHeadlightsEnabled"])
 			net.WriteBool(SVMOD.CFG["Lights"]["TurnOffHeadlightsOnExit"])
 			net.WriteFloat(SVMOD.CFG["Lights"]["TimeTurnOffHeadlights"])
@@ -30,14 +30,14 @@ concommand.Add("svmod", function(ply)
 			net.WriteBool(SVMOD.CFG["Lights"]["TurnOffHazardOnExit"])
 			net.WriteFloat(SVMOD.CFG["Lights"]["TimeTurnOffHazard"])
 			net.WriteBool(SVMOD.CFG["Lights"]["AreReverseLightsEnabled"])
-		
+
 			net.WriteBool(SVMOD.CFG["ELS"]["AreFlashingLightsEnabled"])
 			net.WriteBool(SVMOD.CFG["ELS"]["TurnOffFlashingLightsOnExit"])
 			net.WriteFloat(SVMOD.CFG["ELS"]["TimeTurnOffFlashingLights"])
 			net.WriteFloat(SVMOD.CFG["ELS"]["TimeTurnOffSound"])
-		
+
 			net.WriteBool(SVMOD.CFG["Horn"]["IsEnabled"])
-		
+
 			net.WriteFloat(SVMOD.CFG["Damage"]["PhysicsMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["BulletMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["CarbonisedChance"])
@@ -45,11 +45,11 @@ concommand.Add("svmod", function(ply)
 			net.WriteFloat(SVMOD.CFG["Damage"]["DriverMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["PassengerMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["PlayerExitMultiplier"])
-		
+
 			net.WriteBool(SVMOD.CFG["Fuel"]["IsEnabled"])
 			net.WriteFloat(SVMOD.CFG["Fuel"]["Multiplier"])
 		end
-	
+
 		net.Send(ply)
 	end)
 end)
@@ -156,7 +156,7 @@ net.Receive("SV_Settings", function(_, ply)
 			else
 				SVMOD.CFG[category][name] = math.Round(net.ReadFloat(), 2)
 			end
-		
+
 			SVMOD:Save()
 		end
 	end)

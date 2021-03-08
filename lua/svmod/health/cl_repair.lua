@@ -20,7 +20,7 @@ net.Receive("SV_StartRepair", function()
 		Part.Health = math.min(100, math.floor(Part.Health + (2.5 * PartCount)))
 
 		ply:EmitSound("svmod/repair/wrench" .. math.random(1, 4) .. ".wav", 60)
-		
+
 		if Part.Health >= 100 then
 			timer.Remove("SV_RepairVehicle_" .. ply:UserID())
 		end

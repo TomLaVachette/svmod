@@ -42,9 +42,9 @@ function SVMOD:GUI_Shortcuts(panel)
 		button.Paint = function(self, w, h)
 			surface.SetDrawColor(12, 22, 24)
 			surface.DrawRect(0, 0, w, h)
-	
+
 			local color
-	
+
 			if self:IsHovered() then
 				if not self.soundPlayed then
 					surface.PlaySound("garrysmod/ui_hover.wav")
@@ -59,19 +59,19 @@ function SVMOD:GUI_Shortcuts(panel)
 			end
 
 			surface.SetDrawColor(color.r, color.g, color.b)
-	
+
 			surface.DrawRect(3, 3, 7, 1)
 			surface.DrawRect(3, 3, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, 3, 7, 1)
 			surface.DrawRect(w - 3, 3, 1, 7)
-	
+
 			surface.DrawRect(3, h - 3, 7, 1)
 			surface.DrawRect(3, h - 3 - 7, 1, 7)
-	
+
 			surface.DrawRect(w - 3 - 7, h - 3, 7, 1)
 			surface.DrawRect(w - 3, h - 3 - 7, 1, 7)
-	
+
 			draw.SimpleText(self:GetText(), "SV_CalibriLight18", w / 2, h / 2, color, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
 			return true

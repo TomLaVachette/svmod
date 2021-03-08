@@ -75,6 +75,6 @@ function SVMOD.Metatable:SV_GetAllPlayers()
 			table.insert(players, veh:GetDriver())
 		end
 	end
-	
+
 	return players
 end

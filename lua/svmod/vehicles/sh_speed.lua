@@ -17,7 +17,7 @@ end
 
 -- Returns the vehicle cached speed in km/h. This value
 -- is updated once every 0.2 second.
--- 
+--
 -- You can call it every frame in a draw.
 -- @treturn number Vehicle speed in km/h
 function SVMOD.Metatable:SV_GetCachedSpeed()

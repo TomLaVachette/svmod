@@ -6,7 +6,7 @@ local start = SysTime()
 function SWEP:Initialize()
 	if self:GetOwner() ~= LocalPlayer() then return end
 
-	
+
 end
 
 function SWEP:OnRemove()
