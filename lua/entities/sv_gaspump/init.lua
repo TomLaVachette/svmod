@@ -37,7 +37,7 @@ function ENT:Use(ply)
 
 		ply.SV_CurrentFuelPump = self
 
-		local gasolinePistol = ply:Give("weapon_gasolinepistol")
+		ply:Give("weapon_gasolinepistol")
 		ply:SelectWeapon("weapon_gasolinepistol")
 
 		self:EmitSound("svmod/fuel/pick-up.wav")

@@ -139,11 +139,6 @@ net.Receive("SV_Settings_HardReset", function()
 	end)
 end)
 
-local readTypes = {
-	[0] = net.ReadBool,
-	[1] = net.ReadFloat
-}
-
 net.Receive("SV_Settings", function(_, ply)
 	local category = net.ReadString()
 	local name = net.ReadString()

@@ -1,10 +1,3 @@
-local lightType = {
-	PROJECTEDTEXTURE = 1,
-	SPRITE = 2,
-	SPRITELINE = 3,
-	SPRITECIRCLE = 4
-}
-
 local function createNumSlidePanel(panel, name, defaultValue, minValue, maxValue)
 	local numSlider = SVMOD:CreateNumSlidePanel(panel, name, function() end)
 	numSlider:SetSize(400, 30)

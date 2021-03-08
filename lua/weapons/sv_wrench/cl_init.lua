@@ -1,8 +1,5 @@
 include("shared.lua")
 
-local Percent = 0
-local start = SysTime()
-
 function SWEP:Initialize()
 	if self:GetOwner() ~= LocalPlayer() then return end
 

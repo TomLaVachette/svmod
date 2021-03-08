@@ -104,8 +104,6 @@ function SVMOD.Metatable:SV_SetHealth(value)
 
 				veh:StopSound("fire_med_loop1")
 
-				local Driver = veh:SV_GetDriverSeat():GetDriver()
-
 				for _, ply in ipairs(veh:SV_GetAllPlayers()) do
 					ply:GetVehicle():SV_ExitVehicle(ply)
 

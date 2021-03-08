@@ -183,7 +183,7 @@ function SVMOD:GUI_Home(panel, data)
 	bottomPanel:SetSize(0, 30)
 	bottomPanel:SetDrawBackground(false)
 
-	local discordButton = SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.home.support"), function()
+	SVMOD:CreateButton(bottomPanel, language.GetPhrase("svmod.home.support"), function()
 		gui.OpenURL("https://discord.svmod.com")
 	end)
 

@@ -1,5 +1,3 @@
-local CameraDistance = 0.5
-
 hook.Add("SV_PlayerEnteredVehicle", "SV_AddWheelMouse", function()
 	hook.Add("StartCommand", "SV_Wheel", function(ply, ucmd)
 		local veh = ply:GetVehicle()

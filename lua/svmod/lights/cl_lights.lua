@@ -138,8 +138,6 @@ function SVMOD:RenderLights(veh, lights)
 			local B = spriteLine.Position2
 			local C = spriteLine.Position3 or spriteLine.Position2
 
-			local Vect = B - A
-
 			for i = 0, spriteLine.Count do
 				if not spriteLine.Handler then
 					spriteLine.Handler = {}
