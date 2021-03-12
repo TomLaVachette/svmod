@@ -1,6 +1,11 @@
 -- @class SVMOD
 -- @serverside
 
+hook.Add("Initialize", "SV_LoadConfiguration", function()
+	-- Load the configuration
+	SVMOD:Load()
+end)
+
 -- Enables SVMod. The next vehicles that appear will be
 -- affected by the addon.
 -- @treturn boolean True if successful, false otherwise
@@ -63,10 +68,12 @@ net.Receive("SV_SetAddonState", function(_, ply)
 end)
 
 hook.Add("PlayerConnect", "SV_EnableAddon", function()
-	SVMOD:Load()
-	if SVMOD.CFG.IsEnabled then
-		SVMOD:Enable()
-	end
+	-- Dirty fix if player join before Initialize hook
+	timer.Simple(5, function()
+		if SVMOD.CFG.IsEnabled then
+			SVMOD:Enable()
+		end
+	end)
 	hook.Remove("PlayerConnect", "SV_EnableAddon")
 end)
 

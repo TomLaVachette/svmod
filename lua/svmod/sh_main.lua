@@ -1,11 +1,6 @@
 -- @class SV_Vehicle
 -- @shared
 
--- hook.Add("Initialize", "SV_LoadConfiguration", function()
--- 	-- Load the configuration
--- 	SVMOD:Load()
--- end)
-
 hook.Add("SV_Enabled", "SV_PrintConsole", function()
 	if SERVER then
 		SVMOD:PrintConsole(SVMOD.LOG.Info, "Addon enabled server-side.")
