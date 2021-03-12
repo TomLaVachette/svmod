@@ -56,11 +56,14 @@ net.Receive("SV_SetAddonState", function(_, ply)
 			else
 				SVMOD:Disable()
 			end
+
+			SVMOD:Save()
 		end
 	end)
 end)
 
 hook.Add("PlayerConnect", "SV_EnableAddon", function()
+	SVMOD:Load()
 	if SVMOD.CFG.IsEnabled then
 		SVMOD:Enable()
 	end

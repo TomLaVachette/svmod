@@ -34,16 +34,6 @@ SVMOD.FCFG.ConflictList = {
 	-- }
 }
 
-if SERVER then
-	hook.Add("SV_Enabled", "SV_Save", function()
-		SVMOD:Save()
-	end)
-
-	hook.Add("SV_Disabled", "SV_Save", function()
-		SVMOD:Save()
-	end)
-end
-
 function SVMOD:Load()
 	local Config
 	if SERVER then
