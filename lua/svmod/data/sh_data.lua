@@ -100,18 +100,29 @@ local function temp_fuelpump(data)
 		local pos = data.Fuel.GasTank.Position
 		local ang = data.Fuel.GasTank.Angles
 
-		data.Fuel.GasTank = {
-			{
-				GasHole = {
-					Position = pos,
-					Angles = ang
-				},
-				GasolinePistol = {
-					Position = data.Fuel.GasolinePistol.Position,
-					Angles = data.Fuel.GasolinePistol.Angles
+		if data.Fuel.GasolinePistol then
+			data.Fuel.GasTank = {
+				{
+					GasHole = {
+						Position = pos,
+						Angles = ang
+					},
+					GasolinePistol = {
+						Position = data.Fuel.GasolinePistol.Position,
+						Angles = data.Fuel.GasolinePistol.Angles
+					}
 				}
 			}
-		}
+		else
+			data.Fuel.GasTank = {
+				{
+					GasHole = {
+						Position = pos,
+						Angles = ang
+					}
+				}
+			}
+		end
 	end
 end
 

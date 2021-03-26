@@ -7,5 +7,4 @@ ENT.Author = "TomLaVachette"
 ENT.Contact = "From workshop page only!"
 ENT.Instructions = ""
 
-ENT.Spawnable = true
-ENT.AdminOnly = true
+ENT.Spawnable = false
