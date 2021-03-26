@@ -105,14 +105,14 @@ function SVMOD:GUI_Fuel(panel, data)
 			end
 			frame:MakePopup()
 
-			local slide = SVMOD:CreateNumSlidePanel(frame, #Price, function(val)
+			local slide = SVMOD:CreateNumSlidePanel(frame, language.GetPhrase("svmod.fuel.price"), function(val)
 				line:SetColumnText(6, math.Round(val))
 			end)
 			slide:SetValue(tonumber(line:GetColumnText(6)))
 			slide:SetMaxValue(300)
 			slide:SetUnit("u")
 
-			local button = SVMOD:CreateButton(frame, #CLOSE, function()
+			local button = SVMOD:CreateButton(frame, language.GetPhrase("svmod.close"), function()
 				frame:Close()
 			end)
 			button:Dock(BOTTOM)

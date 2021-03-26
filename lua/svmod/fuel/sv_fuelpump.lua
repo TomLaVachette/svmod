@@ -1,5 +1,4 @@
 hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
-	print(2)
 	local function spawnPump(pos, ang, model)
 		local newEnt = ents.Create("sv_gaspump")
 		newEnt:SetPos(pos)
@@ -28,4 +27,6 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
 			pump.Entity = spawnPump(pump.Position, pump.Angles, pump.Model)
 		end
 	end
+
+	SVMOD:PrintConsole(SVMOD.LOG.Info, #ents.FindByClass("sv_gaspump") .. " gas pump(s) created.")
 end)
