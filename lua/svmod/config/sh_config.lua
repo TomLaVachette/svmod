@@ -3,7 +3,7 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.3.1"
+SVMOD.FCFG.Version = "1.3.2"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -71,6 +71,9 @@ function SVMOD:Save()
 
 		-- Disable contributor mode
 		Config.Contributor.IsEnabled = false
+
+		-- Do not save enterprise ID client-side
+		Config.Contributor.EnterpriseID = nil
 
 		file.Write("svmod/client_" .. string.Replace(SVMOD.FCFG.Version, ".", "_") .. ".txt", util.TableToJSON(Config))
 	end

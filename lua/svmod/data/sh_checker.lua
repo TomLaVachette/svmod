@@ -6,6 +6,9 @@
 -- @treturn string result Error if problem found, nil if no problem found
 -- @internal
 function SVMOD:Data_Check(x)
+	if not x then
+		return "DATA"
+	end
 	local function checkLights(x)
 		if not istable(x) then
 			return ""

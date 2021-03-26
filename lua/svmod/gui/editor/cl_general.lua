@@ -12,6 +12,8 @@ function SVMOD:EDITOR_General(panel, veh)
 		local tab = table.Copy(veh.SV_Data)
 
 		tab.Timestamp = nil
+		tab.Author.Name = authorTextBox:GetValue()
+		tab.Author.SteamID64 = LocalPlayer():SteamID64()
 
 		for _, v in ipairs(tab.FlashingLights) do
 			if v.Sprite then
@@ -26,12 +28,13 @@ function SVMOD:EDITOR_General(panel, veh)
 		HTTP({
 			url = "https://api.svmod.com/add_vehicle.php",
 			method = "POST",
-			parameters = {
+			body = util.TableToJSON({
 				model = veh:GetModel(),
 				json = util.TableToJSON(tab),
 				version = tostring(SVMOD.FCFG.DataVersion),
-				serial = SVMOD.CFG.Contributor.Key
-			},
+				serial = SVMOD.CFG.Contributor.Key,
+				enterpriseID = SVMOD.CFG.Contributor.EnterpriseID
+			}),
 			success = function(code, body)
 				if code == 200 then
 					notification.AddLegacy("Data was sent successfully.", NOTIFY_GENERIC, 5)
@@ -81,12 +84,19 @@ function SVMOD:EDITOR_General(panel, veh)
 	label:SetText(language.GetPhrase("svmod.vehicles.author"))
 	label:SizeToContents()
 
+	local label = vgui.Create("DLabel", panel)
+	label:Dock(TOP)
+	label:DockMargin(0, 5, 0, 0)
+	label:SetFont("SV_Calibri18")
+	if SVMOD.CFG.Contributor.EnterpriseID == 0 then
+		label:SetText(language.GetPhrase("svmod.editor.dbpublic"))
+	else
+		label:SetText(language.GetPhrase("svmod.editor.dbprivate") .. SVMOD.CFG.Contributor.EnterpriseID .. ").")
+	end
+	label:SizeToContents()
+
 	authorTextBox = SVMOD:CreateTextboxPanel(authorPanel, language.GetPhrase("svmod.vehicles.author"))
 	authorTextBox:SetValue(veh.SV_Data.Author.Name or "")
-	authorTextBox.OnValueChange = function(self, val)
-		veh.SV_Data.Author.Name = val
-		veh.SV_Data.Author.SteamID64 = LocalPlayer():SteamID64()
-	end
 
 	local title = SVMOD:CreateTitle(panel, "TOOLS")
 	title:DockMargin(0, 30, 0, 0)

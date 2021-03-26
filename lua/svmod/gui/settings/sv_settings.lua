@@ -15,7 +15,7 @@ concommand.Add("svmod", function(ply)
 		net.WriteBool(hasAccess)
 
 		net.WriteBool(SVMOD.CFG.IsEnabled)
-		net.WriteString(SVMOD.CFG.VehicleDataUpdateTime or "")
+		net.WriteString(SVMOD.VehicleDataUpdateTime or "")
 		net.WriteString(SVMOD:GetConflictList())
 
 		if hasAccess then
@@ -48,6 +48,8 @@ concommand.Add("svmod", function(ply)
 
 			net.WriteBool(SVMOD.CFG["Fuel"]["IsEnabled"])
 			net.WriteFloat(SVMOD.CFG["Fuel"]["Multiplier"])
+
+			net.WriteFloat(SVMOD.CFG["Contributor"]["EnterpriseID"])
 		end
 
 		net.Send(ply)

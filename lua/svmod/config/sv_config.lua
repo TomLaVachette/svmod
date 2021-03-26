@@ -3,8 +3,6 @@ function SVMOD:ResetConfiguration()
 
 	SVMOD.CFG.IsEnabled = true
 
-	SVMOD.CFG.AddWorkshop = true
-
 	SVMOD.CFG.Seats = {
 		IsSwitchEnabled = true,
 		IsKickEnabled = true,
@@ -48,6 +46,10 @@ function SVMOD:ResetConfiguration()
 		IsEnabled = true,
 		Multiplier = 1,
 		Pumps = {}
+	}
+
+	SVMOD.CFG.Contributor = {
+		EnterpriseID = 0
 	}
 end
 

@@ -35,6 +35,7 @@ net.Receive("SV_SetAddonState", function()
 	})
 
 	if SVMOD.IsEnabled then
+		SVMOD.CFG.Contributor.EnterpriseID = net.ReadUInt(16) -- max: 65535
 		hook.Run("SV_Enabled")
 	else
 		hook.Run("SV_Disabled")

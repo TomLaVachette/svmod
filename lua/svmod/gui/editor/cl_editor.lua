@@ -167,6 +167,8 @@ local function openEditor(veh)
 		button:Dock(TOP)
 		button:SetSize(0, 30)
 	end)
+
+	SVMOD:EDITOR_General(frame:GetCenterPanel(), veh)
 end
 
 net.Receive("SV_Editor_Open", function()

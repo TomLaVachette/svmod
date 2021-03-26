@@ -2,11 +2,6 @@ SVMOD.CFG = {}
 
 SVMOD.CFG.Language = "EN"
 
-SVMOD.CFG.Contributor = {
-	IsEnabled = false,
-	Key = ""
-}
-
 SVMOD.CFG.Lights = {
 	DrawProjectedLights = true,
 	DrawShadows = false,
@@ -20,4 +15,10 @@ SVMOD.CFG.Damage = {
 SVMOD.CFG.Sounds = {
 	Horn = 1,
 	Siren = 1
+}
+
+SVMOD.CFG.Contributor = {
+	EnterpriseID = 0,
+	IsEnabled = false,
+	Key = ""
 }

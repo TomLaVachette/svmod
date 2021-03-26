@@ -24,6 +24,7 @@ function SVMOD:Enable()
 	-- Send to clients
 	net.Start("SV_SetAddonState")
 	net.WriteBool(true)
+	net.WriteUInt(SVMOD.CFG.Contributor.EnterpriseID, 16) -- max: 65535
 	net.Broadcast()
 
 	return true
@@ -45,8 +46,13 @@ end
 
 util.AddNetworkString("SV_GetAddonState")
 net.Receive("SV_GetAddonState", function(_, ply)
+	local state = SVMOD:GetAddonState()
+
 	net.Start("SV_SetAddonState")
-	net.WriteBool(SVMOD:GetAddonState())
+	net.WriteBool(state)
+	if state then
+		net.WriteUInt(SVMOD.CFG.Contributor.EnterpriseID, 16) -- max: 65535
+	end
 	net.Send(ply)
 end)
 
@@ -69,12 +75,12 @@ end)
 
 hook.Add("PlayerConnect", "SV_EnableAddon", function()
 	-- Dirty fix if player join before Initialize hook
+	hook.Remove("PlayerConnect", "SV_EnableAddon")
 	timer.Simple(5, function()
 		if SVMOD.CFG.IsEnabled then
 			SVMOD:Enable()
 		end
 	end)
-	hook.Remove("PlayerConnect", "SV_EnableAddon")
 end)
 
 -- concommand.Add("temp", function(ply)

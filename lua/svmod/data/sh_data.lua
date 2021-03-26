@@ -27,7 +27,7 @@ function SVMOD:Data_Update(fun)
 		file.CreateDir("svmod")
 	end
 
-	local parameters = {}
+	local vehicles = {}
 	for _, veh in ipairs(SVMOD:GetVehicleList()) do
 		local filePath = getDataPath(veh.Model)
 
@@ -35,17 +35,20 @@ function SVMOD:Data_Update(fun)
 		if file.Exists(filePath, "DATA") then
 			CRC = util.CRC(file.Read(filePath, "DATA"))
 		end
-		table.insert(parameters, {
+		table.insert(vehicles, {
 			model = veh.Model,
-			version = SVMOD.FCFG.DataVersion,
 			crc = CRC
 		})
 	end
 
 	HTTP({
-		url = "https://api.svmod.com/get_vehicles.php",
+		url = "https://api.svmod.com/get_vehicles_new.php",
 		method = "POST",
-		body = util.TableToJSON(parameters),
+		body = util.TableToJSON({
+			version = SVMOD.FCFG.DataVersion,
+			enterpriseID = SVMOD.CFG.Contributor.EnterpriseID,
+			vehicles = vehicles
+		}),
 		success = function(code, body)
 			if code == 200 then
 				local createdCount = 0
@@ -65,7 +68,7 @@ function SVMOD:Data_Update(fun)
 					file.Write(filePath, veh["json"])
 				end
 
-				SVMOD.CFG.VehicleDataUpdateTime = os.time()
+				SVMOD.VehicleDataUpdateTime = os.time()
 				SVMOD:PrintConsole(SVMOD.LOG.Info, "Updater: " .. createdCount .. " added vehicle" .. self:AddPlurial(createdCount) .. ", " .. updatedCount .. " updated vehicle" .. self:AddPlurial(updatedCount) .. ".")
 			else
 				SVMOD:PrintConsole(SVMOD.LOG.Alert, "Updater: server responding with code " .. code .. ".")

@@ -37,6 +37,8 @@ net.Receive("SV_Settings", function()
 
 		data.FuelIsEnabled = net.ReadBool()
 		data.FuelMultiplier = math.Round(net.ReadFloat(), 2)
+
+		data.EnterpriseID = net.ReadFloat()
 	end
 
 	local frame = SVMOD:CreateFrame("SVMOD : SIMPLE VEHICLE MOD 1.2")
