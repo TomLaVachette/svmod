@@ -8,12 +8,12 @@ function SVMOD:GUI_Credits(panel, data)
 		creditPanel:Dock(TOP)
 		creditPanel:DockMargin(0, 4, 0, 4)
 		creditPanel:SetSize(0, 30)
-		creditPanel:SetDrawBackground(false)
+		creditPanel:SetPaintBackground(false)
 
 		for i, author in ipairs(authors) do
 			local authorPanel = vgui.Create("DPanel", creditPanel)
 			authorPanel:Dock(LEFT)
-			authorPanel:SetDrawBackground(false)
+			authorPanel:SetPaintBackground(false)
 
 			local name = author.Name
 			if i > 1 then

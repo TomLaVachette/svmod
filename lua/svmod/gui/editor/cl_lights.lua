@@ -398,11 +398,11 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
 	local bottomPanel = vgui.Create("DPanel", panel)
 	bottomPanel:Dock(BOTTOM)
 	bottomPanel:SetSize(0, 30)
-	bottomPanel:SetDrawBackground(false)
+	bottomPanel:SetPaintBackground(false)
 
 	local centerPanel = vgui.Create("DPanel", panel)
 	centerPanel:Dock(FILL)
-	centerPanel:SetDrawBackground(false)
+	centerPanel:SetPaintBackground(false)
 
 	-- -------------------
 	--  HOOKS

@@ -4,7 +4,7 @@ function SVMOD:EDITOR_General(panel, veh)
 	local bottomPanel = vgui.Create("DPanel", panel)
 	bottomPanel:Dock(BOTTOM)
 	bottomPanel:SetSize(0, 30)
-	bottomPanel:SetDrawBackground(false)
+	bottomPanel:SetPaintBackground(false)
 
 	local authorTextBox
 
@@ -76,7 +76,7 @@ function SVMOD:EDITOR_General(panel, veh)
 	authorPanel:Dock(TOP)
 	authorPanel:DockMargin(0, 4, 0, 4)
 	authorPanel:SetSize(0, 30)
-	authorPanel:SetDrawBackground(false)
+	authorPanel:SetPaintBackground(false)
 
 	local label = vgui.Create("DLabel", authorPanel)
 	label:SetPos(2, 4)
@@ -104,7 +104,7 @@ function SVMOD:EDITOR_General(panel, veh)
 	local blinkerPanel = vgui.Create("DPanel", panel)
 	blinkerPanel:Dock(TOP)
 	blinkerPanel:SetSize(0, 35)
-	blinkerPanel:SetDrawBackground(false)
+	blinkerPanel:SetPaintBackground(false)
 
 	local function symmetric(tab)
 		for k, v in pairs(tab) do

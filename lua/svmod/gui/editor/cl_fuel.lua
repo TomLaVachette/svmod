@@ -23,7 +23,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
 	leftPanel:Dock(LEFT)
 	leftPanel:DockPadding(0, 0, 10, 0)
 	leftPanel:SetSize(100, 0)
-	leftPanel:SetDrawBackground(false)
+	leftPanel:SetPaintBackground(false)
 
 	local listView = SVMOD:CreateListView(leftPanel)
 	listView:SetHideHeaders(true)
@@ -51,7 +51,7 @@ function SVMOD:EDITOR_Fuel(panel, veh, data)
 
 	local centerPanel = vgui.Create("DPanel", panel)
 	centerPanel:Dock(FILL)
-	centerPanel:SetDrawBackground(false)
+	centerPanel:SetPaintBackground(false)
 
 	local function createNumSlidePanel(name, defaultValue, minValue, maxValue)
 		local numSlider = SVMOD:CreateNumSlidePanel(centerPanel, name, function() end)

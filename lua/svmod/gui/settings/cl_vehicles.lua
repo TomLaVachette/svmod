@@ -72,7 +72,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 	bottomPanel:Dock(BOTTOM)
 	bottomPanel:DockMargin(0, 4, 0, 4)
 	bottomPanel:SetSize(0, 30)
-	bottomPanel:SetDrawBackground(false)
+	bottomPanel:SetPaintBackground(false)
 
 	SVMOD:CreateHorizontalLine(panel, BOTTOM)
 
