@@ -68,7 +68,7 @@ function SVMOD:GUI_Credits(panel, data)
 			SteamID64 = "76561198061601582",
 			IsFemale = false,
 		}
-	}, "LUA Developer")
+	}, "Lua Developer")
 
 	addLabel({
 		{
