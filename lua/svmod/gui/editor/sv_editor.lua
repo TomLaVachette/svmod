@@ -21,8 +21,8 @@ net.Receive("SV_Editor_Open", function(_, ply)
 	veh:SetModel(vehData.Model)
 	veh:SetPos(ply:GetEyeTrace().HitPos)
 
-	if vehData and vehData['KeyValues'] then
-		for k, v in pairs(vehData['KeyValues']) do
+	if vehData and vehData["KeyValues"] then
+		for k, v in pairs(vehData["KeyValues"]) do
 			local kLower = string.lower(k)
 
 			if (kLower == "vehiclescript" or

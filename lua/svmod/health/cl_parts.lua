@@ -26,15 +26,15 @@ hook.Add("PostDrawTranslucentRenderables", "SV_WrenchHUD", function()
 			if p.LastLerp > 50 then
 				Colour.r = math.floor(255 - (p.LastLerp * 2 - 100) * 255 / 100)
 			else
-				Colour.g = math.floor((p.LastLerp*2) * 255 / 100)
+				Colour.g = math.floor((p.LastLerp * 2) * 255 / 100)
 			end
 
 			cam.Start3D2D(Vehicle:LocalToWorld(p.Position), SVMOD:RotateAroundAxis(Vehicle:GetAngles(), p.Angles), 0.05)
 				draw.RoundedBox(20, 0, 0, 350, 40, ColorAlpha(Colour, 100))
 				if p.LastLerp > 0 then
-					draw.RoundedBox(20, 0, 0, 350 * p.LastLerp/100, 40, Colour)
+					draw.RoundedBox(20, 0, 0, 350 * p.LastLerp / 100, 40, Colour)
 				end
-				draw.DrawText(math.Round(p.LastLerp) .. "%", "SVModFont", math.Clamp(350 * p.LastLerp/100 - 5, 60, 350), 5, Color(0, 0, 0), TEXT_ALIGN_RIGHT)
+				draw.DrawText(math.Round(p.LastLerp) .. "%", "SVModFont", math.Clamp(350 * p.LastLerp / 100 - 5, 60, 350), 5, Color(0, 0, 0), TEXT_ALIGN_RIGHT)
 			cam.End3D2D()
 		end
 	end

@@ -3,7 +3,7 @@ include("shared.lua")
 SWEP.pViewModel = ClientsideModel("models/props_equipment/gas_pump_p13.mdl", RENDERGROUP_OPAQUE)
 SWEP.pViewModel:SetNoDraw(true)
 
-local cable = Material( "cable/cable2" )
+-- local cable = Material( "cable/cable2" )
 
 -- local function bezier(p0, p1, p2, p3, t)
 -- 	local e = p0 + t * (p1 - p0)

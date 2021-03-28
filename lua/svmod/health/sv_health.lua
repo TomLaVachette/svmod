@@ -242,7 +242,7 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 		totalDamage = totalDamage * 10000
 	end
 
-	local totalDamage = math.floor(math.max(1, totalDamage * SVMOD.CFG.Damage.BulletMultiplier / 2))
+	totalDamage = math.floor(math.max(1, totalDamage * SVMOD.CFG.Damage.BulletMultiplier / 2))
 
 	-- Deal damage to the driver
 	local driver = ent:GetDriver()
