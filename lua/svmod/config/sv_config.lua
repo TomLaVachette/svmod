@@ -56,13 +56,3 @@ end
 if not SVMOD.CFG then
 	SVMOD:ResetConfiguration()
 end
-
-function SVMOD:GetFuelPumpByEnt(ent)
-	for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
-		if pump.Entity == ent then
-			return pump
-		end
-	end
-
-	return nil
-end

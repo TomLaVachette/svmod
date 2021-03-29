@@ -18,7 +18,6 @@ function SVMOD:SetFlashingLightsState(value)
 end
 
 local function startFlashingSound(veh)
-	print(veh, veh.SV_Data)
 	if veh.SV_Data.Sounds.Siren and #veh.SV_Data.Sounds.Siren > 0 then
 		veh.SV_FlashingLightSound = CreateSound(veh, "svmod/siren/" .. veh.SV_Data.Sounds.Siren .. ".wav")
 		veh.SV_FlashingLightSound:SetSoundLevel(75)

@@ -85,8 +85,10 @@ end
 function ENT:AttachVehicle(veh, ply, index)
 	local pumpData = SVMOD:GetFuelPumpByEnt(ply.SV_CurrentFuelPump)
 	if not pumpData then
-		self:Remove()
-		return
+		pumpData = { Price = 0 }
+		if IsValid(ply.SV_CurrentFuelPump) then
+			SVMOD:PrintConsole(SVMOD.LOG.Error, "Fuel pump (ID: " .. ply.SV_CurrentFuelPump:EntIndex() .. ") does not have a configuration.")
+		end
 	end
 
 	for _, ent in ipairs(veh:GetChildren()) do

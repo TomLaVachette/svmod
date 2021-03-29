@@ -41,7 +41,6 @@ function SVMOD:EDITOR_General(panel, veh)
 
 					SVMOD:Data_Update()
 				else
-					print(body)
 					notification.AddLegacy("Invalid API key.", NOTIFY_ERROR, 5)
 				end
 

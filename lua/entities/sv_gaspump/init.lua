@@ -30,7 +30,7 @@ function ENT:Use(ply)
 
 			ply:StripWeapon("weapon_gasolinepistol")
 		end
-	else
+	elseif SVMOD:GetAddonState() then
 		if IsValid(ply:GetActiveWeapon()) then
 			ply.SV_WeaponBeforePickUpFiller = ply:GetActiveWeapon():GetClass()
 		end
