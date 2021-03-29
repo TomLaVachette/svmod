@@ -41,7 +41,7 @@ net.Receive("SV_Settings", function()
 		data.EnterpriseID = net.ReadFloat()
 	end
 
-	local frame = SVMOD:CreateFrame("SVMOD : SIMPLE VEHICLE MOD 1.2")
+	local frame = SVMOD:CreateFrame("SVMOD : SIMPLE VEHICLE MOD " .. SVMOD.FCFG.Version)
 	frame:SetSize(900, 650)
 	frame:MakePopup()
 
