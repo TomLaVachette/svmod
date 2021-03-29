@@ -14,6 +14,7 @@ function SVMOD:SetAddonState(value)
 end
 
 hook.Add("InitPostEntity", "SV_GetAddonStateOnInitialSpawn", function()
+	SVMOD:Load()
 	net.Start("SV_GetAddonState")
 	net.SendToServer()
 end)
