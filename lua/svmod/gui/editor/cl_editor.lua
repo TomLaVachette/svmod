@@ -129,6 +129,11 @@ local function openEditor(veh)
 		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.FlashingLights, true)
 	end)
 
+	frame:CreateMenuButton(language.GetPhrase("svmod.editor.parts"), TOP, function()
+		activeTab("None")
+		SVMOD:EDITOR_Parts(frame:GetCenterPanel(), veh, veh.SV_Data.Parts)
+	end)
+
 	frame:CreateMenuButton(language.GetPhrase("svmod.fuel.fuel"), TOP, function()
 		activeTab("None")
 		SVMOD:EDITOR_Fuel(frame:GetCenterPanel(), veh, veh.SV_Data.Fuel)

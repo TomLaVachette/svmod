@@ -4,12 +4,12 @@ surface.CreateFont("SVModFont", {
 })
 
 hook.Add("PostDrawTranslucentRenderables", "SV_WrenchHUD", function()
-	local Vehicle = SVMOD.VehicleRenderedParts
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = SVMOD.VehicleRenderedParts
+	if not SVMOD:IsVehicle(veh) then return end
 
-	if not Vehicle.SV_Data.Parts then return end
+	if not veh.SV_Data.Parts then return end
 
-	for _, p in ipairs(Vehicle.SV_Data.Parts) do
+	for _, p in ipairs(veh.SV_Data.Parts) do
 		if p.Health then
 			if not p.StartLerp or not p.LastLerp then
 				p.LastLerp = p.Health
@@ -29,7 +29,7 @@ hook.Add("PostDrawTranslucentRenderables", "SV_WrenchHUD", function()
 				Colour.g = math.floor((p.LastLerp * 2) * 255 / 100)
 			end
 
-			cam.Start3D2D(Vehicle:LocalToWorld(p.Position), SVMOD:RotateAroundAxis(Vehicle:GetAngles(), p.Angles), 0.05)
+			cam.Start3D2D(veh:LocalToWorld(p.Position), SVMOD:RotateAroundAxis(veh:GetAngles(), p.Angles), 0.05)
 				draw.RoundedBox(20, 0, 0, 350, 40, ColorAlpha(Colour, 100))
 				if p.LastLerp > 0 then
 					draw.RoundedBox(20, 0, 0, 350 * p.LastLerp / 100, 40, Colour)
@@ -41,12 +41,12 @@ hook.Add("PostDrawTranslucentRenderables", "SV_WrenchHUD", function()
 end)
 
 net.Receive("SV_Parts", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
 
 	local Count = net.ReadUInt(4)
 
-	for i = 1, math.min(Count, #Vehicle.SV_Data.Parts) do
-		Vehicle.SV_Data.Parts[i].Health = net.ReadUInt(7)
+	for i = 1, math.min(Count, #veh.SV_Data.Parts) do
+		veh.SV_Data.Parts[i].Health = net.ReadUInt(7)
 	end
 end)
