@@ -7,7 +7,11 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
 		newEnt:SetAngles(ang)
 		newEnt:Spawn()
 		newEnt:SetModel(model)
-		newEnt:GetPhysicsObject():EnableMotion(false)
+
+		local phys = newEnt:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:EnableMotion(false)
+		end
 
 		return newEnt
 	end
