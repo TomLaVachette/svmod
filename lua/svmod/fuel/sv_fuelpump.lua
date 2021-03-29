@@ -1,4 +1,6 @@
 hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
+	SVMOD:Load()
+	
 	local function spawnPump(pos, ang, model)
 		local newEnt = ents.Create("sv_gaspump")
 		newEnt:SetPos(pos)
