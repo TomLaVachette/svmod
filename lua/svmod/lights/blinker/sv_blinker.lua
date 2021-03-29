@@ -17,7 +17,7 @@ function SVMOD.Metatable:SV_TurnOnLeftBlinker()
 		return false -- Blinkers disabled
 	elseif self:SV_GetLeftBlinkerState() then
 		return false -- Left blinkers already active
-	elseif self:SV_GetHealth() == 0 then
+	elseif not self.SV_IsEditMode and self:SV_GetHealth() == 0 then
 		return false -- Vehicle destroyed
 	end
 
@@ -67,7 +67,7 @@ function SVMOD.Metatable:SV_TurnOnRightBlinker()
 		return false -- Blinkers disabled
 	elseif self:SV_GetRightBlinkerState() then
 		return false -- Right blinkers already active
-	elseif self:SV_GetHealth() == 0 then
+	elseif not self.SV_IsEditMode and self:SV_GetHealth() == 0 then
 		return false -- Vehicle destroyed
 	end
 

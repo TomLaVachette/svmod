@@ -6,7 +6,7 @@ function SVMOD:EDITOR_Sounds(panel, data)
 	bottomPanel:SetSize(0, 30)
 	bottomPanel:SetPaintBackground(false)
 
-	local function createComboBoxPanel(text, choices)
+	local function createComboBoxPanel(text, choices, fun)
 		local comboBoxPanel = vgui.Create("DPanel", panel)
 		comboBoxPanel:Dock(TOP)
 		comboBoxPanel:DockMargin(0, 4, 0, 4)
@@ -24,6 +24,9 @@ function SVMOD:EDITOR_Sounds(panel, data)
 		comboBox:DockMargin(8, 0, 0, 0)
 		comboBox:SetSize(300, 0)
 		comboBox:SetText("")
+		comboBox.OnSelect = function(self, _, val)
+			fun(val)
+		end
 
 		for _, c in ipairs(choices) do
 			comboBox:AddChoice(c)
@@ -45,15 +48,16 @@ function SVMOD:EDITOR_Sounds(panel, data)
 	hornComboBox:SetValue(data.Horn or "normal")
 
 	local reversingComboBox = createComboBoxPanel("Reversing", { "" }, function(val)
-		data.ReversingSound = val
+		data.Reversing = val
 	end)
-	reversingComboBox:SetValue(data.ReversingSound or "")
+	reversingComboBox:SetValue(data.Reversing or "")
 
 	local sirenComboBox = createComboBoxPanel("Siren", {
 		"",
 		"american_police", "american_firetruck", "american_ambulance",
 		"french_police", "french_firetruck", "french_ambulance"
 	}, function(val)
+		print(val)
 		data.Siren = val
 	end)
 	sirenComboBox:SetValue(data.Siren or "")
