@@ -45,7 +45,7 @@ function SWEP:PrimaryAttack()
 
 	if SVMOD:IsVehicle(ent) then
 		for i, v in ipairs(ent.SV_Data.Fuel.GasTank) do
-			if trace.HitPos:DistToSqr(ent:LocalToWorld(ent.SV_Data.Fuel.GasTank[i].GasolinePistol.Position)) < 200 then
+			if trace.HitPos:DistToSqr(ent:LocalToWorld(ent.SV_Data.Fuel.GasTank[i].GasolinePistol.Position)) < 400 then
 				self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 
 				timer.Simple(0.45, function()
