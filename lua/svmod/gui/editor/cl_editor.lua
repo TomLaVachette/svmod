@@ -96,12 +96,12 @@ local function openEditor(veh)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.lights.headlights"), TOP, function()
 		activeTab("Headlights")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Headlights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Headlights, veh)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.editor.brake"), TOP, function()
 		activeTab("Brake")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Back.BrakeLights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Back.BrakeLights, veh)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.editor.reversing"), TOP, function()
@@ -111,22 +111,22 @@ local function openEditor(veh)
 			veh.SV_IsReversing = true
 		end)
 
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Back.ReversingLights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Back.ReversingLights, veh)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.editor.left_blinker"), TOP, function()
 		activeTab("Left Blinkers")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Blinkers.LeftLights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Blinkers.LeftLights, veh)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.editor.right_blinker"), TOP, function()
 		activeTab("Right Blinkers")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Blinkers.RightLights)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.Blinkers.RightLights, veh)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.els.els"), TOP, function()
 		activeTab("Flashing")
-		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.FlashingLights, true)
+		SVMOD:EDITOR_Lights(frame:GetCenterPanel(), veh.SV_Data.FlashingLights, veh, true)
 	end)
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.editor.parts"), TOP, function()

@@ -384,7 +384,7 @@ local function spriteCirclePanel(panel, data, hasAnim)
 	end
 end
 
-function SVMOD:EDITOR_Lights(panel, data, hasAnim)
+function SVMOD:EDITOR_Lights(panel, data, veh, hasAnim)
 	panel:Clear()
 
 	local listView = SVMOD:CreateListView(panel)
@@ -646,6 +646,13 @@ function SVMOD:EDITOR_Lights(panel, data, hasAnim)
 		menu:Open()
 	end)
 	addButton:Dock(RIGHT)
+
+	local reloadButton = SVMOD:CreateButton(bottomPanel, "RELOAD ANIMATIONS", function()
+		veh:SV_StopAlphaTimer()
+		veh:SV_StartAlphaTimer()
+	end)
+	reloadButton:Dock(RIGHT)
+	reloadButton:SetSize(180, 30)
 
 	for _, light in ipairs(data) do
 		if table.Count(light) > 1 then
