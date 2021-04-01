@@ -3,7 +3,8 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.3.2"
+SVMOD.FCFG.Version = "1.3.2b"
+SVMOD.FCFG.FileVersion = "1.3.2"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -37,9 +38,9 @@ SVMOD.FCFG.ConflictList = {
 function SVMOD:Load()
 	local Config
 	if SERVER then
-		Config = file.Read("svmod/server_" .. string.Replace(SVMOD.FCFG.Version, ".", "_") .. ".txt")
+		Config = file.Read("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
 	else
-		Config = file.Read("svmod/client_" .. string.Replace(SVMOD.FCFG.Version, ".", "_") .. ".txt")
+		Config = file.Read("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
 	end
 
 	if Config then
@@ -54,6 +55,20 @@ function SVMOD:Load()
 				end
 			end
 		end
+	else
+		if SERVER then
+			hook.Add("PlayerInitialSpawn", "SV_SendWelcomeGUI", function(ply)
+				timer.Simple(10, function()
+					if game.SinglePlayer() or ply:IsSuperAdmin() then
+						hook.Remove("PlayerInitialSpawn", "SV_SendWelcomeGUI")
+						net.Start("SV_WelcomeGUI")
+						net.Send(ply)
+					end
+				end)
+			end)
+		end
+
+		SVMOD:Save()
 	end
 end
 
@@ -61,7 +76,7 @@ function SVMOD:Save()
 	local Config = table.Copy(self.CFG)
 
 	if SERVER then
-		file.Write("svmod/server_" .. string.Replace(SVMOD.FCFG.Version, ".", "_") .. ".txt", util.TableToJSON(Config))
+		file.Write("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(Config))
 	else
 		-- Save shortcuts
 		Config.Shortcuts = {}
@@ -75,6 +90,6 @@ function SVMOD:Save()
 		-- Do not save enterprise ID client-side
 		Config.Contributor.EnterpriseID = nil
 
-		file.Write("svmod/client_" .. string.Replace(SVMOD.FCFG.Version, ".", "_") .. ".txt", util.TableToJSON(Config))
+		file.Write("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(Config))
 	end
 end
