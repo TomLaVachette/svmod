@@ -20,7 +20,7 @@ function ENT:Initialize()
 		self:StopSound("svmod/fuel/fill-up.wav")
 	end
 
-	timer.Create("SV_FillerPistol_" .. self:EntIndex(), 3, 0, function()
+	timer.Create("SV_FillerPistol_" .. self:EntIndex(), 4, 0, function()
 		local veh = self:GetParent()
 
 		if not IsValid(veh) or not IsValid(self.Player) then
@@ -32,7 +32,7 @@ function ENT:Initialize()
 			end
 
 			local function callback()
-				veh:SV_SetFuel(veh:SV_GetFuel() + 21)
+				veh:SV_SetFuel(veh:SV_GetFuel() + veh:SV_GetMaxFuel() * 0.21)
 				veh:SV_SendFuel(self.Player)
 			end
 
