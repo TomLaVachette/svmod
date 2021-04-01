@@ -1,3 +1,5 @@
+util.AddNetworkString("SV_WelcomeGUI")
+
 function SVMOD:ResetConfiguration()
 	SVMOD.CFG = {}
 
