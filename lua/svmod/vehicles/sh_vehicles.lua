@@ -84,11 +84,13 @@ end
 -- @tparam SV_Vehicle SV_Vehicle to be unloaded
 -- @internal
 function SVMOD:UnloadVehicle(veh)
-	hook.Run("SV_UnloadVehicle", veh)
+	if IsValid(veh) then
+		hook.Run("SV_UnloadVehicle", veh)
 
-	-- Remove pointers to the vehicle metatable
-	for k, _ in pairs(SVMOD.Metatable) do
-		veh[k] = nil
+		-- Remove pointers to the vehicle metatable
+		for k, _ in pairs(SVMOD.Metatable) do
+			veh[k] = nil
+		end
 	end
 end
 

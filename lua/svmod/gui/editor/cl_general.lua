@@ -7,6 +7,7 @@ function SVMOD:EDITOR_General(panel, veh)
 	bottomPanel:SetPaintBackground(false)
 
 	local authorTextBox
+	local workshopTextBox
 
 	local addButton = SVMOD:CreateButton(bottomPanel, "SAVE", function()
 		local tab = table.Copy(veh.SV_Data)
@@ -14,6 +15,7 @@ function SVMOD:EDITOR_General(panel, veh)
 		tab.Timestamp = nil
 		tab.Author.Name = authorTextBox:GetValue()
 		tab.Author.SteamID64 = LocalPlayer():SteamID64()
+		tab.WorkshopID = workshopTextBox:GetValue()
 
 		for _, v in ipairs(tab.FlashingLights) do
 			if v.Sprite then
@@ -25,10 +27,19 @@ function SVMOD:EDITOR_General(panel, veh)
 			end
 		end
 
+		local name = "Unknown"
+		for _, vehData in ipairs(SVMOD:GetVehicleList()) do
+			if vehData.Model == veh:GetModel() then
+				name = vehData.Name .. " (" .. vehData.Category .. ")"
+				break
+			end
+		end
+
 		HTTP({
 			url = "https://api.svmod.com/add_vehicle.php",
 			method = "POST",
 			body = util.TableToJSON({
+				name = name,
 				model = veh:GetModel(),
 				json = util.TableToJSON(tab),
 				version = tostring(SVMOD.FCFG.DataVersion),
@@ -39,7 +50,10 @@ function SVMOD:EDITOR_General(panel, veh)
 				if code == 200 then
 					notification.AddLegacy("Data was sent successfully.", NOTIFY_GENERIC, 5)
 
-					SVMOD:Data_Update()
+					SVMOD:SetAddonState(false)
+					timer.Simple(1, function()
+						SVMOD:SetAddonState(true)
+					end)
 				else
 					notification.AddLegacy("Invalid API key.", NOTIFY_ERROR, 5)
 				end
@@ -71,17 +85,27 @@ function SVMOD:EDITOR_General(panel, veh)
 
 	SVMOD:CreateTitle(panel, "INFORMATIONS")
 
-	local authorPanel = vgui.Create("DPanel", panel)
-	authorPanel:Dock(TOP)
-	authorPanel:DockMargin(0, 4, 0, 4)
-	authorPanel:SetSize(0, 30)
-	authorPanel:SetPaintBackground(false)
+	local function createField(name, value)
+		local authorPanel = vgui.Create("DPanel", panel)
+		authorPanel:Dock(TOP)
+		authorPanel:DockMargin(0, 4, 0, 4)
+		authorPanel:SetSize(0, 30)
+		authorPanel:SetPaintBackground(false)
+	
+		local label = vgui.Create("DLabel", authorPanel)
+		label:SetPos(2, 4)
+		label:SetFont("SV_Calibri18")
+		label:SetText(name)
+		label:SizeToContents()
+	
+		textBox = SVMOD:CreateTextboxPanel(authorPanel, name)
+		textBox:SetValue(value or "")
 
-	local label = vgui.Create("DLabel", authorPanel)
-	label:SetPos(2, 4)
-	label:SetFont("SV_Calibri18")
-	label:SetText(language.GetPhrase("svmod.vehicles.author"))
-	label:SizeToContents()
+		return textBox
+	end
+
+	authorTextBox = createField(language.GetPhrase("svmod.vehicles.author"), veh.SV_Data.Author.Name or "")
+	workshopTextBox = createField(language.GetPhrase("svmod.editor.workshop"), veh.SV_Data.WorkshopID or "")
 
 	local label = vgui.Create("DLabel", panel)
 	label:Dock(TOP)
@@ -93,9 +117,6 @@ function SVMOD:EDITOR_General(panel, veh)
 		label:SetText(language.GetPhrase("svmod.editor.dbprivate") .. SVMOD.CFG.Contributor.EnterpriseID .. ").")
 	end
 	label:SizeToContents()
-
-	authorTextBox = SVMOD:CreateTextboxPanel(authorPanel, language.GetPhrase("svmod.vehicles.author"))
-	authorTextBox:SetValue(veh.SV_Data.Author.Name or "")
 
 	local title = SVMOD:CreateTitle(panel, "TOOLS")
 	title:DockMargin(0, 30, 0, 0)
