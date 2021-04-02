@@ -161,6 +161,20 @@ function SVMOD:EDITOR_General(panel, veh)
 			local tab = SVMOD:DeepCopy(l)
 			table.insert(veh.SV_Data.Headlights, tab)
 		end
+		surface.PlaySound("buttons/button14.wav")
+		notification.AddLegacy("Brake lights copied to headlights.", NOTIFY_GENERIC, 3)
+	end)
+	blinkerButton:SetSize(0, 35)
+	blinkerButton:Dock(TOP)
+	blinkerButton:DockMargin(0, 10, 0, 0)
+
+	local blinkerButton = SVMOD:CreateButton(panel, "COPY BRAKE TO REVERSING", function()
+		for _, l in ipairs(veh.SV_Data.Back.BrakeLights) do
+			local tab = SVMOD:DeepCopy(l)
+			table.insert(veh.SV_Data.Back.ReversingLights, tab)
+		end
+		surface.PlaySound("buttons/button14.wav")
+		notification.AddLegacy("Brake lights copied to reversing lights.", NOTIFY_GENERIC, 3)
 	end)
 	blinkerButton:SetSize(0, 35)
 	blinkerButton:Dock(TOP)
