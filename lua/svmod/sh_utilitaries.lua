@@ -17,7 +17,7 @@ function SVMOD:DeepCopy(tab)
 	local result = table.Copy(tab)
 
 	for k, v in pairs(result) do
-		if type(v) == "pixelvis_handle_t" then
+		if type(v) == "pixelvis_handle_t" or type(v) == "ProjectedTexture" then
 			result[k] = nil
 		elseif isvector(v) then
 			result[k] = Vector(v.x, v.y, v.z)
