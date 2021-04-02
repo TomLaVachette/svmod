@@ -505,24 +505,39 @@ function SVMOD:EDITOR_Lights(panel, data, veh, hasAnim)
 			downLight(lineID)
 		end):SetIcon("icon16/arrow_down.png")
 
-		local copyChild, copyParent = menu:AddSubMenu("Copy")
-		copyParent:SetIcon("icon16/page_copy.png")
+		menu:AddOption("Dupplicate", function()
+			if line.Data.ProjectedTexture then
+				local index = table.insert(data, {
+					ProjectedTexture = SVMOD:DeepCopy(line.Data.ProjectedTexture)
+				})
+				local tab = addLight(data[index])
+			end
 
-		for i, l in ipairs(listView:GetLines()) do
-			copyChild:AddOption("From light #" .. l:GetColumnText(1), function()
-				for i, v in ipairs(data) do
-					if v == line.Data then
-						data[i] = SVMOD:DeepCopy(l.Data)
-						line.Data = data[i]
-						listView:SelectItem(line)
-						break
-					end
-				end
-			end):SetIcon("icon16/lightbulb_off.png")
-		end
+			if line.Data.Sprite then
+				local index = table.insert(data, {
+					Sprite = SVMOD:DeepCopy(line.Data.Sprite)
+				})
+				local tab = addLight(data[index])
+			end
+
+			if line.Data.SpriteLine then
+				local index = table.insert(data, {
+					SpriteLine = SVMOD:DeepCopy(line.Data.SpriteLine)
+				})
+				local tab = addLight(data[index])
+			end
+
+			if line.Data.SpriteCircle then
+				local index = table.insert(data, {
+					SpriteCircle = SVMOD:DeepCopy(line.Data.SpriteCircle)
+				})
+				local tab = addLight(data[index])
+			end
+		end):SetIcon("icon16/page_copy.png")
 
 		menu:AddOption("Symmetric", function()
 			if line.Data.ProjectedTexture then
+				PrintTable(line.Data.ProjectedTexture)
 				local index = table.insert(data, {
 					ProjectedTexture = SVMOD:DeepCopy(line.Data.ProjectedTexture)
 				})
