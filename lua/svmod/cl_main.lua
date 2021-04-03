@@ -20,7 +20,13 @@ hook.Add("InitPostEntity", "SV_GetAddonStateOnInitialSpawn", function()
 end)
 
 net.Receive("SV_SetAddonState", function()
-	SVMOD.IsEnabled = net.ReadBool()
+	local state = net.ReadBool()
+
+	if state == SVMOD.IsEnabled then
+		return
+	end
+
+	SVMOD.IsEnabled = state
 
 	HTTP({
 		url = "https://api.svmod.com/get_version.php",
