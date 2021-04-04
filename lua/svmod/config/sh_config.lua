@@ -3,7 +3,7 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.3.2b"
+SVMOD.FCFG.Version = "1.3.3"
 SVMOD.FCFG.FileVersion = "1.3.2"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
