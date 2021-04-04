@@ -55,9 +55,8 @@ function SVMOD:EDITOR_Sounds(panel, data)
 	local sirenComboBox = createComboBoxPanel("Siren", {
 		"",
 		"american_police", "american_firetruck", "american_ambulance",
-		"french_police", "french_firetruck", "french_ambulance"
+		"french_police", "french_gendarmerie", "french_firetruck", "french_ambulance"
 	}, function(val)
-		print(val)
 		data.Siren = val
 	end)
 	sirenComboBox:SetValue(data.Siren or "")
