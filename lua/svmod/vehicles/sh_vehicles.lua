@@ -4,7 +4,7 @@
 -- Checks if the entity is a SV_Vehicle or not.
 -- @treturn boolean True if the entity is a SV_Vehicle, false otherwise
 function SVMOD:IsVehicle(veh)
-	return IsValid(veh) and veh.SV_GetDriverSeat and veh:SV_GetDriverSeat().SV_States ~= nil
+	return IsValid(veh) and (veh.SV_IsEditMode or (veh.SV_GetDriverSeat and veh:SV_GetDriverSeat().SV_States ~= nil))
 end
 
 hook.Add("OnEntityCreated", "SV_LoadVehicle", function(ent)
@@ -53,9 +53,13 @@ end)
 -- @tparam Vehicle Vehicle to be loaded
 -- @internal
 function SVMOD:LoadVehicle(veh)
-	if not IsValid(veh) or not veh:IsVehicle() then return end
+	if not IsValid(veh) or not veh:IsVehicle() then
+		return
+	end
 
-	if SVMOD:GetData(veh:GetModel()) or veh:GetNW2Bool("SV_IsSeat", false) then
+	local data = SVMOD:GetData(veh:GetModel())
+
+	if (veh.SV_IsEditMode or data) or veh:GetNW2Bool("SV_IsSeat", false) then
 		-- Add pointers to the vehicle metatable
 		for k, v in pairs(SVMOD.Metatable) do
 			veh[k] = v
@@ -63,8 +67,6 @@ function SVMOD:LoadVehicle(veh)
 
 		-- Get configuration and call InitEntity on driver seat ONLY
 		if veh:GetModel() ~= "models/nova/airboat_seat.mdl" then
-			veh.SV_Data = table.Copy(SVMOD:GetData(veh:GetModel()))
-
 			veh.SV_States = {
 				Headlights = false,
 				BackLights = false,
@@ -75,7 +77,11 @@ function SVMOD:LoadVehicle(veh)
 				Horn = false
 			}
 
-			hook.Run("SV_LoadVehicle", veh)
+			if data then
+				veh.SV_Data = SVMOD:DeepCopy(data)
+
+				hook.Run("SV_LoadVehicle", veh)
+			end
 		end
 	end
 end

@@ -20,26 +20,26 @@ function SVMOD:SetHeadlightsState(value)
 end
 
 net.Receive("SV_TurnHeadlights", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
 
-	local State = net.ReadBool()
+	local state = net.ReadBool()
 
-	if State then
-		Vehicle.SV_States.Headlights = true
+	if state then
+		veh.SV_States.Headlights = true
 
-		Vehicle:EmitSound("svmod/headlight/switch_on.wav")
+		veh:EmitSound("svmod/headlight/switch_on.wav")
 	else
-		Vehicle.SV_States.Headlights = false
+		veh.SV_States.Headlights = false
 
-		for _, v in ipairs(Vehicle.SV_Data.Headlights) do
+		for _, v in ipairs(veh.SV_Data.Headlights) do
 			if v.ProjectedTexture and IsValid(v.ProjectedTexture.Entity) then
 				v.ProjectedTexture.Entity:Remove()
 				v.ProjectedTexture.Entity = nil
 			end
 		end
 
-		Vehicle:EmitSound("svmod/headlight/switch_off.wav")
+		veh:EmitSound("svmod/headlight/switch_off.wav")
 	end
 end)
 

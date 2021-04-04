@@ -23,6 +23,8 @@ local function openEditor(veh)
 			}
 		}
 
+		veh.SV_IsEditMode = true
+
 		SVMOD:LoadVehicle(veh)
 	end
 

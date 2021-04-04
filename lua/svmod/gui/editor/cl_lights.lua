@@ -537,7 +537,6 @@ function SVMOD:EDITOR_Lights(panel, data, veh, hasAnim)
 
 		menu:AddOption("Symmetric", function()
 			if line.Data.ProjectedTexture then
-				PrintTable(line.Data.ProjectedTexture)
 				local index = table.insert(data, {
 					ProjectedTexture = SVMOD:DeepCopy(line.Data.ProjectedTexture)
 				})
