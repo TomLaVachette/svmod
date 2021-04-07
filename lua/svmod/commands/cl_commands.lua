@@ -1,9 +1,14 @@
-hook.Add("OnPlayerChat", "SV_OpenMenu", function(ply, text) 
-    if text == "!svmod" or text == "/svmod" then
-        if ply == LocalPlayer() then
-            LocalPlayer():ConCommand("svmod")
-        end
+local commands = {
+	["!svmod"] = true,
+	["/svmod"] = true
+}
 
-        return true
-    end
+hook.Add("OnPlayerChat", "SV_OpenMenu", function(ply, text)
+	if commands[text] then
+		if ply == LocalPlayer() then
+			RunConsoleCommand("svmod")
+		end
+
+		return true
+	end
 end)
