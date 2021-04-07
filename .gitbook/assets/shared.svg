@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg height="80" width="64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="myGradient" gradientTransform="rotate(315)">
+      <stop offset="00%"  stop-color="#dea909" />
+      <stop offset="00%" stop-color="#03a9f4" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded corner rectangle -->
+  <rect x="0" width="64" height="64" rx="15" fill="url(#myGradient)" />
+</svg>
