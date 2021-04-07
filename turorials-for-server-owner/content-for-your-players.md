@@ -1,2 +1,0 @@
-# Content for your players
-
