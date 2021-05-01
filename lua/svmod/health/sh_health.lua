@@ -7,7 +7,7 @@ function SVMOD.Metatable:SV_GetHealth()
 	local veh = self:SV_GetDriverSeat()
 
 	if not veh.SV_Data.Parts or #veh.SV_Data.Parts == 0 then
-		return 0
+		return -1
 	end
 
 	local Health = 0
