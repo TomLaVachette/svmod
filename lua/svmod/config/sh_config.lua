@@ -29,10 +29,10 @@ SVMOD.FCFG.ConflictList = {
 		Name = "VCMod Main",
 		Variable = "vcmod_main"
 	},
-	-- {
-	--	 Name = "Photon",
-	--	 Variable = "Photon"
-	-- }
+	{
+		Name = "Novacars",
+		Variable = "NOVA_Config"
+	}
 }
 
 function SVMOD:Load()
