@@ -7,7 +7,7 @@ hook.Add("SV_PlayerEnteredVehicle", "SV_AddWheelMouse", function()
 
 		local A, B = veh:GetModelBounds()
 		local Width = B.y - A.y
-		if veh:GetThirdPersonMode() and ucmd:GetMouseWheel() ~= 0 then
+		if ply:GetVehicle():GetThirdPersonMode() and ucmd:GetMouseWheel() ~= 0 then
 			veh:SetCameraDistance(math.Clamp(veh:GetCameraDistance() + (-ucmd:GetMouseWheel() / 10), Width / 1000 * 3, Width / 1000 * 7))
 		end
 
