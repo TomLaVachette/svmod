@@ -31,7 +31,7 @@ function SVMOD.Metatable:SV_ShowFillingHUD()
 	local lastLerp, startLerp
 
 	hook.Add("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex(), function()
-		if not IsValid(self) then
+		if not SVMOD:IsVehicle(self) then
 			hook.Remove("PostDrawTranslucentRenderables", "SV_FillingHUD_" .. self:EntIndex())
 			return
 		end
