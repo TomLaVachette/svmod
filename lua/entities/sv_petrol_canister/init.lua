@@ -10,6 +10,7 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+	self:SetPos(self:GetPos() + Vector(0, 0, 10)) -- dirty quick fix
 end
 
 function ENT:StartTouch(ent)
