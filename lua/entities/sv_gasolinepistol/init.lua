@@ -23,7 +23,7 @@ function ENT:Initialize()
 	timer.Create("SV_FillerPistol_" .. self:EntIndex(), 4, 0, function()
 		local veh = self:GetParent()
 
-		if not IsValid(veh) or not IsValid(self.Player) then
+		if not SVMOD:IsVehicle(veh) or not IsValid(self.Player) then
 			self:Remove()
 		else
 			if veh:SV_GetFuel() == veh:SV_GetMaxFuel() then
@@ -107,7 +107,7 @@ function ENT:AttachVehicle(veh, ply, index)
 	self.Price = pumpData.Price
 
 	if veh:SV_GetFuel() < veh:SV_GetMaxFuel() then
-		self:EmitSound("svmod/fuel/fill-up.wav")
+		self:EmitSound("svmod/fuel/fill-up.wav", 75, 100, 2)
 	end
 
 	veh:SV_SendFuel(ply)
