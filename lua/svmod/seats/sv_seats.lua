@@ -103,7 +103,7 @@ function SVMOD.Metatable:SV_CreateSeat(index)
 	-- Without this timer, passenger seats are inaccessible
 	-- if an addon returns false in PlayerCanEnterVehicle.
 	timer.Simple(FrameTime(), function()
-		if not IsValid(seat:GetDriver()) then
+		if IsValid(seat) and not IsValid(seat:GetDriver()) then
 			seat:Remove()
 		end
 	end)
