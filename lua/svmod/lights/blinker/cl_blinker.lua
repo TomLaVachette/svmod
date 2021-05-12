@@ -5,8 +5,8 @@
 -- driven by the player.
 -- @tparam boolean result True to enable the left blinker, false to disable
 function SVMOD:SetLeftBlinkerState(value)
-	local Vehicle = LocalPlayer():GetVehicle()
-	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
+	local veh = LocalPlayer():GetVehicle()
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
 	if not value then
 		value = false
@@ -34,30 +34,32 @@ function SVMOD:SetRightBlinkerState(value)
 end
 
 net.Receive("SV_TurnLeftBlinker", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
+	veh = veh:SV_GetDriverSeat()
 
-	Vehicle.SV_States.LeftBlinkers = net.ReadBool()
-	Vehicle.SV_States.RightBlinkers = false
+	veh.SV_States.LeftBlinkers = net.ReadBool()
+	veh.SV_States.RightBlinkers = false
 
-	if Vehicle.SV_States.LeftBlinkers then
-		Vehicle:EmitSound("svmod/blinker/switch_on.wav")
+	if veh.SV_States.LeftBlinkers then
+		veh:EmitSound("svmod/blinker/switch_on.wav")
 	else
-		Vehicle:EmitSound("svmod/blinker/switch_off.wav")
+		veh:EmitSound("svmod/blinker/switch_off.wav")
 	end
 end)
 
 net.Receive("SV_TurnRightBlinker", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
+	veh = veh:SV_GetDriverSeat()
 
-	Vehicle.SV_States.RightBlinkers = net.ReadBool()
-	Vehicle.SV_States.LeftBlinkers = false
+	veh.SV_States.RightBlinkers = net.ReadBool()
+	veh.SV_States.LeftBlinkers = false
 
-	if Vehicle.SV_States.RightBlinkers then
-		Vehicle:EmitSound("svmod/blinker/switch_on.wav")
+	if veh.SV_States.RightBlinkers then
+		veh:EmitSound("svmod/blinker/switch_on.wav")
 	else
-		Vehicle:EmitSound("svmod/blinker/switch_off.wav")
+		veh:EmitSound("svmod/blinker/switch_off.wav")
 	end
 end)
 

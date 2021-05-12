@@ -18,14 +18,15 @@ function SVMOD:SetHazardLightsState(value)
 end
 
 net.Receive("SV_TurnHazardLights", function()
-	local Vehicle = net.ReadEntity()
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = net.ReadEntity()
+	if not SVMOD:IsVehicle(veh) then return end
+	veh = veh:SV_GetDriverSeat()
 
-	Vehicle.SV_States.HazardLights = net.ReadBool()
+	veh.SV_States.HazardLights = net.ReadBool()
 
-	if Vehicle.SV_States.HazardLights then
-		Vehicle:EmitSound("svmod/blinker/switch_on.wav")
+	if veh.SV_States.HazardLights then
+		veh:EmitSound("svmod/blinker/switch_on.wav")
 	else
-		Vehicle:EmitSound("svmod/blinker/switch_off.wav")
+		veh:EmitSound("svmod/blinker/switch_off.wav")
 	end
 end)

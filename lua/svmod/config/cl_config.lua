@@ -1,7 +1,5 @@
 SVMOD.CFG = {}
 
-SVMOD.CFG.Language = "EN"
-
 SVMOD.CFG.Lights = {
 	DrawProjectedLights = true,
 	DrawShadows = false,

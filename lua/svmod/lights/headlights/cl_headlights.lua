@@ -22,6 +22,7 @@ end
 net.Receive("SV_TurnHeadlights", function()
 	local veh = net.ReadEntity()
 	if not SVMOD:IsVehicle(veh) then return end
+	veh = veh:SV_GetDriverSeat()
 
 	local state = net.ReadBool()
 

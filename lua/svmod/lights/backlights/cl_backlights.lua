@@ -1,10 +1,10 @@
 net.Receive("SV_TurnBackLights", function()
 	local veh = net.ReadEntity()
-	if not SVMOD:IsVehicle(veh) then
-		return
-	end
+	if not SVMOD:IsVehicle(veh) then return end
+	veh = veh:SV_GetDriverSeat()
 
 	veh.SV_States.BackLights = net.ReadBool()
+
 	if veh.SV_States.BackLights then
 		veh.SV_IsReversing = false
 
