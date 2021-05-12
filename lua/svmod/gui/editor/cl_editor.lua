@@ -146,7 +146,7 @@ local function openEditor(veh)
 		SVMOD:EDITOR_Sounds(frame:GetCenterPanel(), veh.SV_Data.Sounds)
 	end)
 
-	frame:CreateMenuButton(language.GetPhrase("svmod.close"), BOTTOM, function()
+	frame.CustomClose = function()
 		local closeFrame = vgui.Create("DFrame")
 		closeFrame:SetSize(300, 110)
 		closeFrame:Center()
@@ -173,7 +173,7 @@ local function openEditor(veh)
 		end)
 		button:Dock(TOP)
 		button:SetSize(0, 30)
-	end)
+	end
 
 	SVMOD:EDITOR_General(frame:GetCenterPanel(), veh)
 end

@@ -49,6 +49,13 @@ concommand.Add("svmod", function(ply)
 			net.WriteBool(SVMOD.CFG["Fuel"]["IsEnabled"])
 			net.WriteFloat(SVMOD.CFG["Fuel"]["Multiplier"])
 
+			net.WriteBool(SVMOD.CFG["Others"]["IsHUDEnabled"])
+			net.WriteFloat(SVMOD.CFG["Others"]["HUDPositionX"])
+			net.WriteFloat(SVMOD.CFG["Others"]["HUDPositionY"])
+			net.WriteUInt(SVMOD.CFG["Others"]["HUDSize"], 9) -- max: 511
+			net.WriteColor(SVMOD.CFG["Others"]["HUDColor"])
+			net.WriteFloat(SVMOD.CFG["Others"]["CustomSuspension"])
+
 			net.WriteFloat(SVMOD.CFG["Contributor"]["EnterpriseID"])
 		end
 
@@ -127,7 +134,8 @@ end)
 
 net.Receive("SV_Settings_HardReset", function()
 	local bool = net.ReadBool()
-	if not bool then -- anti netscan
+	if not bool then
+		-- anti netscan
 		return
 	end
 
@@ -150,8 +158,16 @@ net.Receive("SV_Settings", function(_, ply)
 		if hasAccess then
 			if type == 0 then
 				SVMOD.CFG[category][name] = net.ReadBool()
-			else
+			elseif type == 1 then
 				SVMOD.CFG[category][name] = math.Round(net.ReadFloat(), 2)
+			else
+				-- 2
+				SVMOD.CFG[category][name] = net.ReadColor()
+			end
+
+			-- Realtime HUD update
+			if name == "IsHUDEnabled" or string.StartWith(name, "HUD") then
+				SVMOD:SendHUDConfiguration()
 			end
 
 			SVMOD:Save()

@@ -38,6 +38,13 @@ net.Receive("SV_Settings", function()
 		data.FuelIsEnabled = net.ReadBool()
 		data.FuelMultiplier = math.Round(net.ReadFloat(), 2)
 
+		data.IsHUDEnabled = net.ReadBool()
+		data.HUDPositionX = net.ReadFloat()
+		data.HUDPositionY = net.ReadFloat()
+		data.HUDSize = net.ReadUInt(9) -- max: 511
+		data.HUDColor = net.ReadColor()
+		data.CustomSuspension = math.Round(net.ReadFloat(), 2)
+
 		data.EnterpriseID = net.ReadFloat()
 	end
 
@@ -87,11 +94,11 @@ net.Receive("SV_Settings", function()
 		frame:CreateMenuButton(language.GetPhrase("svmod.fuel.fuel"), TOP, function()
 			SVMOD:GUI_Fuel(frame:GetCenterPanel(), data)
 		end)
-	end
 
-	frame:CreateMenuButton(language.GetPhrase("svmod.close"), BOTTOM, function()
-		frame:Remove()
-	end)
+		frame:CreateMenuButton(language.GetPhrase("svmod.others.others"), TOP, function()
+			SVMOD:GUI_Others(frame:GetCenterPanel(), data)
+		end)
+	end
 
 	frame:CreateMenuButton(language.GetPhrase("svmod.credits"), BOTTOM, function()
 		SVMOD:GUI_Credits(frame:GetCenterPanel(), data)

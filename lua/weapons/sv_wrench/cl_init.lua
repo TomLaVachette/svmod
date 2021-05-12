@@ -1,42 +1,30 @@
 include("shared.lua")
 
-function SWEP:Initialize()
-	if self:GetOwner() ~= LocalPlayer() then return end
-
-
-end
-
-function SWEP:OnRemove()
-	if self:GetOwner() ~= LocalPlayer() then return end
-
-	-- hook.Remove("PostDrawTranslucentRenderables", "SV_WrenchHUD")
-end
-
 function SWEP:PrimaryAttack()
-	local Vehicle = self:GetOwner():GetEyeTrace().Entity
-	if Vehicle ~= SVMOD.VehicleRenderedParts then return end
+	local veh = self:GetOwner():GetEyeTrace().Entity
+	if veh ~= SVMOD.VehicleRenderedParts then return end
 
-	if not Vehicle.SV_Data.Parts or #Vehicle.SV_Data.Parts == 0 then return end
+	if not veh.SV_Data.Parts or #veh.SV_Data.Parts == 0 then return end
 
-	local BestDistance = 6000
-	local Index
+	local bestDistance = 6000
+	local index
 
-	for i, p in ipairs(Vehicle.SV_Data.Parts) do
-		local Distance = Vehicle:LocalToWorld(p.Position):DistToSqr(self:GetOwner():GetPos())
-		if Distance < BestDistance then
-			BestDistance = Distance
-			Index = i
+	for i, p in ipairs(veh.SV_Data.Parts) do
+		local distance = veh:LocalToWorld(p.Position):DistToSqr(self:GetOwner():GetPos())
+		if distance < bestDistance then
+			bestDistance = distance
+			index = i
 		end
 	end
 
-	if not Index then return end
+	if not index then return end
 
 	-- Already full health
-	if Vehicle.SV_Data.Parts[Index].Health == 100 then return end
+	if veh.SV_Data.Parts[index]:GetHealth() == 100 then return end
 
 	net.Start("SV_StartRepair")
-	net.WriteEntity(Vehicle)
-	net.WriteUInt(Index, 4) -- max: 15
+	net.WriteEntity(veh)
+	net.WriteUInt(index, 4) -- max: 15
 	net.SendToServer()
 
 	hook.Add("Think", "SV_Wrench", function()
@@ -44,7 +32,7 @@ function SWEP:PrimaryAttack()
 			hook.Remove("Think", "SV_Wrench")
 		elseif not self:GetOwner():KeyDown(IN_ATTACK) then
 			net.Start("SV_StopRepair")
-			net.WriteEntity(Vehicle)
+			net.WriteEntity(veh)
 			net.SendToServer()
 
 			hook.Remove("Think", "SV_Wrench")
@@ -53,15 +41,15 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	local Vehicle = self:GetOwner():GetEyeTrace().Entity
-	if not SVMOD:IsVehicle(Vehicle) then return end
+	local veh = self:GetOwner():GetEyeTrace().Entity
+	if not SVMOD:IsVehicle(veh) then return end
 
-	if not Vehicle.SV_Data.Parts or #Vehicle.SV_Data.Parts == 0 then return end
+	if not veh.SV_Data.Parts or #veh.SV_Data.Parts == 0 then return end
 
 	-- Too far away
-	if Vehicle:GetPos():DistToSqr(self:GetOwner():EyePos()) > 30000 then return end
+	if veh:GetPos():DistToSqr(self:GetOwner():EyePos()) > 45000 then return end
 
-	SVMOD.VehicleRenderedParts = Vehicle
+	SVMOD.VehicleRenderedParts = veh
 end
 
 function SWEP:Holster()

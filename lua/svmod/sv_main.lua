@@ -49,6 +49,10 @@ net.Receive("SV_GetAddonState", function(_, ply)
 		net.WriteUInt(SVMOD.CFG.Contributor.EnterpriseID, 16) -- max: 65535
 	end
 	net.Send(ply)
+
+	if state then
+		SVMOD:SendHUDConfiguration(ply)
+	end
 end)
 
 util.AddNetworkString("SV_SetAddonState")
@@ -78,29 +82,3 @@ hook.Add("PlayerConnect", "SV_EnableAddon", function()
 		end
 	end)
 end)
-
- concommand.Add("temp", function(ply)
- 	local ent = ply:GetEyeTrace().Entity
-
- 	--local size = 0
-	 --
- 	--ent:SetSpringLength(0, 499.95)
- 	-- -- ent:SetSpringLength(1, 499.95)
- 	-- -- ent:SetSpringLength(2, 499.95)
- 	-- -- ent:SetSpringLength(3, 499.95)
-	 --
- 	--timer.Simple(2, function()
- 	--	ent:SetSpringLength(0, 500.12)
- 	--	ent:SetSpringLength(1, 500.12)
- 	--	ent:SetSpringLength(2, 500.12)
- 	--	ent:SetSpringLength(3, 500.12)
- 	--end)
-
-	 for i = 1, ent:GetWheelCount() do
-		 local tyre = ent:GetWheel(i)
-
-		 if tyre:IsValid() then
-			 ent:SetSpringLength(i - 1, 500.08 + 0.1)
-		 end
-	 end
- end)

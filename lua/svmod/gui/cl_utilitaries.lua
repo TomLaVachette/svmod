@@ -13,6 +13,8 @@ surface.CreateFont("SV_Calibri18", {
 	size = 18
 })
 
+local crossMaterial = Material("materials/vgui/svmod/cross.png", "noclamp smooth")
+
 function SVMOD:CreateFrame(name)
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(900, 650)
@@ -25,6 +27,34 @@ function SVMOD:CreateFrame(name)
 
 		surface.SetDrawColor(178, 95, 245)
 		surface.DrawRect(0, 0, w, 4)
+	end
+
+	local closePanel = vgui.Create("DPanel", frame)
+	closePanel:SetSize(24, 24)
+	closePanel:SetPos(900 - 48, 11)
+	closePanel.Paint = function(self, w, h)
+		if self.isHovered then
+			surface.SetDrawColor(237, 197, 255, 255)
+		else
+			surface.SetDrawColor(154, 128, 166, 255)
+		end
+		surface.SetMaterial(crossMaterial)
+		surface.DrawTexturedRect(0, 0, w, h)
+	end
+	closePanel.OnCursorEntered = function(self)
+		self.isHovered = true
+		self:SetCursor("hand")
+	end
+	closePanel.OnCursorExited = function(self)
+		self.isHovered = false
+	end
+	closePanel.OnMousePressed = function(_)
+		surface.PlaySound("garrysmod/ui_click.wav")
+		if frame.CustomClose then
+			frame:CustomClose()
+		else
+			frame:Remove()
+		end
 	end
 
 	local title = vgui.Create("DLabel", frame)
