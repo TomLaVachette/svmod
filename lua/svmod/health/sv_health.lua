@@ -2,14 +2,13 @@
 -- @serverside
 
 hook.Add("SV_LoadVehicle", "SV_LoadVehicle_Health", function(veh)
-	veh:SetMaxHealth(100)
-	veh:SetHealth(100)
+	veh:SV_SetMaxHealth(100)
+	veh:SV_SetHealth(100)
 
-	if veh.SV_Data.Parts then
-		for _, p in ipairs(veh.SV_Data.Parts) do
-			p.Health = 100
-		end
-	end
+	veh:SV_SetWheelFLHealth(100)
+	veh:SV_SetWheelFRHealth(100)
+	veh:SV_SetWheelRLHealth(100)
+	veh:SV_SetWheelRRHealth(100)
 end)
 
 hook.Add("PlayerEnteredVehicle", "SV_Health_StopEngine", function(ply, veh)
@@ -39,46 +38,7 @@ function SVMOD.Metatable:SV_SetHealth(value)
 		veh = self:SV_GetDriverSeat()
 	end
 
-	if not veh.SV_Data.Parts or #veh.SV_Data.Parts == 0 then return end
-
-	value = math.Round(math.Clamp(value, 0, veh:SV_GetMaxHealth()), 2)
-
-	local currentHealth = veh:SV_GetHealth()
-	local count = #veh.SV_Data.Parts
-	local left = currentHealth - value
-	local maxIte = 100
-
-	if value == currentHealth then
-		return
-	elseif value == 100 then
-		for _, p in ipairs(veh.SV_Data.Parts) do
-			p.Health = 100
-		end
-	elseif value == 0 then
-		for _, p in ipairs(veh.SV_Data.Parts) do
-			p.Health = 0
-		end
-	elseif value < currentHealth then
-		while maxIte > 0 and left > 0 do
-			local Random = math.random(1, count)
-			veh.SV_Data.Parts[Random].Health = math.Clamp(veh.SV_Data.Parts[Random].Health - count, 0, 100)
-			if veh.SV_Data.Parts[Random].Health > 0 then
-				left = left - 1
-			end
-			maxIte = maxIte - 1
-		end
-	else
-		while maxIte > 0 and left > 0 do
-			local Random = math.random(1, count)
-			veh.SV_Data.Parts[Random].Health = math.Clamp(veh.SV_Data.Parts[Random].Health + count, 0, 100)
-			if veh.SV_Data.Parts[Random].Health < 100 then
-				left = left - 1
-			end
-			maxIte = maxIte - 1
-		end
-	end
-
-	veh:SetHealth(value)
+	veh:SetNW2Int("SV_Health", math.Clamp(value, 0, veh:SV_GetMaxHealth()))
 
 	if veh:SV_GetHealth() == 0 then
 		if not veh.SV_IsExploded then
@@ -108,7 +68,7 @@ function SVMOD.Metatable:SV_SetHealth(value)
 					ply:GetVehicle():SV_ExitVehicle(ply)
 
 					local pos = veh:GetPos()
-					local ang = math.random(1,359)
+					local ang = math.random(1, 359)
 					pos.x = pos.x + 10 * math.cos(ang)
 					pos.y = pos.y + 10 * math.sin(ang)
 					pos.z = pos.z + 50
@@ -180,7 +140,7 @@ end
 -- Sets the maximum health of the vehicle.
 -- @tparam number health New health value
 function SVMOD.Metatable:SV_SetMaxHealth(value)
-	self:SetMaxHealth(value)
+	self:SetNW2Int("SV_MaxHealth", value)
 end
 
 hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
@@ -191,7 +151,8 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 			return
 		elseif data.Speed < 300 or data.DeltaTime < 1 then
 			return
-		elseif data.HitNormal.z < -0.9 then -- Avoid random damages
+		elseif data.HitNormal.z < -0.9 then
+			-- Avoid random damages
 			return
 		end
 
@@ -203,7 +164,7 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 			return
 		end
 
-		local Health = math.Round(data.Speed * 0.02 * SVMOD.CFG.Damage.PhysicsMultiplier)
+		local health = math.Round(data.Speed * 0.02 * SVMOD.CFG.Damage.PhysicsMultiplier)
 
 		if data.Speed > 500 then
 			for _, passengerSeat in ipairs(ent:SV_GetPassengerSeats()) do
@@ -215,16 +176,16 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 						DInfo:SetAttacker(game.GetWorld())
 					end
 					DInfo:SetInflictor(ent)
-					DInfo:SetDamage(Health)
+					DInfo:SetDamage(health)
 					DInfo:SetDamageType(DMG_VEHICLE)
 					passengerSeat:GetDriver():TakeDamageInfo(DInfo)
 				end
 			end
 		end
 
-		ent:SV_SetHealth(ent:SV_GetHealth() - Health)
+		ent:SV_SetHealth(ent:SV_GetHealth() - health)
 
-		ent:EmitSound("physics/metal/metal_barrel_impact_hard" .. math.random(1,3) .. ".wav")
+		ent:EmitSound("physics/metal/metal_barrel_impact_hard" .. math.random(1, 3) .. ".wav")
 	end)
 end)
 
@@ -238,11 +199,12 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 	end
 
 	local totalDamage = dmg:GetDamage()
-	if totalDamage < 0.1 then -- Fix for GMod doing shit on the damage
+	if totalDamage < 0.1 then
+		-- Fix for GMod doing shit on the damage
 		totalDamage = totalDamage * 10000
 	end
 
-	totalDamage = math.floor(math.max(1, totalDamage * SVMOD.CFG.Damage.BulletMultiplier / 2))
+	totalDamage = math.floor(math.max(1, totalDamage * SVMOD.CFG.Damage.BulletMultiplier))
 
 	-- Deal damage to the driver
 	local driver = ent:GetDriver()
@@ -267,7 +229,15 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 		end
 	end
 
-	ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage)
+	local nearestWheelID, nearestWheelDistance = ent:SV_GetNearestWheel(ent:WorldToLocal(dmg:GetDamagePosition()))
+
+	if nearestWheelDistance < 1000 then
+		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.2)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.8)
+	else
+		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.8)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.2)
+	end
 end)
 
 hook.Add("SV_PlayerLeaveVehicle", "SV_DealDamageOnLeave", function(ply, veh)

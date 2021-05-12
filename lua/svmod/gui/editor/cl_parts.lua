@@ -19,7 +19,7 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 		local index = table.insert(data, {
             Position = Vector(0, 0, 0),
             Angles = Angle(0, 0, 0),
-            Health = 50
+            Type = "engine"
 		})
 		addPart(data[index])
 	end)
@@ -127,8 +127,9 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
             local index = table.insert(data, {
                 Position = Vector(-line.Data.Position.x, line.Data.Position.y, line.Data.Position.z),
                 Angles = Angle(line.Data.Angles.x, line.Data.Angles.y, line.Data.Angles.z),
-                Health = 50
+                Type = "engine"
             })
+
             addPart(data[index])
 
             newPart = data[index]
@@ -159,8 +160,79 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 
 		local gasolinePistol = ClientsideModel("models/kaesar/kaesar_weapons/w_petrolgun.mdl")
 
-		local title = SVMOD:CreateTitle(centerPanel, "LOCAL POSITIONS")
+		local title = SVMOD:CreateTitle(centerPanel, "SETTINGS")
 		title:DockMargin(0, 5, 0, 0)
+
+		local wheelType
+
+		SVMOD:CreateSettingPanel(centerPanel, "Part type", {
+			{
+				Name = "Engine",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = (e.Data.Type == "engine"),
+				DoClick = function()
+					wheelType:Hide()
+					e.Data.Type = "engine"
+				end
+			},
+			{
+				Name = "Wheel",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = string.StartWith(e.Data.Type, "wheel"),
+				DoClick = function()
+					e.Data.Type = "wheel_fl"
+					wheelType:Show()
+				end
+			}
+		})
+
+		wheelType = SVMOD:CreateSettingPanel(centerPanel, "Wheel type", {
+			{
+				Name = "Front Left",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = (not string.StartWith(e.Data.Type, "wheel")) or (e.Data.Type == "wheel_fl"),
+				DoClick = function()
+					e.Data.Type = "wheel_fl"
+				end
+			},
+			{
+				Name = "Front Right",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = (e.Data.Type == "wheel_fr"),
+				DoClick = function()
+					e.Data.Type = "wheel_fr"
+				end
+			},
+			{
+				Name = "Rear Left",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = (e.Data.Type == "wheel_rl"),
+				DoClick = function()
+					e.Data.Type = "wheel_rl"
+				end
+			},
+			{
+				Name = "Rear Right",
+				Color = Color(59, 217, 85),
+				HoverColor = Color(156, 255, 161),
+				IsSelected = (e.Data.Type == "wheel_rr"),
+				DoClick = function()
+					e.Data.Type = "wheel_rr"
+				end
+			}
+		})
+		if not string.StartWith(e.Data.Type, "wheel") then
+			wheelType:Hide()
+		end
+
+		title = SVMOD:CreateTitle(centerPanel, "LOCAL POSITIONS")
+		title:DockMargin(0, 30, 0, 0)
+
 		local button = SVMOD:CreateButton(title, "EyePos", function()
 			local trace = LocalPlayer():GetEyeTrace()
 
@@ -189,7 +261,7 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 			e.Data.Position.z = val
 		end)
 
-		local title = SVMOD:CreateTitle(centerPanel, "ANGLES")
+		title = SVMOD:CreateTitle(centerPanel, "ANGLES")
 		title:DockMargin(0, 30, 0, 0)
 
 		local xAngleNumSlider = createNumSlidePanel("Y Angle", e.Data.Angles.x, -180, 180)
