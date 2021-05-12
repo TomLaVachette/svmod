@@ -132,7 +132,7 @@ net.Receive("SV_Settings_GetMapCreationID", function(_, ply)
 	end)
 end)
 
-net.Receive("SV_Settings_HardReset", function()
+net.Receive("SV_Settings_HardReset", function(_, ply)
 	local bool = net.ReadBool()
 	if not bool then
 		-- anti netscan
