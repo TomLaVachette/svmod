@@ -105,9 +105,11 @@ end
 function SVMOD:LoadAllVehicles()
 	for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
 		if SERVER then
-			local ply = veh:GetDriver()
-			if IsValid(ply) then
-				ply:ExitVehicle()
+			if IsValid(veh) then
+				local ply = veh:GetDriver()
+				if IsValid(ply) then
+					ply:ExitVehicle()
+				end
 			end
 		end
 

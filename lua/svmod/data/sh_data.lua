@@ -126,6 +126,14 @@ end
 --	end
 --end
 
+local function temp_partType(data)
+	for _, part in ipairs(data.Parts) do
+		if not part.Type then
+			part.Type = "engine"
+		end
+	end
+end
+
 -- Loads vehicle data.
 -- @tparam function callback Function callback
 -- @internal
@@ -138,6 +146,7 @@ function SVMOD:Data_Load(fun)
 			if checkResult == nil then
 				--temp_angleToAngles(JSON)
 				--temp_fuelpump(JSON)
+				temp_partType(JSON)
 				self.Data[model] = JSON
 			else
 				SVMOD:PrintConsole(SVMOD.LOG.Alert, veh.Model .. " cannot be loaded, syntax error on " .. checkResult)

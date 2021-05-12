@@ -240,46 +240,48 @@ hook.Add("PlayerLeaveVehicle", "SV_PlayerLeaveVehicle", function(ply, seat)
 
 	ply:SetEyeAngles(Angle(0, (seat:GetPos() - ply:GetPos()):Angle().y, 0))
 
-	-- Set the player position because the player will
-	-- be teleported on a blocked zone otherwise
-	local vectorList = {
-		Vector(-50, 0, 10), Vector(50, 0, 10),
-		Vector(-70, 0, 10), Vector(70, 0, 10),
-		Vector(-90, 0, 10), Vector(90, 0, 10)
-	}
+	if #seat:SV_GetDriverSeat().SV_Data.Seats > 0 then
+		-- Set the player position because the player will
+		-- be teleported on a blocked zone otherwise
+		local vectorList = {
+			Vector(-50, 0, 10), Vector(50, 0, 10),
+			Vector(-70, 0, 10), Vector(70, 0, 10),
+			Vector(-90, 0, 10), Vector(90, 0, 10)
+		}
 
-	for i, v in ipairs(vectorList) do
-		local position = seat:GetPos()
-		local newPosition = seat:LocalToWorld(v)
+		for i, v in ipairs(vectorList) do
+			local position = seat:GetPos()
+			local newPosition = seat:LocalToWorld(v)
 
-		-- If it is the driver's seat, the position of the player is incorrect.
-		-- Then, we take the position of the seat as a reference.
-		if seat:SV_IsDriverSeat() then
-			position = seat:LocalToWorld(seat.SV_Data.Seats[1].Position)
-			newPosition = LocalToWorld(v, seat:GetAngles(), position, seat:GetAngles())
-		end
+			-- If it is the driver's seat, the position of the player is incorrect.
+			-- Then, we take the position of the seat as a reference.
+			if seat:SV_IsDriverSeat() then
+				position = seat:LocalToWorld(seat.SV_Data.Seats[1].Position)
+				newPosition = LocalToWorld(v, seat:GetAngles(), position, seat:GetAngles())
+			end
 
-		-- Check if the player can spawn without going through a wall
-		local isHittingWall = util.TraceLine({
-			start = position,
-			endpos = newPosition,
-			filter = seat:SV_GetDriverSeat()
-		}).Hit
-
-		if not isHittingWall then
-			-- From the gmod wiki, thank you <3
-			-- Check if player can spawn without getting stuck inside anything
-			local isHittingAnything = util.TraceHull({
-				start = newPosition,
+			-- Check if the player can spawn without going through a wall
+			local isHittingWall = util.TraceLine({
+				start = position,
 				endpos = newPosition,
-				mins = Vector(-16, -16, 0), -- Magic values
-				maxs = Vector(16, 16, 71), -- Magic values
-				filter = ply
+				filter = seat:SV_GetDriverSeat()
 			}).Hit
 
-			if not isHittingAnything then
-				ply:SetPos(newPosition)
-				break
+			if not isHittingWall then
+				-- From the gmod wiki, thank you <3
+				-- Check if player can spawn without getting stuck inside anything
+				local isHittingAnything = util.TraceHull({
+					start = newPosition,
+					endpos = newPosition,
+					mins = Vector(-16, -16, 0), -- Magic values
+					maxs = Vector(16, 16, 71), -- Magic values
+					filter = ply
+				}).Hit
+
+				if not isHittingAnything then
+					ply:SetPos(newPosition)
+					break
+				end
 			end
 		end
 	end
@@ -382,7 +384,9 @@ hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(_, 
 		veh:Remove()
 	else
 		-- Free the driver seat
-		veh.SV_Data.Seats[1].Entity = nil
+		if #veh.SV_Data.Seats > 0 then
+			veh.SV_Data.Seats[1].Entity = nil
+		end
 	end
 end)
 

@@ -26,8 +26,22 @@ function SVMOD:Data_Check(x)
 					return "Sprite[" .. i .. "].HiddenTime"
 				elseif v.Position and not isvector(v.Position) then
 					return "Sprite[" .. i .. "].Position"
-				elseif v.Size and not isnumber(v.Size) then
-					return "Sprite[" .. i .. "].Size"
+				elseif v.Width and not isnumber(v.Width) then
+					return "Sprite[" .. i .. "].Width"
+				end
+			elseif v.SpriteLine then
+				if v.Color and (not v.Color.r or not v.Color.g or not v.Color.b or not v.Color.a) then
+					return "Sprite[" .. i .. "].Color"
+				elseif v.Width and not isnumber(v.Width) then
+					return "Sprite[" .. i .. "].Height"
+				elseif v.Count and not isnumber(v.Count) then
+					return "Sprite[" .. i .. "].Count"
+				elseif v.Position1 and not isvector(v.Position1) then
+					return "Sprite[" .. i .. "].Position1"
+				elseif v.Position2 and not isvector(v.Position2) then
+					return "Sprite[" .. i .. "].Position2"
+				elseif v.Position3 and not isvector(v.Position3) then
+					return "Sprite[" .. i .. "].Position3"
 				elseif v.Width and not isnumber(v.Width) then
 					return "Sprite[" .. i .. "].Width"
 				end

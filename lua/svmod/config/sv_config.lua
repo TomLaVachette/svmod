@@ -8,7 +8,7 @@ function SVMOD:ResetConfiguration()
 	SVMOD.CFG.Seats = {
 		IsSwitchEnabled = true,
 		IsKickEnabled = true,
-		IsLockEnabled = true
+		IsLockEnabled = true,
 	}
 
 	SVMOD.CFG.Lights = {
@@ -48,6 +48,15 @@ function SVMOD:ResetConfiguration()
 		IsEnabled = true,
 		Multiplier = 1,
 		Pumps = {}
+	}
+
+	SVMOD.CFG.Others = {
+		IsHUDEnabled = true,
+		HUDPositionX = 0.2,
+		HUDPositionY = 0.8,
+		HUDSize = 200,
+		HUDColor = Color(178, 95, 245),
+		CustomSuspension = 0
 	}
 
 	SVMOD.CFG.Contributor = {

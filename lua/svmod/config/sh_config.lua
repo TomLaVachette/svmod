@@ -3,8 +3,8 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.3.3"
-SVMOD.FCFG.FileVersion = "1.3.2"
+SVMOD.FCFG.Version = "1.4.0"
+SVMOD.FCFG.FileVersion = "1.4.0"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -36,26 +36,45 @@ SVMOD.FCFG.ConflictList = {
 }
 
 function SVMOD:Load()
-	local Config
+	local config
 	if SERVER then
-		Config = file.Read("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
+		config = file.Read("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
 	else
-		Config = file.Read("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
+		config = file.Read("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt")
 	end
 
-	if Config then
-		Config = util.JSONToTable(Config)
+	if config then
+		config = util.JSONToTable(config)
 
-		if Config then
-			self.CFG = Config
+		if config then
+			self.CFG = config
 
-			if CLIENT and self.CFG.Shortcuts then
+			if SERVER then
+				self.CFG.Others.HUDColor = Color(self.CFG.Others.HUDColor.r, self.CFG.Others.HUDColor.g, self.CFG.Others.HUDColor.b)
+			elseif self.CFG.Shortcuts then
+				-- CLIENT
 				for i, s in ipairs(self.CFG.Shortcuts) do
 					self.Shortcuts[i].Key = s
 				end
 			end
 		end
 	else
+		-- Temporary convertor from 1.3 to 1.4
+		if SERVER and file.Exists("svmod/server_1_3_2.txt", "DATA") then
+			self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
+			self.CFG.Others = {
+				IsHUDEnabled = true,
+				HUDPositionX = 0.2,
+				HUDPositionY = 0.8,
+				HUDSize = 200,
+				HUDColor = Color(178, 95, 245),
+				CustomSuspension = 0
+			}
+			SVMOD:Save()
+			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file converted from 1.3 to 1.4.")
+			return
+		end
+
 		if SERVER then
 			hook.Add("PlayerInitialSpawn", "SV_SendWelcomeGUI", function(ply)
 				timer.Simple(10, function()
