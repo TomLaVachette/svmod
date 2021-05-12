@@ -31,14 +31,3 @@ concommand.Add("sv_unlock", function(ply)
 		end
 	end)
 end)
-
-concommand.Add("sv_repair", function(ply)
-	CAMI.PlayerHasAccess(ply, "SV_UseCommands", function(hasAccess)
-		if hasAccess then
-			local veh = ply:GetEyeTrace().Entity
-			if not SVMOD:IsVehicle(veh) then return end
-
-			veh:SV_SetHealth(100)
-		end
-	end)
-end)

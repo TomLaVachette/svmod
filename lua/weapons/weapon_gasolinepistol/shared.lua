@@ -10,8 +10,7 @@ SWEP.WorldModel = "models/kaesar/kaesar_weapons/w_petrolgun.mdl"
 SWEP.UseHands = true
 SWEP.HoldType = "slam"
 
-SWEP.Spawnable = true
-SWEP.AdminOnly = true
+SWEP.Spawnable = false
 
 SWEP.Primary = {
 	ClipSize = -1,

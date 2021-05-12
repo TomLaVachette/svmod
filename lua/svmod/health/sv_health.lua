@@ -143,6 +143,15 @@ function SVMOD.Metatable:SV_SetMaxHealth(value)
 	self:SetNW2Int("SV_MaxHealth", value)
 end
 
+-- Repairs a vehicle.
+function SVMOD.Metatable:SV_FullRepair()
+	self:SV_SetHealth(self:SV_GetMaxHealth())
+	self:SV_SetWheelFLHealth(100)
+	self:SV_SetWheelFRHealth(100)
+	self:SV_SetWheelRLHealth(100)
+	self:SV_SetWheelRRHealth(100)
+end
+
 hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 	if not veh:SV_IsDriverSeat() then return end
 
