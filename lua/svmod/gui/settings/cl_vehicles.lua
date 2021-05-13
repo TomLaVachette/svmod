@@ -58,7 +58,7 @@ function SVMOD:GUI_Vehicles(panel, data)
 			local vehicleData = SVMOD:GetData(veh.Model)
 			local line
 			if vehicleData then
-				line = listView:AddLine(veh.Name, veh.Category, vehicleData.Author.Name, os.date("%d/%m/%Y - %H:%M", vehicleData.Timestamp))
+				line = listView:AddLine(veh.Name, veh.Category, vehicleData.Author.Name, os.date("%Y/%m/%d - %H:%M", vehicleData.Timestamp))
 				line.Data = vehicleData
 			else
 				line = listView:AddLine(veh.Name, veh.Category, "-", "-")

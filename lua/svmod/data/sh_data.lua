@@ -84,16 +84,16 @@ function SVMOD:Data_Update(fun)
 	})
 end
 
---local function temp_angleToAngles(x)
---	for k, v in pairs(x) do
---		if istable(v) then
---			temp_angleToAngles(v)
---		elseif k == "Angle" then
---			x["Angles"] = v
---			x[k] = nil
---		end
---	end
---end
+local function temp_angleToAngles(x)
+	for k, v in pairs(x) do
+		if istable(v) then
+			temp_angleToAngles(v)
+		elseif k == "Angle" then
+			x["Angles"] = v
+			x[k] = nil
+		end
+	end
+end
 --
 --local function temp_fuelpump(data)
 --	if data.Fuel.GasTank.Angles then
@@ -142,11 +142,13 @@ function SVMOD:Data_Load(fun)
 		local model = string.lower(veh.Model)
 		if file.Exists(getDataPath(model), "DATA") then
 			local JSON = util.JSONToTable(file.Read(getDataPath(model), "DATA"))
+
+			temp_angleToAngles(JSON)
+			--temp_fuelpump(JSON)
+			temp_partType(JSON)
+
 			local checkResult = SVMOD:Data_Check(JSON)
 			if checkResult == nil then
-				--temp_angleToAngles(JSON)
-				--temp_fuelpump(JSON)
-				temp_partType(JSON)
 				self.Data[model] = JSON
 			else
 				SVMOD:PrintConsole(SVMOD.LOG.Alert, veh.Model .. " cannot be loaded, syntax error on " .. checkResult)

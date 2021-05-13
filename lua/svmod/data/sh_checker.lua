@@ -91,9 +91,9 @@ function SVMOD:Data_Check(x)
 		end
 
 		for i, v in ipairs(x) do
-			if v.Angles and not isangle(v.Angles) then
+			if not isangle(v.Angles) then
 				return "Sprite[" .. i .. "].Angles"
-			elseif v.Position and not isvector(v.Position) then
+			elseif not isvector(v.Position) then
 				return "Sprite[" .. i .. "].Position"
 			end
 		end

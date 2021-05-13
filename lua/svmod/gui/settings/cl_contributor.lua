@@ -127,6 +127,10 @@ function SVMOD:GUI_Contributor(panel, data)
 		net.WriteFloat(math.Clamp(keyTextEntry:GetValue(), 0, 65535))
 		net.SendToServer()
 
+		SVMOD:SetAddonState(false)
+		panel:GetParent():Remove()
+		SVMOD:SetAddonState(true)
+
 		panel:GetParent():Remove()
 	end)
 	validButton:Dock(RIGHT)

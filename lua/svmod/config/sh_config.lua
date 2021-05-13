@@ -64,9 +64,9 @@ function SVMOD:Load()
 			self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
 			self.CFG.Others = {
 				IsHUDEnabled = true,
-				HUDPositionX = 0.2,
-				HUDPositionY = 0.8,
-				HUDSize = 200,
+				HUDPositionX = 0.21,
+				HUDPositionY = 0.92,
+				HUDSize = 90,
 				HUDColor = Color(178, 95, 245),
 				CustomSuspension = 0
 			}
