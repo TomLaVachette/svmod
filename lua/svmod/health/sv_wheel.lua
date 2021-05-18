@@ -2,24 +2,28 @@ function SVMOD.Metatable:SV_SetWheelFLHealth(value)
 	value = math.Clamp(value, 0, 100)
 	self:SV_SetWheelPercent(0, value)
 	self:SetNW2Int("SV_WheelFLHealth", value)
+	self:SV_UpdateWheelSpeed()
 end
 
 function SVMOD.Metatable:SV_SetWheelFRHealth(value)
 	value = math.Clamp(value, 0, 100)
 	self:SV_SetWheelPercent(1, value)
 	self:SetNW2Int("SV_WheelFRHealth", value)
+	self:SV_UpdateWheelSpeed()
 end
 
 function SVMOD.Metatable:SV_SetWheelRLHealth(value)
 	value = math.Clamp(value, 0, 100)
 	self:SV_SetWheelPercent(2, value)
 	self:SetNW2Int("SV_WheelRLHealth", value)
+	self:SV_UpdateWheelSpeed()
 end
 
 function SVMOD.Metatable:SV_SetWheelRRHealth(value)
 	value = math.Clamp(value, 0, 100)
 	self:SV_SetWheelPercent(3, value)
 	self:SetNW2Int("SV_WheelRRHealth", value)
+	self:SV_UpdateWheelSpeed()
 end
 
 function SVMOD.Metatable:SV_DealDamageToWheel(wheelID, value)
@@ -32,6 +36,10 @@ function SVMOD.Metatable:SV_DealDamageToWheel(wheelID, value)
 	elseif wheelID == self.SV_WheelRearRightID then
 		self:SV_SetWheelRRHealth(self:SV_GetWheelRRHealth() - value)
 	end
+end
+
+function SVMOD.Metatable:SV_UpdateWheelSpeed()
+	self:SetMaxThrottle((self:SV_GetWheelFLHealth() * 0.25 + self:SV_GetWheelFRHealth() * 0.25 + self:SV_GetWheelRLHealth() * 0.25 + self:SV_GetWheelRRHealth() * 0.25) / 100)
 end
 
 function SVMOD.Metatable:SV_SetWheelPercent(wheelID, percent)

@@ -67,12 +67,14 @@ hook.Add("EntityNetworkedVarChanged", "SV_Wheel", function(veh, name, oldVal, ne
 		return
 	end
 
-	if newVal < oldVal then
-		veh:StopSound("svmod/tire/composite.wav")
-		veh:EmitSound("svmod/tire/composite.wav", 75, 100, 0.5)
-	else
-		veh:StopSound("svmod/tire/composite_reversed.wav")
-		veh:EmitSound("svmod/tire/composite_reversed.wav", 75, 100, 0.5)
+	if math.abs(newVal - oldVal) >= 6 then
+		if newVal < oldVal then
+			veh:StopSound("svmod/tire/composite.wav")
+			veh:EmitSound("svmod/tire/composite.wav", 75, 100, 0.5)
+		else
+			veh:StopSound("svmod/tire/composite_reversed.wav")
+			veh:EmitSound("svmod/tire/composite_reversed.wav", 75, 100, 0.5)
+		end
 	end
 
 	if newVal > 10 then
@@ -92,18 +94,4 @@ hook.Add("EntityNetworkedVarChanged", "SV_Wheel", function(veh, name, oldVal, ne
 			end
 		end)
 	end
-end)
-
-hook.Add("CreateMove", "SV_Wheel", function(cmd)
-	--local veh = LocalPlayer():GetVehicle()
-	--if not SVMOD:IsVehicle(veh) then
-	--	return
-	--end
-
-	--if veh:SV_GetWheelFRHealth() < 50 then
-	--	print(veh:SV_GetWheelFRHealth())
-	--	print(cmd:GetSideMove())
-	--	--cmd:SetForwardMove(0)
-	--	cmd:SetSideMove(cmd:GetSideMove() *0)
-	--end
 end)

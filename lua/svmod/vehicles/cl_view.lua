@@ -1,5 +1,5 @@
 hook.Add("SV_PlayerEnteredVehicle", "SV_AddWheelMouse", function()
-	hook.Add("StartCommand", "SV_Wheel", function(ply, ucmd)
+	hook.Add("StartCommand", "SV_Wheel", function(ply, cmd)
 		local veh = ply:GetVehicle()
 		if not SVMOD:IsVehicle(veh) then return end
 
@@ -7,12 +7,12 @@ hook.Add("SV_PlayerEnteredVehicle", "SV_AddWheelMouse", function()
 
 		local A, B = veh:GetModelBounds()
 		local Width = B.y - A.y
-		if ply:GetVehicle():GetThirdPersonMode() and ucmd:GetMouseWheel() ~= 0 then
-			veh:SetCameraDistance(math.Clamp(veh:GetCameraDistance() + (-ucmd:GetMouseWheel() / 10), Width / 1000 * 3, Width / 1000 * 7))
+		if ply:GetVehicle():GetThirdPersonMode() and cmd:GetMouseWheel() ~= 0 then
+			veh:SetCameraDistance(math.Clamp(veh:GetCameraDistance() + (-cmd:GetMouseWheel() / 10), Width / 1000 * 3, Width / 1000 * 7))
 		end
 
 		-- Disable default camera distance
-		ucmd:SetMouseWheel(0)
+		cmd:SetMouseWheel(0)
 	end)
 end)
 

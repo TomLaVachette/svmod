@@ -9,7 +9,9 @@ net.Receive("SV_StartRepair", function()
 	ply:EmitSound("svmod/repair/wrench" .. math.random(1, 4) .. ".wav", 60)
 
 	timer.Create("SV_RepairVehicle_" .. ply:UserID(), 1, 0, function()
-		ply:EmitSound("svmod/repair/wrench" .. math.random(1, 4) .. ".wav", 60)
+		if IsValid(ply) then
+			ply:EmitSound("svmod/repair/wrench" .. math.random(1, 4) .. ".wav", 60)
+		end
 	end)
 end)
 
