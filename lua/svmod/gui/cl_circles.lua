@@ -99,6 +99,11 @@ do
 		local vertices = { Count = 0 }
 		local step = distance / radius
 
+		if step == math.inf then
+			print("svmod warning anti-crash, report it to TomLaVachette please!")
+			return vertices
+		end
+
 		local rad_start_angle = math.rad(start_angle)
 		local rad_end_angle = math.rad(end_angle)
 		local rad_rotation = math.rad(rotation)
