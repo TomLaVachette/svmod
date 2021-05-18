@@ -29,6 +29,7 @@ net.Receive("SV_Settings", function()
 
 		data.PhysicsMultiplier = math.Round(net.ReadFloat(), 2)
 		data.BulletMultiplier = math.Round(net.ReadFloat(), 2)
+		data.WheelMultiplier = math.Round(net.ReadFloat(), 2)
 		data.CarbonisedChance = math.Round(net.ReadFloat(), 2)
 		data.SmokePercent = math.Round(net.ReadFloat(), 2)
 		data.DriverMultiplier = math.Round(net.ReadFloat(), 2)

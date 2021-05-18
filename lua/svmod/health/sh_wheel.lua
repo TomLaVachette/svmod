@@ -13,19 +13,23 @@ hook.Add("SV_LoadVehicle", "SV_InitWheels", function(veh)
 end)
 
 function SVMOD.Metatable:SV_GetWheelFLHealth()
-	return self:GetNW2Int("SV_WheelFLHealth", 0)
+	local veh = self:SV_GetDriverSeat()
+	return veh:GetNW2Int("SV_WheelFLHealth", 0)
 end
 
 function SVMOD.Metatable:SV_GetWheelFRHealth()
-	return self:GetNW2Int("SV_WheelFRHealth", 0)
+	local veh = self:SV_GetDriverSeat()
+	return veh:GetNW2Int("SV_WheelFRHealth", 0)
 end
 
 function SVMOD.Metatable:SV_GetWheelRLHealth()
-	return self:GetNW2Int("SV_WheelRLHealth", 0)
+	local veh = self:SV_GetDriverSeat()
+	return veh:GetNW2Int("SV_WheelRLHealth", 0)
 end
 
 function SVMOD.Metatable:SV_GetWheelRRHealth()
-	return self:GetNW2Int("SV_WheelRRHealth", 0)
+	local veh = self:SV_GetDriverSeat()
+	return veh:GetNW2Int("SV_WheelRRHealth", 0)
 end
 
 function SVMOD.Metatable:SV_GetWheelID(type)

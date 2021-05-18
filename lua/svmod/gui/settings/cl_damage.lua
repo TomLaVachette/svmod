@@ -27,6 +27,18 @@ function SVMOD:GUI_Damage(panel, data)
 	slide:SetMaxValue(200)
 	slide:SetUnit("%")
 
+	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.damage.wheel_multiplier"), function(val)
+		net.Start("SV_Settings")
+		net.WriteString("Damage")
+		net.WriteString("WheelMultiplier")
+		net.WriteUInt(1, 2) -- float
+		net.WriteFloat(val / 100)
+		net.SendToServer()
+	end)
+	slide:SetValue(data.WheelMultiplier * 100)
+	slide:SetMaxValue(200)
+	slide:SetUnit("%")
+
 	local slide = SVMOD:CreateNumSlidePanel(panel, language.GetPhrase("svmod.damage.chance_carbonise"), function(val)
 		net.Start("SV_Settings")
 		net.WriteString("Damage")

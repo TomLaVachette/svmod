@@ -242,10 +242,10 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 
 	if nearestWheelDistance < 1000 then
 		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.2)
-		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.8)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.8 * SVMOD.CFG.Damage.WheelMultiplier)
 	else
 		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.8)
-		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.2)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.2 * SVMOD.CFG.Damage.WheelMultiplier)
 	end
 end)
 

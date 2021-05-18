@@ -40,6 +40,7 @@ concommand.Add("svmod", function(ply)
 
 			net.WriteFloat(SVMOD.CFG["Damage"]["PhysicsMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["BulletMultiplier"])
+			net.WriteFloat(SVMOD.CFG["Damage"]["WheelMultiplier"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["CarbonisedChance"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["SmokePercent"])
 			net.WriteFloat(SVMOD.CFG["Damage"]["DriverMultiplier"])

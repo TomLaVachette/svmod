@@ -62,6 +62,7 @@ function SVMOD:Load()
 		-- Temporary convertor from 1.3 to 1.4
 		if SERVER and file.Exists("svmod/server_1_3_2.txt", "DATA") then
 			self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
+			self.CFG.Damage.WheelMultiplier = 1
 			self.CFG.Others = {
 				IsHUDEnabled = true,
 				HUDPositionX = 0.21,
