@@ -99,10 +99,7 @@ do
 		local vertices = { Count = 0 }
 		local step = distance / radius
 
-		if step == math.inf then
-			print("svmod warning anti-crash, report it to TomLaVachette please!")
-			return vertices
-		end
+		local count = 0
 
 		local rad_start_angle = math.rad(start_angle)
 		local rad_end_angle = math.rad(end_angle)
@@ -129,6 +126,12 @@ do
 
 			vertices.Count = vertices.Count + 1
 			vertices[vertices.Count] = vertex
+
+			count = count + 1
+			if count > 250 then
+				SVMOD:PrintConsole(SVMOD.LOG.Alert,"svmod warning anti-crash (step = " .. step .. ", iterations= " .. ((rad_end_angle + step - rad_start_angle) / step) .. "), report it to TomLaVachette please!")
+				break
+			end
 		end
 
 		if end_angle - start_angle ~= 360 then
