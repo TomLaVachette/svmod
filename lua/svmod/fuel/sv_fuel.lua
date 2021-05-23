@@ -95,10 +95,10 @@ hook.Add("PlayerEnteredVehicle", "SV_Fuel_StartFuelConsumption", function(ply, v
 
 	veh.SV_LastPosition = veh:GetPos()
 	timer.Create("SV_Fuel_Consumption_" .. veh:EntIndex(), 5, 0, function()
-		local NewFuel = veh:SV_GetFuel() - (veh:GetPos():Distance(veh.SV_LastPosition) * 0.01905 * 0.004 * (veh.SV_Data.Fuel.Consumption or 5) * SVMOD.CFG.Fuel.Multiplier)
-		veh:SV_SetFuel(NewFuel)
+		local newFuel = veh:SV_GetFuel() - (veh:GetPos():Distance(veh.SV_LastPosition) * 0.00005715 * (veh.SV_Data.Fuel.Consumption or 5) * SVMOD.CFG.Fuel.Multiplier)
+		veh:SV_SetFuel(newFuel)
 
-		if NewFuel <= 0 then
+		if newFuel <= 0 then
 			timer.Remove("SV_Fuel_Consumption_" .. veh:EntIndex())
 		end
 
