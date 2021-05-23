@@ -16,7 +16,7 @@ function SVMOD.Metatable:SV_SetWheelBlowout(wheelID, state)
 			self.SV_TireBlowoutSound:ChangePitch(100, 0)
 			timer.Simple(0.1, function()
 				if self.SV_TireBlowoutSound then
-					self.SV_TireBlowoutSound:ChangeVolume(SVMOD.CFG.Sounds.Horn * 0.3, 0)
+					self.SV_TireBlowoutSound:ChangeVolume(SVMOD.CFG.Sounds.Horn * 0.15, 0)
 				end
 			end)
 		end

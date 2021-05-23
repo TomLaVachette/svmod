@@ -173,7 +173,7 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 			return
 		end
 
-		local health = math.Round(data.Speed * 0.02 * SVMOD.CFG.Damage.PhysicsMultiplier)
+		local totalDamage = math.Round(data.Speed * 0.02 * SVMOD.CFG.Damage.PhysicsMultiplier)
 
 		if data.Speed > 500 then
 			for _, passengerSeat in ipairs(ent:SV_GetPassengerSeats()) do
@@ -185,14 +185,17 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 						DInfo:SetAttacker(game.GetWorld())
 					end
 					DInfo:SetInflictor(ent)
-					DInfo:SetDamage(health)
+					DInfo:SetDamage(totalDamage)
 					DInfo:SetDamageType(DMG_VEHICLE)
 					passengerSeat:GetDriver():TakeDamageInfo(DInfo)
 				end
 			end
 		end
 
-		ent:SV_SetHealth(ent:SV_GetHealth() - health)
+		local nearestWheelID, _ = ent:SV_GetNearestWheel(ent:WorldToLocal(data.HitPos))
+
+		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.5 * SVMOD.CFG.Damage.WheelCollisionMultiplier)
 
 		ent:EmitSound("physics/metal/metal_barrel_impact_hard" .. math.random(1, 3) .. ".wav")
 	end)
@@ -240,12 +243,13 @@ hook.Add("EntityTakeDamage", "SV_VehicleDamage", function(ent, dmg)
 
 	local nearestWheelID, nearestWheelDistance = ent:SV_GetNearestWheel(ent:WorldToLocal(dmg:GetDamagePosition()))
 
-	if nearestWheelDistance < 1000 then
+	if nearestWheelDistance < 800 then
 		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.2)
-		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.8 * SVMOD.CFG.Damage.WheelMultiplier)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.8 * SVMOD.CFG.Damage.WheelShotMultiplier)
+		ent:SV_StartPunctureWheel(nearestWheelID, SVMOD.CFG.Damage.TimeBeforeWheelIsPunctured) -- 0 to disable
 	else
 		ent:SV_SetHealth(ent:SV_GetHealth() - totalDamage * 0.8)
-		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.2 * SVMOD.CFG.Damage.WheelMultiplier)
+		ent:SV_DealDamageToWheel(nearestWheelID, totalDamage * 0.2 * SVMOD.CFG.Damage.WheelShotMultiplier)
 	end
 end)
 

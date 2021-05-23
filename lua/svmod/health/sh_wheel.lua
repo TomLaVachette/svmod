@@ -32,6 +32,22 @@ function SVMOD.Metatable:SV_GetWheelRRHealth()
 	return veh:GetNW2Int("SV_WheelRRHealth", 0)
 end
 
+function SVMOD.Metatable:SV_IsWheelFLPunctured()
+	return self:GetNW2Bool("SV_IsWheelFLPunctured", false)
+end
+
+function SVMOD.Metatable:SV_IsWheelFRPunctured()
+	return self:GetNW2Bool("SV_IsWheelFRPunctured", false)
+end
+
+function SVMOD.Metatable:SV_IsWheelRLPunctured()
+	return self:GetNW2Bool("SV_IsWheelRLPunctured", false)
+end
+
+function SVMOD.Metatable:SV_IsWheelRRPunctured()
+	return self:GetNW2Bool("SV_IsWheelRRPunctured", false)
+end
+
 function SVMOD.Metatable:SV_GetWheelID(type)
 	for _, v in ipairs(self:GetAttachments()) do
 		if v.name == type then

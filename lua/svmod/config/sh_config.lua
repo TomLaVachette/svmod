@@ -62,7 +62,9 @@ function SVMOD:Load()
 		-- Temporary convertor from 1.3 to 1.4
 		if SERVER and file.Exists("svmod/server_1_3_2.txt", "DATA") then
 			self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
-			self.CFG.Damage.WheelMultiplier = 1
+			self.CFG.Damage.WheelShotMultiplier = 1
+			self.CFG.Damage.WheelCollisionMultiplier = 1
+			self.CFG.Damage.TimeBeforeWheelIsPunctured = 60
 			self.CFG.Others = {
 				IsHUDEnabled = true,
 				HUDPositionX = 0.21,
@@ -72,7 +74,12 @@ function SVMOD:Load()
 				CustomSuspension = 0
 			}
 			SVMOD:Save()
-			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file converted from 1.3 to 1.4.")
+			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.4.")
+			return
+		elseif CLIENT and file.Exists("svmod/client_1_3_2.txt", "DATA") then
+			self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
+			SVMOD:Save()
+			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.4.")
 			return
 		end
 

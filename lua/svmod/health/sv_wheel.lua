@@ -27,6 +27,10 @@ function SVMOD.Metatable:SV_SetWheelRRHealth(value)
 end
 
 function SVMOD.Metatable:SV_DealDamageToWheel(wheelID, value)
+	if value <= 0 then
+		return
+	end
+
 	if wheelID == self.SV_WheelFrontLeftID then
 		self:SV_SetWheelFLHealth(self:SV_GetWheelFLHealth() - value)
 	elseif wheelID == self.SV_WheelFrontRightID then
@@ -35,6 +39,79 @@ function SVMOD.Metatable:SV_DealDamageToWheel(wheelID, value)
 		self:SV_SetWheelRLHealth(self:SV_GetWheelRLHealth() - value)
 	elseif wheelID == self.SV_WheelRearRightID then
 		self:SV_SetWheelRRHealth(self:SV_GetWheelRRHealth() - value)
+	end
+end
+
+function SVMOD.Metatable:SV_StartPunctureWheel(wheelID, delayToPuncture)
+	if delayToPuncture <= 0 then
+		return
+	end
+
+	local setter, getter
+	if wheelID == self.SV_WheelFrontLeftID then
+		if self:SV_IsWheelFLPunctured() then
+			return
+		end
+		setter = self.SV_SetWheelFLHealth
+		getter = self.SV_GetWheelFLHealth
+		self:SetNW2Bool("SV_IsWheelFLPunctured", true)
+	elseif wheelID == self.SV_WheelFrontRightID then
+		if self:SV_IsWheelFRPunctured() then
+			return
+		end
+		setter = self.SV_SetWheelFRHealth
+		getter = self.SV_GetWheelFRHealth
+		self:SetNW2Bool("SV_IsWheelFRPunctured", true)
+	elseif wheelID == self.SV_WheelRearLeftID then
+		if self:SV_IsWheelRLPunctured() then
+			return
+		end
+		setter = self.SV_SetWheelRLHealth
+		getter = self.SV_GetWheelRLHealth
+		self:SetNW2Bool("SV_IsWheelRLPunctured", true)
+	elseif wheelID == self.SV_WheelRearRightID then
+		if self:SV_IsWheelRRPunctured() then
+			return
+		end
+		setter = self.SV_SetWheelRRHealth
+		getter = self.SV_GetWheelRRHealth
+		self:SetNW2Bool("SV_IsWheelRRPunctured", true)
+	else
+		return
+	end
+
+	local veh = self
+	timer.Create("SV_PunctureWheel_" .. self:EntIndex() .. "_" .. wheelID, delayToPuncture / 11, 0, function()
+		if not IsValid(veh) then
+			timer.Remove("SV_PunctureWheel_" .. self:EntIndex() .. "_" .. wheelID)
+			return
+		end
+
+		local value = getter(veh)
+
+		if value == 0 then
+			self:SV_StopPunctureWheel(wheelID)
+		else
+			if veh:GetVelocity():Length() > 400 then
+				setter(veh, value - 11 * 2)
+			else
+				setter(veh, value - 11)
+			end
+		end
+	end)
+end
+
+function SVMOD.Metatable:SV_StopPunctureWheel(wheelID)
+	timer.Remove("SV_PunctureWheel_" .. self:EntIndex() .. "_" .. wheelID)
+
+	if wheelID == self.SV_WheelFrontLeftID then
+		self:SetNW2Bool("SV_IsWheelFLPunctured", false)
+	elseif wheelID == self.SV_WheelFrontRightID then
+		self:SetNW2Bool("SV_IsWheelFRPunctured", false)
+	elseif wheelID == self.SV_WheelRearLeftID then
+		self:SetNW2Bool("SV_IsWheelRLPunctured", false)
+	elseif wheelID == self.SV_WheelRearRightID then
+		self:SetNW2Bool("SV_IsWheelRRPunctured", false)
 	end
 end
 

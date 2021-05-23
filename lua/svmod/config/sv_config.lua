@@ -39,7 +39,11 @@ function SVMOD:ResetConfiguration()
 		BulletMultiplier = 1,
 		CarbonisedChance = 0.1,
 		SmokePercent = 0.25,
-		WheelMultiplier = 1,
+
+		WheelShotMultiplier = 1,
+		WheelCollisionMultiplier = 1,
+		TimeBeforeWheelIsPunctured = 60,
+
 		DriverMultiplier = 1,
 		PassengerMultiplier = 1,
 		PlayerExitMultiplier = 1
