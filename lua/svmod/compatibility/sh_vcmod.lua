@@ -38,4 +38,8 @@ hook.Add("SV_Enabled", function()
 	function SVMOD.Metatable:VC_GetDamagedParts()
 		return self:VC_getDamagedParts()
 	end
+
+	function VC_getSettings()
+		SVMOD:PrintConsole(SVMOD.LOG.Error, "VC_getSettings called! This may generate errors because the SVMod cannot return the VCMod configuration file.")
+	end
 end)

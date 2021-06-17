@@ -1,7 +1,11 @@
 hook.Add("SV_Enabled", function()
-	if VCMOD then
+	if not SVMOD.IsVCEnabled and VC then
 		return
 	end
+
+	SVMOD.IsVCEnabled = true
+	VC = {}
+	VCMOD = {}
 
 	function SVMOD.Metatable:VC_fuelAdd(amount)
 		self:SV_SetFuel(self:SV_GetFuel() + amount)

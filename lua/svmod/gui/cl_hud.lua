@@ -118,9 +118,11 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 		hook.Remove("HUDPaint", "SV_HUDPaint")
 	end)
 
-	local veh = LocalPlayer():GetVehicle()
-	if IsValid(veh) then
-		createDrawHook(veh)
+	if LocalPlayer().GetVehicle then
+		local veh = LocalPlayer():GetVehicle()
+		if IsValid(veh) then
+			createDrawHook(veh)
+		end
 	end
 end
 

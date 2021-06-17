@@ -60,6 +60,11 @@ function SVMOD:LoadVehicle(veh)
 	local data = SVMOD:GetData(veh:GetModel())
 
 	if (veh.SV_IsEditMode or data) or veh:GetNW2Bool("SV_IsSeat", false) then
+		local driver = veh:GetDriver()
+		if IsValid(driver) then
+			driver:ExitVehicle()
+		end
+
 		-- Add pointers to the vehicle metatable
 		for k, v in pairs(SVMOD.Metatable) do
 			veh[k] = v
