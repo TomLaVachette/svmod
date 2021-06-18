@@ -217,7 +217,7 @@ function SVMOD:GUI_Home(panel, data)
 
 	local thirdLabel = vgui.Create("DLabel", bottomPanel)
 	thirdLabel:SetFont("SV_Calibri18")
-	thirdLabel:SetText(language.GetPhrase("by TomLaVachette"))
+	thirdLabel:SetText(language.GetPhrase("svmod.home.by"))
 	thirdLabel:SizeToContents()
 
 	timer.Simple(FrameTime(), function()
