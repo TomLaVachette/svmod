@@ -88,6 +88,7 @@ function SVMOD:LoadVehicle(veh)
 				veh.SV_Data = SVMOD:DeepCopy(data)
 
 				hook.Run("SV_LoadVehicle", veh)
+				hook.Run("SV_LoadedVehicle", veh)
 			end
 		end
 	end
