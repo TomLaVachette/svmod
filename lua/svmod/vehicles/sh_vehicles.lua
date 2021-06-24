@@ -36,6 +36,7 @@ hook.Add("EntityRemoved", "SV_UnloadVehicle", function(ent)
 		-- Same as SVMOD:UnloadVehicle without removing pointers
 		-- because it is unnecessary
 		hook.Run("SV_UnloadVehicle", ent)
+		hook.Run("SV_VehicleUnloaded", ent)
 	end
 end)
 
@@ -100,6 +101,7 @@ end
 function SVMOD:UnloadVehicle(veh)
 	if IsValid(veh) then
 		hook.Run("SV_UnloadVehicle", veh)
+		hook.Run("SV_VehicleUnloaded", ent)
 
 		-- Remove pointers to the vehicle metatable
 		for k, _ in pairs(SVMOD.Metatable) do
