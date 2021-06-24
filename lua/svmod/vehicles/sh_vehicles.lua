@@ -60,7 +60,7 @@ function SVMOD:LoadVehicle(veh)
 	local data = SVMOD:GetData(veh:GetModel())
 
 	if (veh.SV_IsEditMode or data) or veh:GetNW2Bool("SV_IsSeat", false) then
-		if data then -- Is a driver seat
+		if SERVER and data then -- Is a driver seat
 			local driver = veh:GetDriver()
 			if IsValid(driver) then
 				driver:ExitVehicle()
@@ -88,6 +88,7 @@ function SVMOD:LoadVehicle(veh)
 				veh.SV_Data = SVMOD:DeepCopy(data)
 
 				hook.Run("SV_LoadVehicle", veh)
+				hook.Run("SV_LoadedVehicle", veh)
 			end
 		end
 	end
