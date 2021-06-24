@@ -24,7 +24,7 @@ hook.Add("SV_Enabled", "SV_FixWCD", function()
 
 	local waitingSVLoad = {}
 
-	hook.Add("SV_LoadedVehicle", "WCD", function(ent)
+	hook.Add("SV_VehicleLoaded", "WCD", function(ent)
 		if not waitingSVLoad[ent] then return end
 
 		local data = waitingSVLoad[ent]
