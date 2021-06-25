@@ -6,6 +6,10 @@ hook.Add("SV_Enabled", "SV_FixWCD", function()
 			ent:keysUnLock(ply)
 		end
 
+		if (ent.keysOwn) then
+			ent:keysOwn(ply)
+		end
+
 		ply:EnterVehicle(ent)
 
 		if (not IsValid(ply:GetVehicle())) then
@@ -67,7 +71,7 @@ hook.Add("SV_Enabled", "SV_FixWCD", function()
 			end
 		end
 
-		if (_e.zsOwn) then
+		if (_e.keysOwn) then
 			_e:keysOwn(_p)
 		end
 
