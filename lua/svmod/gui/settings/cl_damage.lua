@@ -83,7 +83,7 @@ function SVMOD:GUI_Damage(panel, data)
 		net.WriteString("Damage")
 		net.WriteString("TimeBeforeWheelIsPunctured")
 		net.WriteUInt(1, 2) -- float
-		net.WriteFloat(val / 100)
+		net.WriteFloat(val)
 		net.SendToServer()
 	end)
 	slide:SetValue(data.TimeBeforeWheelIsPunctured)

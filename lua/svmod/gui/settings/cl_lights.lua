@@ -154,10 +154,10 @@ function SVMOD:GUI_Lights(panel, data)
 	slide:SetMaxValue(300)
 	slide:SetUnit(language.GetPhrase("svmod.seconds"))
 
-	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.els.reverse"))
+	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.lights.reverse"))
 	title:DockMargin(0, 30, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.els.enable_reverse"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.lights.enable_reverse"), {
 		{
 			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),

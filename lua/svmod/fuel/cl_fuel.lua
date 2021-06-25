@@ -98,3 +98,40 @@ net.Receive("SV_StopFilling", function()
 		veh:SV_HideFillingHUD()
 	end
 end)
+
+net.Receive("SV_Settings_SetPriceFuelPump", function()
+	local ent = net.ReadEntity()
+	local value = net.ReadUInt(9) -- max: 511
+
+	local frame = vgui.Create("DFrame")
+	frame:SetSize(300, 110)
+	frame:Center()
+	frame:ShowCloseButton(false)
+	frame:SetTitle("")
+	frame.Paint = function(self, w, h)
+		surface.SetDrawColor(18, 25, 31)
+		surface.DrawRect(0, 0, w, h)
+
+		surface.SetDrawColor(178, 95, 245)
+		surface.DrawRect(0, 0, w, 4)
+	end
+	frame:MakePopup()
+
+	local slide = SVMOD:CreateNumSlidePanel(frame, language.GetPhrase("svmod.fuel.price"), function(val)
+		value = math.Round(val)
+	end)
+	slide:SetValue(value)
+	slide:SetMaxValue(500)
+	slide:SetUnit("u")
+
+	local button = SVMOD:CreateButton(frame, language.GetPhrase("svmod.close"), function()
+		frame:Close()
+
+		net.Start("SV_Settings_SetPriceFuelPump")
+		net.WriteEntity(ent)
+		net.WriteUInt(value, 9) -- max: 511
+		net.SendToServer()
+	end)
+	button:Dock(BOTTOM)
+	button:SetSize(0, 30)
+end)

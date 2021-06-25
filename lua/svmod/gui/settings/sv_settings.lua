@@ -1,8 +1,8 @@
 util.AddNetworkString("SV_Settings")
 util.AddNetworkString("SV_Settings_GetFuelPump")
-util.AddNetworkString("SV_Settings_SetFuelPump")
-util.AddNetworkString("SV_Settings_GetMapCreationID")
 util.AddNetworkString("SV_Settings_HardReset")
+
+util.AddNetworkString("SV_Settings_GetFuelPumpCreatorPistol")
 
 concommand.Add("svmod", function(ply)
 	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
@@ -83,54 +83,10 @@ net.Receive("SV_Settings_GetFuelPump", function(_, ply)
 	net.Send(ply)
 end)
 
-net.Receive("SV_Settings_SetFuelPump", function(_, ply)
-	local tab = {}
-
-	local count = net.ReadUInt(5) -- max: 31
-	for i = 1, count do
-		local model = net.ReadString()
-		local isCompiled = net.ReadBool()
-		local mapCreationID = net.ReadUInt(16) -- max: 65535
-		local position = net.ReadVector()
-		local angle = net.ReadAngle()
-		local price = net.ReadUInt(16) -- max: 65535
-
-		if not isCompiled then
-			mapCreationID = -1
-		end
-
-		table.insert(tab, {
-			Model = model,
-			MapCreationID = mapCreationID,
-			Position = position,
-			Angles = angle,
-			Price = price
-		})
-	end
-
+net.Receive("SV_Settings_GetFuelPumpCreatorPistol", function(_, ply)
 	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
 		if hasAccess then
-			SVMOD.CFG["Fuel"]["Pumps"] = tab
-			SVMOD:Save()
-		end
-	end)
-end)
-
-net.Receive("SV_Settings_GetMapCreationID", function(_, ply)
-	local ent = net.ReadEntity()
-
-	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
-		if hasAccess then
-			net.Start("SV_Settings_GetMapCreationID")
-
-			if ent:MapCreationID() >= 0 then
-				net.WriteBool(true)
-				net.WriteUInt(ent:MapCreationID(), 16) -- max: 65535
-			else
-				net.WriteBool(false)
-			end
-
-			net.Send(ply)
+			ply:Give("weapon_fuelpumpcreator")
 		end
 	end)
 end)
