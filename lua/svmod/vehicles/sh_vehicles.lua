@@ -36,6 +36,7 @@ hook.Add("EntityRemoved", "SV_UnloadVehicle", function(ent)
 		-- Same as SVMOD:UnloadVehicle without removing pointers
 		-- because it is unnecessary
 		hook.Run("SV_UnloadVehicle", ent)
+		hook.Run("SV_VehicleUnloaded", ent)
 	end
 end)
 
@@ -60,7 +61,7 @@ function SVMOD:LoadVehicle(veh)
 	local data = SVMOD:GetData(veh:GetModel())
 
 	if (veh.SV_IsEditMode or data) or veh:GetNW2Bool("SV_IsSeat", false) then
-		if data then -- Is a driver seat
+		if SERVER and data then -- Is a driver seat
 			local driver = veh:GetDriver()
 			if IsValid(driver) then
 				driver:ExitVehicle()
@@ -88,6 +89,7 @@ function SVMOD:LoadVehicle(veh)
 				veh.SV_Data = SVMOD:DeepCopy(data)
 
 				hook.Run("SV_LoadVehicle", veh)
+				hook.Run("SV_VehicleLoaded", veh)
 			end
 		end
 	end
@@ -99,6 +101,7 @@ end
 function SVMOD:UnloadVehicle(veh)
 	if IsValid(veh) then
 		hook.Run("SV_UnloadVehicle", veh)
+		hook.Run("SV_VehicleUnloaded", ent)
 
 		-- Remove pointers to the vehicle metatable
 		for k, _ in pairs(SVMOD.Metatable) do
@@ -111,12 +114,10 @@ end
 -- @internal
 function SVMOD:LoadAllVehicles()
 	for _, veh in ipairs(ents.FindByClass("prop_vehicle_jeep")) do
-		if SERVER then
-			if IsValid(veh) then
-				local ply = veh:GetDriver()
-				if IsValid(ply) then
-					ply:ExitVehicle()
-				end
+		if SERVER and IsValid(veh) then
+			local ply = veh:GetDriver()
+			if IsValid(ply) then
+				ply:ExitVehicle()
 			end
 		end
 

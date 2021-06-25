@@ -17,9 +17,9 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 
 	local addButton = SVMOD:CreateButton(leftPanel, "ADD", function()
 		local index = table.insert(data, {
-            Position = Vector(0, 0, 0),
-            Angles = Angle(0, 0, 0),
-            Type = "engine"
+			Position = Vector(0, 0, 0),
+			Angles = Angle(0, 0, 0),
+			Type = "engine"
 		})
 		addPart(data[index])
 	end)
@@ -124,15 +124,15 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 		end):SetIcon("icon16/arrow_down.png")
 
 		menu:AddOption("Symmetric", function()
-            local index = table.insert(data, {
-                Position = Vector(-line.Data.Position.x, line.Data.Position.y, line.Data.Position.z),
-                Angles = Angle(line.Data.Angles.x, line.Data.Angles.y, line.Data.Angles.z),
-                Type = "engine"
-            })
+			local index = table.insert(data, {
+				Position = Vector(-line.Data.Position.x, line.Data.Position.y, line.Data.Position.z),
+				Angles = Angle(line.Data.Angles.x, line.Data.Angles.y, line.Data.Angles.z),
+				Type = "engine"
+			})
 
-            addPart(data[index])
+			addPart(data[index])
 
-            newPart = data[index]
+			newPart = data[index]
 
 			newPart.Angles.z = line.Data.Angles.z - 180
 			if newPart.Angles.z < -180 then
@@ -147,18 +147,16 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 		menu:Open()
 	end
 
-    local lastRowSelected
+	local lastRowSelected
 
 	listView.OnRowSelected = function(_, _, e)
 		centerPanel:Clear()
 
-        e.Data.Health = 100
-        if lastRowSelected and lastRowSelected.Data then
-            lastRowSelected.Data.Health = 50
-        end
-        lastRowSelected = e
-
-		local gasolinePistol = ClientsideModel("models/kaesar/kaesar_weapons/w_petrolgun.mdl")
+		e.Data.Health = 100
+		if lastRowSelected and lastRowSelected.Data then
+			lastRowSelected.Data.Health = 50
+		end
+		lastRowSelected = e
 
 		local title = SVMOD:CreateTitle(centerPanel, "SETTINGS")
 		title:DockMargin(0, 5, 0, 0)
@@ -286,7 +284,7 @@ function SVMOD:EDITOR_Parts(panel, veh, data)
 		SVMOD.VehicleRenderedParts = nil
 	end
 
-    for _, v in ipairs(data) do
-        v.Health = 50
-    end
+	for _, v in ipairs(data) do
+		v.Health = 50
+	end
 end

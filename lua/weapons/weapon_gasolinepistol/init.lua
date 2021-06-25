@@ -14,23 +14,27 @@ function SWEP:Equip(ply)
 
 	local a, b = pump:GetModelBounds()
 
-	self.Rope = constraint.Rope(
-		ply,
-		pump,
-		0,
-		0,
-		Vector(0, 6, 30),
-		(b + a) / 2,
-		250,
-		0,
+	local pumpPos = pump:GetPos()
+
+	self.Rope = constraint.CreateKeyframeRope(
+		pumpPos,
 		1,
-		1.5,
 		"cable/cable2",
-		false
+		nil,
+		pump,
+		(b + a) / 2,
+		0,
+		ply,
+		Vector(0, 6, 30),
+		0,
+		{
+			Length = 250,
+			Collide = 1
+		}
 	)
 
 	timer.Create("SV_FillerPistol_" .. self:EntIndex(), 1, 0, function()
-		if not IsValid(self.Rope) then
+		if not IsValid(self.Rope) or ply:GetPos():DistToSqr(pumpPos) > 50000 then
 			self:Remove()
 		end
 	end)
