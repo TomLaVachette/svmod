@@ -91,13 +91,13 @@ function SVMOD:EDITOR_General(panel, veh)
 		authorPanel:DockMargin(0, 4, 0, 4)
 		authorPanel:SetSize(0, 30)
 		authorPanel:SetPaintBackground(false)
-	
+
 		local label = vgui.Create("DLabel", authorPanel)
 		label:SetPos(2, 4)
 		label:SetFont("SV_Calibri18")
 		label:SetText(name)
 		label:SizeToContents()
-	
+
 		textBox = SVMOD:CreateTextboxPanel(authorPanel, name)
 		textBox:SetValue(value or "")
 

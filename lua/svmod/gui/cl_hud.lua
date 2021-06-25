@@ -24,13 +24,13 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 		local positionY = ScrH() * ratioY
 		local scale = radius * (ScrW() / 1920)
 
-		surface.CreateFont('SV_HUD40', {
-			font = 'Tahoma',
+		surface.CreateFont("SV_HUD40", {
+			font = "Tahoma",
 			size = scale * 0.7
 		})
 
-		surface.CreateFont('SV_HUD20', {
-			font = 'Tahoma',
+		surface.CreateFont("SV_HUD20", {
+			font = "Tahoma",
 			size = (scale * 0.7) / 2
 		})
 
