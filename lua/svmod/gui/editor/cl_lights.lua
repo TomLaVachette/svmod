@@ -510,28 +510,28 @@ function SVMOD:EDITOR_Lights(panel, data, veh, hasAnim)
 				local index = table.insert(data, {
 					ProjectedTexture = SVMOD:DeepCopy(line.Data.ProjectedTexture)
 				})
-				local tab = addLight(data[index])
+				addLight(data[index])
 			end
 
 			if line.Data.Sprite then
 				local index = table.insert(data, {
 					Sprite = SVMOD:DeepCopy(line.Data.Sprite)
 				})
-				local tab = addLight(data[index])
+				addLight(data[index])
 			end
 
 			if line.Data.SpriteLine then
 				local index = table.insert(data, {
 					SpriteLine = SVMOD:DeepCopy(line.Data.SpriteLine)
 				})
-				local tab = addLight(data[index])
+				addLight(data[index])
 			end
 
 			if line.Data.SpriteCircle then
 				local index = table.insert(data, {
 					SpriteCircle = SVMOD:DeepCopy(line.Data.SpriteCircle)
 				})
-				local tab = addLight(data[index])
+				addLight(data[index])
 			end
 		end):SetIcon("icon16/page_copy.png")
 
