@@ -85,7 +85,7 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 			local speed = veh:SV_GetSpeed()
 
 			draw.DrawText(speed, "SV_HUD40", positionX, positionY - scale * 0.6, Color(230, 230, 230), TEXT_ALIGN_CENTER)
-			draw.DrawText("KM/H", "SV_HUD20", positionX, positionY + scale * 0.1, Color(200, 200, 200), TEXT_ALIGN_CENTER)
+			draw.DrawText("km/h", "SV_HUD20", positionX, positionY + scale * 0.1, Color(200, 200, 200), TEXT_ALIGN_CENTER)
 
 			speed_circle_background()
 			speed_circle:SetEndAngle(135 + 225 * math.min(speed / maxSpeed, 1))
