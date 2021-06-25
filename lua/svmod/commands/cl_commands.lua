@@ -1,5 +1,7 @@
 local commands = {
+	["!Svmod"] = true,
 	["!svmod"] = true,
+	["/Svmod"] = true,
 	["/svmod"] = true
 }
 
