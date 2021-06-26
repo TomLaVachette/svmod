@@ -5,7 +5,6 @@ include("shared.lua")
 ENT.EnablePhysgun = false
 
 function ENT:Initialize()
-	self:SetModel("models/props_equipment/gas_pump.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)

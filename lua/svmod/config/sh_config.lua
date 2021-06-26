@@ -100,23 +100,23 @@ function SVMOD:Load()
 end
 
 function SVMOD:Save()
-	local Config = table.Copy(self.CFG)
+	local cfg = table.Copy(self.CFG)
 
 	if SERVER then
-		file.Write("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(Config))
+		file.Write("svmod/server_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(cfg))
 	else
 		-- Save shortcuts
-		Config.Shortcuts = {}
+		cfg.Shortcuts = {}
 		for i, s in ipairs(self.Shortcuts) do
-			Config.Shortcuts[i] = s.Key
+			cfg.Shortcuts[i] = s.Key
 		end
 
 		-- Disable contributor mode
-		Config.Contributor.IsEnabled = false
+		cfg.Contributor.IsEnabled = false
 
 		-- Do not save enterprise ID client-side
-		Config.Contributor.EnterpriseID = nil
+		cfg.Contributor.EnterpriseID = nil
 
-		file.Write("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(Config))
+		file.Write("svmod/client_" .. string.Replace(SVMOD.FCFG.FileVersion, ".", "_") .. ".txt", util.TableToJSON(cfg))
 	end
 end

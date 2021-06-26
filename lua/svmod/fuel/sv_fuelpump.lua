@@ -1,13 +1,17 @@
 util.AddNetworkString("SV_Settings_SetPriceFuelPump")
+util.AddNetworkString("SV_Settings_GoToFuelPump")
+
+SVMOD.FuelPumps = SVMOD.FuelPumps or {}
 
 local function spawnPump(pos, ang, model)
 	local newEnt = ents.Create("sv_gaspump")
 	newEnt:SetPos(pos)
 	newEnt:SetAngles(ang)
-	newEnt:Spawn()
 	newEnt:SetModel(model)
+	newEnt:Spawn()
 
 	local phys = newEnt:GetPhysicsObject()
+	print(IsValid(phys))
 	if IsValid(phys) then
 		phys:EnableMotion(false)
 	end
@@ -39,8 +43,6 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
 	SVMOD:PrintConsole(SVMOD.LOG.Info, #ents.FindByClass("sv_gaspump") .. " gas pump(s) created.")
 end)
 
-SVMOD.FuelPumps = SVMOD.FuelPumps or {}
-
 function SVMOD:GetFuelPumpByEnt(ent)
 	return SVMOD.FuelPumps[ent]
 end
@@ -55,7 +57,10 @@ function SVMOD:AddFuelPump(ent)
 	local position = ent:GetPos()
 	local angles = ent:GetAngles()
 
+	SVMOD.CFG.Fuel.currentID = (SVMOD.CFG.Fuel.currentID or 0) + 1
+
 	local i = table.insert(SVMOD.CFG["Fuel"]["Pumps"], {
+		ID = SVMOD.CFG.Fuel.currentID,
 		Model = model,
 		MapCreationID = mapCreationID,
 		Position = position,
@@ -82,7 +87,7 @@ function SVMOD:DeleteFuelPump(ent)
 	local data = SVMOD:GetFuelPumpByEnt(ent)
 
 	for i, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
-		if pump == data then
+		if pump.ID == data.ID then
 			table.remove(SVMOD.CFG.Fuel.Pumps, i)
 			SVMOD:Save()
 
@@ -104,10 +109,34 @@ net.Receive("SV_Settings_SetPriceFuelPump", function(_, ply)
 		if hasAccess then
 			local fuelPump = SVMOD:GetFuelPumpByEnt(ent)
 			if fuelPump then
-				fuelPump.Price = price
-				SVMOD:SendNotification(ply, "Price edited.", 0, 5)
+				for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
+					if pump.ID == fuelPump.ID then
+						pump.Price = price
+						fuelPump.Price = price
+
+						SVMOD:Save()
+						SVMOD:SendNotification(ply, "Price edited.", 0, 5)
+
+						return
+					end
+				end
+
+				SVMOD:SendNotification(ply, "Error occurred.", 1, 5)
 			else
 				SVMOD:SendNotification(ply, "Error occurred.", 1, 5)
+			end
+		end
+	end)
+end)
+
+net.Receive("SV_Settings_GoToFuelPump", function(_, ply)
+	local index = net.ReadUInt(5) -- max: 31
+
+	CAMI.PlayerHasAccess(ply, "SV_EditOptions", function(hasAccess)
+		if hasAccess then
+			local pumpData = SVMOD.CFG.Fuel.Pumps[index]
+			if pumpData then
+				ply:SetPos(pumpData.Position + Vector(0, 0, 40))
 			end
 		end
 	end)

@@ -214,7 +214,7 @@ function SVMOD.Metatable:SV_ExitVehicle(ply)
 
 	if self:SV_IsLocked() then
 		self:EmitSound("doors/default_locked.wav")
-		hook.Run("SV_TriedToLeaveLockedVehicle", self, ply)
+		hook.Run("SV_TriedToExitLockedVehicle", self, ply)
 		return -2
 	end
 

@@ -60,35 +60,6 @@ function SVMOD:GUI_Fuel(panel, data)
 	pumpList.OnRowRightClick = function(self, _, line)
 		local menu = DermaMenu()
 
-		--menu:AddOption(language.GetPhrase("svmod.fuel.edit_price"), function()
-		--	local frame = vgui.Create("DFrame")
-		--	frame:SetSize(300, 110)
-		--	frame:Center()
-		--	frame:ShowCloseButton(false)
-		--	frame:SetTitle("")
-		--	frame.Paint = function(self, w, h)
-		--		surface.SetDrawColor(18, 25, 31)
-		--		surface.DrawRect(0, 0, w, h)
-		--
-		--		surface.SetDrawColor(178, 95, 245)
-		--		surface.DrawRect(0, 0, w, 4)
-		--	end
-		--	frame:MakePopup()
-		--
-		--	local slide = SVMOD:CreateNumSlidePanel(frame, language.GetPhrase("svmod.fuel.price"), function(val)
-		--		line:SetColumnText(6, math.Round(val))
-		--	end)
-		--	slide:SetValue(tonumber(line:GetColumnText(6)))
-		--	slide:SetMaxValue(300)
-		--	slide:SetUnit("u")
-		--
-		--	local button = SVMOD:CreateButton(frame, language.GetPhrase("svmod.close"), function()
-		--		frame:Close()
-		--	end)
-		--	button:Dock(BOTTOM)
-		--	button:SetSize(0, 30)
-		--end):SetIcon("icon16/money.png")
-
 		menu:AddOption(language.GetPhrase("svmod.fuel.goto"), function()
 			net.Start("SV_Settings_GoToFuelPump")
 			net.WriteUInt(tonumber(line:GetColumnText(1)), 5) -- max: 31
