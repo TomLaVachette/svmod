@@ -57,9 +57,9 @@ function SVMOD:ResetConfiguration()
 
 	SVMOD.CFG.Others = {
 		IsHUDEnabled = true,
-		HUDPositionX = 0.2,
-		HUDPositionY = 0.8,
-		HUDSize = 200,
+		HUDPositionX = 0.21,
+		HUDPositionY = 0.91,
+		HUDSize = 100,
 		HUDColor = Color(178, 95, 245),
 		CustomSuspension = 0
 	}
