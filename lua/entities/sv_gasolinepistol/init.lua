@@ -15,12 +15,15 @@ function ENT:Initialize()
 	self:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	self:SetUseType(SIMPLE_USE)
 
+	local entIndex = self:EntIndex()
+	local timerName = "SV_FillerPistol_" .. entIndex
+
 	local function stopTimer()
-		timer.Remove("SV_FillerPistol_" .. self:EntIndex())
+		timer.Remove(timerName)
 		self:StopSound("svmod/fuel/fill-up.wav")
 	end
 
-	timer.Create("SV_FillerPistol_" .. self:EntIndex(), 4, 0, function()
+	timer.Create(timerName, 4, 0, function()
 		local veh = self:GetParent()
 
 		if not SVMOD:IsVehicle(veh) or not IsValid(self.Player) then
@@ -61,8 +64,10 @@ function ENT:Initialize()
 		end
 	end)
 
-	timer.Create("SV_FillerPistolRope_" .. self:EntIndex(), 1, 0, function()
-		if not IsValid(self.Rope) then
+	local pumpPos = self.Pump:GetPos()
+
+	timer.Create("SV_FillerPistolRope_" .. entIndex, 1, 0, function()
+		if not IsValid(self.Rope) or not IsValid(self.Player) or self.Player:GetPos():DistToSqr(pumpPos) > 50000 then
 			hook.Run("SV_FillerPistolRopeDestroyed", self:GetParent(), self.Player, self.Pump)
 			self:Remove()
 		end
@@ -124,25 +129,31 @@ function ENT:SpawnRope()
 
 	local a, b = self.Pump:GetModelBounds()
 
-	self.Rope = constraint.Rope(
-		self,
-		self.Pump,
-		0,
-		0,
-		Vector(3.5, 1, -3),
-		(b + a) / 2,
-		250,
-		0,
+	local pumpPos = self.Pump:GetPos()
+
+	self.Rope = constraint.CreateKeyframeRope(
+		pumpPos,
 		1,
-		1.5,
 		"cable/cable2",
-		false
+		nil,
+		pump,
+		(b + a) / 2,
+		0,
+		self,
+		Vector(3.5, 1, -3),
+		0,
+		{
+			Length = 250,
+			Collide = 1
+		}
 	)
 end
 
 function ENT:OnRemove()
-	timer.Remove("SV_FillerPistol_" .. self:EntIndex())
-	timer.Remove("SV_FillerPistolRope_" .. self:EntIndex())
+	local entIndex = self:EntIndex()
+
+	timer.Remove("SV_FillerPistol_" .. entIndex)
+	timer.Remove("SV_FillerPistolRope_" .. entIndex)
 
 	self:StopSound("svmod/fuel/fill-up.wav")
 
