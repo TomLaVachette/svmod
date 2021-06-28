@@ -1,7 +1,7 @@
 if SERVER then return false end
 
 local _R = debug.getregistry()
-if _R.Circles then return _R.Circles end
+if _R.SVMODCircles then return _R.SVMODCircles end
 
 local CIRCLE = {}
 CIRCLE.__index = CIRCLE
@@ -496,7 +496,7 @@ do
 	end
 end
 
-_R.Circles = {
+_R.SVMODCircles = {
 	_MT = CIRCLE,
 
 	New = New,
@@ -504,4 +504,4 @@ _R.Circles = {
 	CalculateVertices = CalculateVertices,
 }
 
-return _R.Circles
+return _R.SVMODCircles
