@@ -57,6 +57,9 @@ function SVMOD.Metatable:SV_StartRepair(ply, partIndex)
 		else
 			part:SetHealth(math.floor(part:GetHealth() + (2.5 * partCount)))
 			self:GetPhysicsObject():ApplyForceCenter(Vector(20000, 20000, 20000))
+			if part.WheelID ~= nil then
+				self:SV_StopPunctureWheel(part.WheelID)
+			end
 		end
 	end)
 end

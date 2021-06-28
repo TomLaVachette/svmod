@@ -136,7 +136,7 @@ function ENT:SpawnRope()
 		1,
 		"cable/cable2",
 		nil,
-		pump,
+		self.Pump,
 		(b + a) / 2,
 		0,
 		self,
