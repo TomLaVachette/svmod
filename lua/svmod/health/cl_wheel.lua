@@ -63,7 +63,9 @@ hook.Add("EntityNetworkedVarChanged", "SV_Wheel", function(veh, name, oldVal, ne
 		wheelID = veh.SV_WheelRearLeftID
 	elseif name == "SV_WheelRRHealth" then
 		wheelID = veh.SV_WheelRearRightID
-	else
+	end
+
+	if not wheelID then
 		return
 	end
 

@@ -20,7 +20,7 @@ function SWEP:Reload()
 		return
 	end
 
-	CAMI.PlayerHasAccess(ply, "SV_RepairVehicle", function(hasAccess)
+	CAMI.PlayerHasAccess(self:GetOwner(), "SV_RepairVehicle", function(hasAccess)
 		if hasAccess then
 			if not SVMOD:IsVehicle(veh) then
 				return

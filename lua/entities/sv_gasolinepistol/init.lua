@@ -67,7 +67,7 @@ function ENT:Initialize()
 	local pumpPos = self.Pump:GetPos()
 
 	timer.Create("SV_FillerPistolRope_" .. entIndex, 1, 0, function()
-		if not IsValid(self.Rope) or not IsValid(self.Player) or self.Player:GetPos():DistToSqr(pumpPos) > 50000 then
+		if not IsValid(self) or self:GetParent():GetPos():DistToSqr(pumpPos) > 50000 then
 			hook.Run("SV_FillerPistolRopeDestroyed", self:GetParent(), self.Player, self.Pump)
 			self:Remove()
 		end
