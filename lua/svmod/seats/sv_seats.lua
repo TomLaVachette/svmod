@@ -324,13 +324,14 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 
 		ply.SV_IsSwitchingSeat = true
 
+		ply:ExitVehicle()
+
 		local isDriverSeat = seat:SV_IsDriverSeat()
 
 		if not isDriverSeat then
 			ply:SetAllowWeaponsInVehicle(true)
 		end
 
-		ply:ExitVehicle()
 		ply:EnterVehicle(seat)
 
 		timer.Simple(FrameTime(), function()
