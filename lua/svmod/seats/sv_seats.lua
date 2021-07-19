@@ -158,6 +158,10 @@ function SVMOD.Metatable:SV_EnterVehicle(ply)
 		return -4
 	end
 
+	if seat:SV_IsPassengerSeat() then
+		ply:SetAllowWeaponsInVehicle(true)
+	end
+
 	ply:ExitVehicle()
 	ply:EnterVehicle(seat)
 
@@ -320,6 +324,12 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 
 		ply.SV_IsSwitchingSeat = true
 
+		local isDriverSeat = seat:SV_IsDriverSeat()
+
+		if not isDriverSeat then
+			ply:SetAllowWeaponsInVehicle(true)
+		end
+
 		ply:ExitVehicle()
 		ply:EnterVehicle(seat)
 
@@ -328,7 +338,7 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 		end)
 
 		-- Update last driver
-		if seat:SV_IsDriverSeat() then
+		if isDriverSeat then
 			seat.SV_LastDriver = ply
 		end
 
@@ -374,10 +384,12 @@ hook.Add("PlayerLeaveVehicle", "SV_VehicleHandbrake", function(ply, veh)
 	end
 end)
 
-hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(_, veh)
+hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(ply, veh)
 	if not SVMOD:IsVehicle(veh) then
 		return
 	end
+
+	ply:SetAllowWeaponsInVehicle(false)
 
 	if veh:SV_IsPassengerSeat() then
 		-- Remove the passenger seat
