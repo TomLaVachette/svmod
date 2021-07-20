@@ -11,17 +11,17 @@ SVMOD.FCFG.LastVersion = "?" -- Do not change
 SVMOD.FCFG.ShortcutTime = 0.3
 
 SVMOD.FCFG.BlacklistedModels = {
-	"models/nova/airboat_seat.mdl",
-	"models/nova/chair_office02.mdl",
-	"models/props_phx/carseat2.mdl",
-	"models/props_phx/carseat3.mdl",
-	"models/props_phx/carseat2.mdl",
-	"models/nova/chair_plastic01.mdl",
-	"models/nova/jeep_seat.mdl",
-	"models/nova/chair_wood01.mdl",
-	"models/nova/chair_office01.mdl",
-	"models/vehicles/prisoner_pod_inner.mdl",
-	"models/nova/jalopy_seat.mdl"
+	["models/nova/airboat_seat.mdl"] = true,
+	["models/nova/chair_office02.mdl"] = true,
+	["models/props_phx/carseat2.mdl"] = true,
+	["models/props_phx/carseat3.mdl"] = true,
+	["models/props_phx/carseat2.mdl"] = true,
+	["models/nova/chair_plastic01.mdl"] = true,
+	["models/nova/jeep_seat.mdl"] = true,
+	["models/nova/chair_wood01.mdl"] = true,
+	["models/nova/chair_office01.mdl"] = true,
+	["models/vehicles/prisoner_pod_inner.mdl"] = true,
+	["models/nova/jalopy_seat.mdl"] = true
 }
 
 SVMOD.FCFG.ConflictList = {
