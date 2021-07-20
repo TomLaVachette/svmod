@@ -9,3 +9,12 @@ hook.Add("EntityTakeDamage", "SV_CollisionFix", function(target, dmg)
 		dmg:SetDamage(0)
 	end
 end)
+
+-- Allow player to shot bullets in vehicle
+hook.Add("EntityFireBullets", "SV_BulletsFix", function(ent, data)
+	if not IsValid(ent) or not ent:IsPlayer() or not ent:InVehicle() then return end
+
+	data.Src = data.Src + 50 * data.Dir
+
+	return true
+end)
