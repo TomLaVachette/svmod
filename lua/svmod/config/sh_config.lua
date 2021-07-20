@@ -24,6 +24,22 @@ SVMOD.FCFG.BlacklistedModels = {
 	"models/nova/jalopy_seat.mdl"
 }
 
+SVMOD.FCFG.BlacklistedWeapons = {
+	["arrest_stick"] = true,
+	["door_ram"] = true,
+	["gmod_tool"] = true,
+	["stunstick"] = true,
+	["sv_wrench"] = true,
+	["unarrest_stick"] = true,
+	["weapon_bugbait"] = true,
+	["weapon_crossbow"] = true,
+	["weapon_crowbar"] = true,
+	["weapon_physcannon"] = true,
+	["weapon_physgun"] = true,
+	["weapon_rpg"] = true,
+	["weapon_stunstick"] = true
+}
+
 SVMOD.FCFG.ConflictList = {
 	{
 		Name = "VCMod Main",

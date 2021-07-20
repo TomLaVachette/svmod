@@ -18,3 +18,9 @@ hook.Add("EntityFireBullets", "SV_BulletsFix", function(ent, data)
 
 	return true
 end)
+
+hook.Add("PlayerSwitchWeapon", "SV_BlacklistedWeapons", function(ply, old, new)
+	if not IsValid(ply) or not ply:IsPlayer() or not ply:InVehicle() or not IsValid(new) or not SVMOD.FCFG.BlacklistedWeapons[new:GetClass()] then return end
+
+	return true
+end)
