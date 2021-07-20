@@ -24,6 +24,12 @@ SVMOD.FCFG.BlacklistedModels = {
 	"models/nova/jalopy_seat.mdl"
 }
 
+SVMOD.FCFG.FallBackWeapon = "gmod_fists"
+
+if DarkRP then
+	SVMOD.FCFG.FallBackWeapon = "keys"
+end
+
 SVMOD.FCFG.BlacklistedWeapons = {
 	["arrest_stick"] = true,
 	["door_ram"] = true,

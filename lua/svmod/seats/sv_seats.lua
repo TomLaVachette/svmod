@@ -160,6 +160,11 @@ function SVMOD.Metatable:SV_EnterVehicle(ply)
 
 	if seat:SV_IsPassengerSeat() then
 		ply:SetAllowWeaponsInVehicle(true)
+
+		local weapon = ply:GetActiveWeapon()
+		if IsValid(weapon) and SVMOD.FCFG.BlacklistedWeapons[weapon:GetClass()] then
+			ply:SelectWeapon(SVMOD.FCFG.FallBackWeapon)
+		end
 	end
 
 	ply:ExitVehicle()
