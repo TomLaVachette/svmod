@@ -207,9 +207,15 @@ end)
 -----------------------------------------------------------]]
 util.AddNetworkString("SV_PlayerLeaveVehicle")
 function SVMOD.Metatable:SV_ExitVehicle(ply)
+	local driverSeat = self:SV_GetDriverSeat()
+
 	-- The player is not sitting in this vehicle
-	if ply:GetVehicle():SV_GetDriverSeat() ~= self:SV_GetDriverSeat() then
+	if ply:GetVehicle():SV_GetDriverSeat() ~= driverSeat then
 		return -1
+	end
+
+	if hook.Run("CanExitVehicle", driverSeat, ply) == false then
+		return -3
 	end
 
 	if self:SV_IsLocked() then
@@ -305,6 +311,8 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 	if not SVMOD:IsVehicle(veh) then return end
 
 	veh = veh:SV_GetDriverSeat()
+
+	if hook.Run("CanExitVehicle", veh, ply) == false then return end
 
 	local seatIndex = net.ReadUInt(4) -- max: 15
 
