@@ -45,7 +45,7 @@ function SVMOD:GetVehicleList()
 	local result = {}
 
 	for _, veh in pairs(list.Get("Vehicles")) do
-		if not table.HasValue(SVMOD.FCFG.BlacklistedModels, string.lower(veh.Model)) then
+		if not SVMOD.FCFG.BlacklistedModels[veh.Model:lower()] then
 			table.insert(result, veh)
 		end
 	end
