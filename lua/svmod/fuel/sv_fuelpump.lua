@@ -19,7 +19,7 @@ local function spawnPump(pos, ang, model)
 	return newEnt
 end
 
-hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
+local function createPumps()
 	SVMOD:Load()
 
 	for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
@@ -41,7 +41,10 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
 	end
 
 	SVMOD:PrintConsole(SVMOD.LOG.Info, #ents.FindByClass("sv_gaspump") .. " gas pump(s) created.")
-end)
+end
+
+hook.Add("InitPostEntity", "SV_SpawnFuelPump", createPumps)
+hook.Add("PostCleanupMap", "SV_SpawnFuelPump", createPumps)
 
 function SVMOD:GetFuelPumpByEnt(ent)
 	return SVMOD.FuelPumps[ent]
