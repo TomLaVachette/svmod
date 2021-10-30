@@ -118,7 +118,6 @@ end
 function SVMOD.Metatable:SV_UpdateWheelSpeed()
 	self:SetMaxThrottle((self:SV_GetWheelFLHealth() * 0.25 + self:SV_GetWheelFRHealth() * 0.25 + self:SV_GetWheelRLHealth() * 0.25 + self:SV_GetWheelRRHealth() * 0.25) / 100)
 	self:SetMaxReverseThrottle((self:SV_GetWheelFLHealth() * -0.25 + self:SV_GetWheelFRHealth() * -0.25 + self:SV_GetWheelRLHealth() * -0.25 + self:SV_GetWheelRRHealth() * -0.25) / 120)
-
 end
 
 function SVMOD.Metatable:SV_SetWheelPercent(wheelID, percent)
