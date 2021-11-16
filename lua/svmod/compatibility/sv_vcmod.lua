@@ -1,4 +1,4 @@
-hook.Add("SV_Enabled", function()
+hook.Add("SV_Enabled", "SV_VCModServerCompatibility", function()
 	if not SVMOD.IsVCEnabled and VC then
 		return
 	end

@@ -1,4 +1,4 @@
-hook.Add("SV_Enabled", function()
+hook.Add("SV_Enabled", "SV_VCModCompatibility", function()
 	if VCMOD then
 		return
 	end
