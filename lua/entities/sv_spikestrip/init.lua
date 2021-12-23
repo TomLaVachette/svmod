@@ -20,7 +20,6 @@ function ENT:Think()
 end
 
 function ENT:Touch(ent)
-	print(math.random(40,80))
 	if ent:GetClass() == "prop_vehicle_jeep" and SVMOD:IsVehicle(ent) then
 		for wheel = 0, ent:GetWheelCount() do
 			if ent:GetWheelContactPoint(wheel):Distance( self:GetTouchTrace().HitPos ) < 50 then
