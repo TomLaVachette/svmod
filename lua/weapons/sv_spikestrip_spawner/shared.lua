@@ -5,7 +5,6 @@ SWEP.WorldModel 	= "models/weapons/w_package.mdl"
 SWEP.HoldType 		= "normal"
 SWEP.Spawnable		= true
 SWEP.UseHands 		= true
-SWEP.Base 			= "wep_ck_base"
 
 SWEP.Primary.Recoil		= 5
 SWEP.Primary.Damage		= 0
