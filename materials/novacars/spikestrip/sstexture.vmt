@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+
+	$basetexture "novacars/spikestrip/ssbase"
+	$bumpmap "novacars/spikestrip/ssnormal"
+	$envmapmask "novacars/spikestrip/ssrough"
+
+
+	 $envmap "env_cubemap"
+}
