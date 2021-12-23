@@ -1,5 +1,5 @@
 SWEP.Category 		= "SVMod"
-SWEP.Instructions   = "Left click to deploy spike strips, Right click to collect them."
+SWEP.Instructions   = "Left click to deploy spike strips, USE to collect them."
 SWEP.ViewModel      = "models/weapons/c_crowbar.mdl"
 SWEP.WorldModel 	= "models/weapons/w_package.mdl"
 SWEP.HoldType 		= "normal"
