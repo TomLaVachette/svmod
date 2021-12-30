@@ -3,7 +3,6 @@ AddCSLuaFile("shared.lua")
 
 include("shared.lua")
 
-
 function ENT:Initialize()
 	self:SetModel( "models/novacars/spikestrip/spikestrip.mdl" )
 	self:PhysicsInit( SOLID_VPHYSICS )
@@ -13,26 +12,31 @@ function ENT:Initialize()
 	self:SetTrigger( true )
 end
 
-function ENT:Use( activator, caller )
-end
-
-function ENT:Think()
-end
-
 function ENT:Touch(ent)
 	if ent:GetClass() == "prop_vehicle_jeep" and SVMOD:IsVehicle(ent) then
-		for wheel = 0, ent:GetWheelCount() do
-			if ent:GetWheelContactPoint(wheel):Distance( self:GetTouchTrace().HitPos ) < 50 then
-				ent:SV_DealDamageToWheel(wheel + 1, math.random(40,80))
+		for _, part in ipairs(ent.SV_Data.Parts) do
+			if part.WheelID then
+				local wheelPos = ent:LocalToWorld(part.Position)
+				local trace = util.TraceLine({
+					start = wheelPos,
+					endpos = wheelPos + Vector(0, 0, -50),
+					filter = ent
+				})
+				if trace.Entity == self then
+					ent:SV_DealDamageToWheel(part.WheelID, 50)
+				end
 			end
 		end
 	end
 end
 
 function ENT:Use(ent)
-
+	-- This "Used" prevent duplication. ENTITY:Use can be called multiple time per tick.
+	if self.Used then return end
+	self.Used = true
 	if IsValid(ent) then
 		self:Remove()
 		ent:Give("sv_spikestrip_spawner")
 	end
+	self.Used = false
 end
