@@ -387,7 +387,10 @@ hook.Add("PlayerLeaveVehicle", "SV_SaveSteeringWheel", function(ply, veh)
 		return
 	end
 	local vehSteering = veh:GetSteering()
-    	timer.Simple(0.01, function()
+    	timer.Simple(FrameTime(), function()
+		if not IsValid(veh) then 
+			return 
+		end
         	veh:SetSteering(vehSteering,0)
     	end)
 end)
