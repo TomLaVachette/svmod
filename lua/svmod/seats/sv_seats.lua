@@ -382,6 +382,19 @@ hook.Add("PlayerLeaveVehicle", "SV_VehicleHandbrake", function(ply, veh)
 	end
 end)
 
+hook.Add("PlayerLeaveVehicle", "SV_SaveSteeringWheel", function(ply, veh)
+	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then 
+		return
+	end
+	local vehSteering = veh:GetSteering()
+    	timer.Simple(FrameTime(), function()
+		if not IsValid(veh) then 
+			return 
+		end
+        	veh:SetSteering(vehSteering,0)
+    	end)
+end)
+
 hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(_, veh)
 	if not SVMOD:IsVehicle(veh) then
 		return
