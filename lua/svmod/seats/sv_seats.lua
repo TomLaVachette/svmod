@@ -22,6 +22,29 @@ function SVMOD.Metatable:SV_GetNearestEmptySeat(position)
 end
 
 --[[---------------------------------------------------------
+   Name: SV_Vehicle:SV_GetNearestEmptyPassengerSeat(Vector position)
+   Type: Server
+   Desc: Returns the nearest empty passenger seat of a given position.
+   Note: This is an internal function, you should not use it.
+-----------------------------------------------------------]]
+function SVMOD.Metatable:SV_GetNearestEmptyPassengerSeat(position)
+	local bestDistance = 15000
+	local bestIndex = nil
+
+	for i, seat in ipairs(self.SV_Data.Seats) do
+		if not seat.Entity and i ~= 1 then
+			local CurrentDistance = position:DistToSqr(self:LocalToWorld(seat.Position))
+			if CurrentDistance < bestDistance then
+				bestDistance = CurrentDistance
+				bestIndex = i
+			end
+		end
+	end
+
+	return bestIndex, self.SV_Data.Seats[bestIndex]
+end
+
+--[[---------------------------------------------------------
    Name: SV_Vehicle:SV_GetSeat(int index)
    Type: Server
    Desc: Returns the seat to the specified index.
@@ -147,6 +170,57 @@ function SVMOD.Metatable:SV_EnterVehicle(ply)
 	end
 
 	local seatIndex = self:SV_GetNearestEmptySeat(ply:GetShootPos())
+
+	-- No seat available
+	if not seatIndex then
+		return -3
+	end
+
+	local seat = self:SV_CreateSeat(seatIndex)
+	-- Error on creating seat
+	if not IsValid(seat) then
+		return -4
+	end
+
+	if seat:SV_IsPassengerSeat() then
+		ply:SetAllowWeaponsInVehicle(true)
+
+		local weapon = ply:GetActiveWeapon()
+		if IsValid(weapon) and SVMOD.FCFG.BlacklistedWeapons[weapon:GetClass()] then
+			ply:SelectWeapon(SVMOD.FCFG.FallBackWeapon)
+		end
+	end
+
+	ply:ExitVehicle()
+	ply:EnterVehicle(seat)
+
+	return 1
+end
+
+--[[---------------------------------------------------------
+   Name: SV_Vehicle:SV_HandcuffedPlayerEnterVehicle(Player ply)
+   Type: Server
+   Desc: Sit the player on the nearest available seat. The
+		 seat is a passenger seat. The
+		 operation will fail if the vehicle is locked.
+-----------------------------------------------------------]]
+function SVMOD.Metatable:SV_HandcuffedPlayerEnterVehicle(ply, handcuffer)
+	if not IsValid(handcuffer) then return end
+
+	-- No seat configuration for this vehicle
+	if not self.SV_Data or not self.SV_Data.Seats then
+		return -1
+	end
+
+	-- Vehicle locked
+	if self:SV_IsLocked() then
+		self:EmitSound("doors/default_locked.wav")
+		hook.Run("SV_TriedToEnterLockedVehicle", self, ply)
+		return -2
+	end
+
+	local seatIndex = self:SV_GetNearestEmptyPassengerSeat(handcuffer:GetShootPos())
+
 	-- No seat available
 	if not seatIndex then
 		return -3
@@ -329,6 +403,13 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 		ply.SV_IsSwitchingSeat = true
 
 		ply:ExitVehicle()
+
+		local isDriverSeat = seat:SV_IsDriverSeat()
+
+		if not isDriverSeat then
+			ply:SetAllowWeaponsInVehicle(true)
+		end
+
 		ply:EnterVehicle(seat)
 
 		timer.Simple(FrameTime(), function()
@@ -336,7 +417,7 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 		end)
 
 		-- Update last driver
-		if seat:SV_IsDriverSeat() then
+		if isDriverSeat then
 			seat.SV_LastDriver = ply
 		end
 
@@ -395,7 +476,7 @@ hook.Add("PlayerLeaveVehicle", "SV_SaveSteeringWheel", function(ply, veh)
 		end)
 end)
 
-hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(_, veh)
+hook.Add("PlayerLeaveVehicle", "SV_RemoveSeats_PlayerLeaveVehicle", function(ply, veh)
 	if not SVMOD:IsVehicle(veh) then
 		return
 	end
