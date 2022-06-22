@@ -182,7 +182,7 @@ function SVMOD.Metatable:SV_EnterVehicle(ply)
 		return -4
 	end
 
-	if seat:SV_IsPassengerSeat() then
+	if seat:SV_IsPassengerSeat() and SVMOD.FCFG.BlacklistedWeapons then
 		ply:SetAllowWeaponsInVehicle(true)
 
 		local weapon = ply:GetActiveWeapon()
