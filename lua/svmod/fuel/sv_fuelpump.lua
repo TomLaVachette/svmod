@@ -11,7 +11,6 @@ local function spawnPump(pos, ang, model)
 	newEnt:Spawn()
 
 	local phys = newEnt:GetPhysicsObject()
-	print(IsValid(phys))
 	if IsValid(phys) then
 		phys:EnableMotion(false)
 	end
@@ -19,9 +18,7 @@ local function spawnPump(pos, ang, model)
 	return newEnt
 end
 
-hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
-	SVMOD:Load()
-
+local function createPumps()
 	for _, pump in ipairs(SVMOD.CFG.Fuel.Pumps) do
 		if pump.MapCreationID >= 0 then
 			local ent = ents.GetMapCreatedEntity(pump.MapCreationID)
@@ -41,7 +38,14 @@ hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
 	end
 
 	SVMOD:PrintConsole(SVMOD.LOG.Info, #ents.FindByClass("sv_gaspump") .. " gas pump(s) created.")
+end
+
+hook.Add("InitPostEntity", "SV_SpawnFuelPump", function()
+	SVMOD:Load()
+
+	createPumps()
 end)
+hook.Add("PostCleanupMap", "SV_SpawnFuelPump", createPumps)
 
 function SVMOD:GetFuelPumpByEnt(ent)
 	return SVMOD.FuelPumps[ent]
