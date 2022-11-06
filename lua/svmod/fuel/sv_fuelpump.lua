@@ -11,7 +11,6 @@ local function spawnPump(pos, ang, model)
 	newEnt:Spawn()
 
 	local phys = newEnt:GetPhysicsObject()
-	print(IsValid(phys))
 	if IsValid(phys) then
 		phys:EnableMotion(false)
 	end
