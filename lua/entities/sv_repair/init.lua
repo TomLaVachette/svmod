@@ -11,7 +11,6 @@ function ENT:Initialize()
     self:SetUseType(SIMPLE_USE)
     self:CapabilitiesAdd(CAP_ANIMATEDFACE, CAP_TURN_HEAD)
     self:SetMaxYawSpeed(90)
-    self:DropToFloor()
 end
 
 function ENT:Use(ply)
