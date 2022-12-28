@@ -116,7 +116,7 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 		if not LocalPlayer().SVHint then
 			LocalPlayer().SVHint = true
 
-			chat.AddText(Color(178, 95, 245), "SVMod: ", Color(255, 255, 255), "To adjust options (car lights, view) type "!svmod" in chat.")
+			chat.AddText(Color(178, 95, 245), "SVMod: ", Color(255, 255, 255), 'To adjust options (car lights, view) type "!svmod" in chat.')
 		end
 	end)
 
