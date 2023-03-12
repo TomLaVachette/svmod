@@ -48,3 +48,11 @@ net.Receive("SV_SetAddonState", function()
 		hook.Run("SV_Disabled")
 	end
 end)
+
+hook.Add("SV_PlayerEnteredVehicle", "SV_Hint", function()
+	if not LocalPlayer().SVHint then
+		LocalPlayer().SVHint = true
+
+		chat.AddText(Color(178, 95, 245), "SVMod: ", Color(255, 255, 255), language.GetPhrase("svmod.hint"))
+	end
+end)
