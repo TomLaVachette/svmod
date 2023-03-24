@@ -169,7 +169,11 @@ function SVMOD.Metatable:SV_EnterVehicle(ply, seat)
 		return -2
 	end
 
-	local seatIndex = seat or self:SV_GetNearestEmptySeat(ply:GetShootPos())
+	local seatIndex = self:SV_GetNearestEmptySeat(ply:GetShootPos())
+
+	if seat and self.SV_Data.Seats[seat] and not self.SV_Data.Seats[seat].Entity then
+		seatIndex = seat
+	end
 
 	-- No seat available
 	if not seatIndex then
