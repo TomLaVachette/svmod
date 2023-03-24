@@ -156,7 +156,7 @@ end
 		 in a specific seat, use Player:EnterVehicle instead.
 -----------------------------------------------------------]]
 util.AddNetworkString("SV_PlayerEnteredVehicle")
-function SVMOD.Metatable:SV_EnterVehicle(ply)
+function SVMOD.Metatable:SV_EnterVehicle(ply, seat)
 	-- No seat configuration for this vehicle
 	if not self.SV_Data or not self.SV_Data.Seats then
 		return -1
@@ -170,6 +170,10 @@ function SVMOD.Metatable:SV_EnterVehicle(ply)
 	end
 
 	local seatIndex = self:SV_GetNearestEmptySeat(ply:GetShootPos())
+
+	if seat and self.SV_Data.Seats[seat] and not self.SV_Data.Seats[seat].Entity then
+		seatIndex = seat
+	end
 
 	-- No seat available
 	if not seatIndex then
