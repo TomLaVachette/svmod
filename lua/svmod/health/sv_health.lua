@@ -150,6 +150,7 @@ function SVMOD.Metatable:SV_FullRepair()
 	self:SV_SetWheelFRHealth(100)
 	self:SV_SetWheelRLHealth(100)
 	self:SV_SetWheelRRHealth(100)
+	self:StopParticles() -- to not wait ~5 seconds before it is done automatically
 end
 
 hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
