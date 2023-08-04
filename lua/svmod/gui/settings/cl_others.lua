@@ -119,7 +119,7 @@ function SVMOD:GUI_Others(panel, data)
 	local title = SVMOD:CreateTitle(panel, language.GetPhrase("svmod.others.carkill"))
 	title:DockMargin(0, 10, 0, 0)
 
-	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.sounds.enable_carkill"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.others.enable_carkill"), {
 		{
 			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
