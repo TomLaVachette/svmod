@@ -54,7 +54,11 @@ function SVMOD:Load()
 			elseif self.CFG.Shortcuts then
 				-- CLIENT
 				for i, s in ipairs(self.CFG.Shortcuts) do
-					self.Shortcuts[i].Key = s
+					if self.Shortcuts[i] then
+						self.Shortcuts[i].Key = s
+					else
+						SVMOD:PrintConsole(SVMOD.LOG.Alert, "Shortcut " .. i .. " from the configuration file is not registered!")
+					end
 				end
 			end
 		end
