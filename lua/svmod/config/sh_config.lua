@@ -51,6 +51,10 @@ function SVMOD:Load()
 
 			if SERVER then
 				self.CFG.Others.HUDColor = Color(self.CFG.Others.HUDColor.r, self.CFG.Others.HUDColor.g, self.CFG.Others.HUDColor.b)
+
+				if SVMOD.CFG.Others.IsCarkillEnabled == nil then
+					SVMOD.CFG.Others.IsCarkillEnabled = true
+				end
 			elseif self.CFG.Shortcuts then
 				-- CLIENT
 				for i, s in ipairs(self.CFG.Shortcuts) do
