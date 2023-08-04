@@ -58,6 +58,7 @@ concommand.Add("svmod", function(ply)
 			net.WriteUInt(SVMOD.CFG["Others"]["HUDSize"], 9) -- max: 511
 			net.WriteColor(SVMOD.CFG["Others"]["HUDColor"])
 			net.WriteFloat(SVMOD.CFG["Others"]["CustomSuspension"])
+			net.WriteBool(SVMOD.CFG["Others"]["IsCarkillEnabled"])
 
 			net.WriteFloat(SVMOD.CFG["Contributor"]["EnterpriseID"])
 		end

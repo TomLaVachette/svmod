@@ -273,3 +273,13 @@ hook.Add("SV_PlayerLeaveVehicle", "SV_DealDamageOnLeave", function(ply, veh)
 	DInfo:SetDamageType(DMG_VEHICLE)
 	ply:TakeDamageInfo(DInfo)
 end)
+
+hook.Add("EntityTakeDamage", "SV_CarKill", function(victim, dmg)
+	local ent = dmg:GetInflictor()
+
+	if SVMOD.CFG.Others.IsCarkillEnabled or not victim:IsPlayer() or not SVMOD:IsVehicle(ent) or not ent:SV_IsDriverSeat() then
+		return
+	end
+
+	return true
+end)
