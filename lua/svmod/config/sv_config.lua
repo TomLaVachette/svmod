@@ -61,7 +61,8 @@ function SVMOD:ResetConfiguration()
 		HUDPositionY = 0.91,
 		HUDSize = 100,
 		HUDColor = Color(178, 95, 245),
-		CustomSuspension = 0
+		CustomSuspension = 0,
+		IsWeaponsEnabled = false
 	}
 
 	SVMOD.CFG.Contributor = {

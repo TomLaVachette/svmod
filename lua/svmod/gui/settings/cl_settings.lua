@@ -47,6 +47,7 @@ net.Receive("SV_Settings", function()
 		data.HUDSize = net.ReadUInt(9) -- max: 511
 		data.HUDColor = net.ReadColor()
 		data.CustomSuspension = math.Round(net.ReadFloat(), 2)
+		data.IsWeaponsEnabled = net.ReadBool()
 
 		data.EnterpriseID = net.ReadFloat()
 	end
