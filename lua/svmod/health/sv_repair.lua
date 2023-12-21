@@ -6,6 +6,10 @@ net.Receive("SV_StartRepair", function(_, ply)
 	local veh = net.ReadEntity()
 	if not SVMOD:IsVehicle(veh) then return end
 
+	local weapon = ply:GetActiveWeapon()
+	if not IsValid(weapon) then return end
+	if weapon:GetClass() ~= "sv_wrench" then return end
+
 	local index = net.ReadUInt(4)
 
 	veh:SV_StartRepair(ply, index)
@@ -15,6 +19,10 @@ util.AddNetworkString("SV_StopRepair")
 net.Receive("SV_StopRepair", function(_, ply)
 	local Vehicle = net.ReadEntity()
 	if not SVMOD:IsVehicle(Vehicle) then return end
+
+	local weapon = ply:GetActiveWeapon()
+	if not IsValid(weapon) then return end
+	if weapon:GetClass() ~= "sv_wrench" then return end
 
 	Vehicle:SV_StopRepair(ply)
 end)
