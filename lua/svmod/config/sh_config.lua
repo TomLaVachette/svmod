@@ -3,8 +3,8 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.4.0"
-SVMOD.FCFG.FileVersion = "1.4.0"
+SVMOD.FCFG.Version = "1.5.0"
+SVMOD.FCFG.FileVersion = "1.5.0"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -67,29 +67,42 @@ function SVMOD:Load()
 			end
 		end
 	else
-		-- Temporary convertor from 1.3 to 1.4
-		if SERVER and file.Exists("svmod/server_1_3_2.txt", "DATA") then
-			self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
-			self.CFG.Damage.WheelShotMultiplier = 1
-			self.CFG.Damage.WheelCollisionMultiplier = 1
-			self.CFG.Damage.TimeBeforeWheelIsPunctured = 60
-			self.CFG.Others = {
-				IsHUDEnabled = true,
-				HUDPositionX = 0.21,
-				HUDPositionY = 0.92,
-				HUDSize = 90,
-				HUDColor = Color(178, 95, 245),
-				CustomSuspension = 0,
-				IsWeaponsEnabled = false
-			}
-			SVMOD:Save()
-			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.4.")
-			return
-		elseif CLIENT and file.Exists("svmod/client_1_3_2.txt", "DATA") then
-			self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
-			SVMOD:Save()
-			SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.4.")
-			return
+		if SERVER then
+			if file.Exists("svmod/server_1_4_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_4_0.txt"))
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.4 to 1.5.")
+				return
+			elseif file.Exists("svmod/server_1_3_2.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
+				self.CFG.Damage.WheelShotMultiplier = 1
+				self.CFG.Damage.WheelCollisionMultiplier = 1
+				self.CFG.Damage.TimeBeforeWheelIsPunctured = 60
+				self.CFG.Others = {
+					IsHUDEnabled = true,
+					HUDPositionX = 0.21,
+					HUDPositionY = 0.92,
+					HUDSize = 90,
+					HUDColor = Color(178, 95, 245),
+					CustomSuspension = 0,
+					IsWeaponsEnabled = false
+				}
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.4.")
+				return
+			end
+		elseif CLIENT then
+			if file.Exists("svmod/client_1_4_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_4_0.txt"))
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.4 to 1.5.")
+				return
+			elseif file.Exists("svmod/client_1_3_2.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.4.")
+				return
+			end
 		end
 
 		if SERVER then

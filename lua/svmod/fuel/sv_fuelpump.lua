@@ -28,9 +28,13 @@ local function createPumps()
 				local pos = ent:GetPos()
 				local ang = ent:GetAngles()
 
-				ent:Remove()
+				if model == nil then
+					SVMOD:PrintConsole(SVMOD.LOG.Alert, "Tried to spawn a pump with a nil model. (MapCreationID: " .. pump.MapCreationID .. ")")
+				else
+					ent:Remove()
+					SVMOD.FuelPumps[spawnPump(pos, ang, model)] = pump
+				end
 
-				SVMOD.FuelPumps[spawnPump(pos, ang, model)] = pump
 			end
 		else
 			SVMOD.FuelPumps[spawnPump(pump.Position, pump.Angles, pump.Model)] = pump
