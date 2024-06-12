@@ -12,7 +12,11 @@ function ENT:Initialize()
 	self:SetTrigger( true )
 end
 
+local nextTouchCheck = 0
+
 function ENT:Touch(ent)
+	if CurTime() < nextTouchCheck then return end
+	nextTouchCheck = CurTime() + 0.1
 	if ent:GetClass() == "prop_vehicle_jeep" and SVMOD:IsVehicle(ent) then
 		for _, part in ipairs(ent.SV_Data.Parts) do
 			if part.WheelID then
