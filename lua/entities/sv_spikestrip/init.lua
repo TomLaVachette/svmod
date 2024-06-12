@@ -12,21 +12,34 @@ function ENT:Initialize()
 	self:SetTrigger( true )
 end
 
+local nextTouchCheck = 0
+
 function ENT:Touch(ent)
+	if CurTime() < nextTouchCheck then return end
+	nextTouchCheck = CurTime() + 0.1
 	if ent:GetClass() == "prop_vehicle_jeep" and SVMOD:IsVehicle(ent) then
 		for _, part in ipairs(ent.SV_Data.Parts) do
 			if part.WheelID then
 				local wheelPos = ent:LocalToWorld(part.Position)
-				local trace = util.TraceLine({
+				local trace = util.TraceHull({
 					start = wheelPos,
 					endpos = wheelPos + Vector(0, 0, -50),
-					filter = ent
+					filter = ent,
+					maxs = Vector(30, 30, 30),
+					mins = Vector(-30, -30, -30),
+					ignoreworld = true
 				})
 				if trace.Entity == self then
-					ent:SV_DealDamageToWheel(part.WheelID, 50)
+					ent:SV_StartPunctureWheel(part.WheelID, 1)
 				end
 			end
 		end
+	end
+end
+
+function ENT:StartTouch(entity)
+	if IsValid(entity) and entity:IsPlayer() then
+		entity:TakeDamage(5, self, self)
 	end
 end
 
