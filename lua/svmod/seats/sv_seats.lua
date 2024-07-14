@@ -401,7 +401,7 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 
 		local isDriverSeat = seat:SV_IsDriverSeat()
 
-		if SVMOD.CFG.Others.IsWeaponsEnabled and not isDriverSeat then
+		if SVMOD.CFG.Seats.AllowWeaponsInVehicle and not isDriverSeat then
 			ply:SetAllowWeaponsInVehicle(true)
 		end
 

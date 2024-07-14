@@ -11,6 +11,7 @@ net.Receive("SV_Settings", function()
 		data.IsSwitchEnabled = net.ReadBool()
 		data.IsKickEnabled = net.ReadBool()
 		data.IsLockEnabled = net.ReadBool()
+		data.AllowWeaponsInVehicle = net.ReadBool()
 
 		data.AreHeadlightsEnabled = net.ReadBool()
 		data.TurnOffHeadlightsOnExit = net.ReadBool()
@@ -47,7 +48,7 @@ net.Receive("SV_Settings", function()
 		data.HUDSize = net.ReadUInt(9) -- max: 511
 		data.HUDColor = net.ReadColor()
 		data.CustomSuspension = math.Round(net.ReadFloat(), 2)
-		data.IsWeaponsEnabled = net.ReadBool()
+		data.TimeDeploySpikeStrips = math.Round(net.ReadFloat(), 2)
 
 		data.EnterpriseID = net.ReadFloat()
 	end

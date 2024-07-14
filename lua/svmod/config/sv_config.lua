@@ -9,6 +9,7 @@ function SVMOD:ResetConfiguration()
 		IsSwitchEnabled = true,
 		IsKickEnabled = true,
 		IsLockEnabled = true,
+		AllowWeaponsInVehicle = false
 	}
 
 	SVMOD.CFG.Lights = {
@@ -62,7 +63,7 @@ function SVMOD:ResetConfiguration()
 		HUDSize = 100,
 		HUDColor = Color(178, 95, 245),
 		CustomSuspension = 0,
-		IsWeaponsEnabled = false
+		TimeDeploySpikeStrips = 5
 	}
 
 	SVMOD.CFG.Contributor = {

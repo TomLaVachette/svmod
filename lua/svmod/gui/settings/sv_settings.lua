@@ -22,6 +22,7 @@ concommand.Add("svmod", function(ply)
 			net.WriteBool(SVMOD.CFG["Seats"]["IsSwitchEnabled"])
 			net.WriteBool(SVMOD.CFG["Seats"]["IsKickEnabled"])
 			net.WriteBool(SVMOD.CFG["Seats"]["IsLockEnabled"])
+			net.WriteBool(SVMOD.CFG["Seats"]["AllowWeaponsInVehicle"])
 
 			net.WriteBool(SVMOD.CFG["Lights"]["AreHeadlightsEnabled"])
 			net.WriteBool(SVMOD.CFG["Lights"]["TurnOffHeadlightsOnExit"])
@@ -58,7 +59,7 @@ concommand.Add("svmod", function(ply)
 			net.WriteUInt(SVMOD.CFG["Others"]["HUDSize"], 9) -- max: 511
 			net.WriteColor(SVMOD.CFG["Others"]["HUDColor"])
 			net.WriteFloat(SVMOD.CFG["Others"]["CustomSuspension"])
-			net.WriteBool(SVMOD.CFG["Others"]["IsWeaponsEnabled"])
+			net.WriteFloat(SVMOD.CFG["Others"]["TimeDeploySpikeStrips"])
 
 			net.WriteFloat(SVMOD.CFG["Contributor"]["EnterpriseID"])
 		end

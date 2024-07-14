@@ -3,8 +3,8 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.5.0"
-SVMOD.FCFG.FileVersion = "1.5.0"
+SVMOD.FCFG.Version = "1.5.2"
+SVMOD.FCFG.FileVersion = "1.5.2"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -51,10 +51,6 @@ function SVMOD:Load()
 
 			if SERVER then
 				self.CFG.Others.HUDColor = Color(self.CFG.Others.HUDColor.r, self.CFG.Others.HUDColor.g, self.CFG.Others.HUDColor.b)
-
-				if SVMOD.CFG.Others.IsWeaponsEnabled == nil then
-					SVMOD.CFG.Others.IsWeaponsEnabled = false
-				end
 			elseif self.CFG.Shortcuts then
 				-- CLIENT
 				for i, s in ipairs(self.CFG.Shortcuts) do
@@ -68,10 +64,21 @@ function SVMOD:Load()
 		end
 	else
 		if SERVER then
-			if file.Exists("svmod/server_1_4_0.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/server_1_4_0.txt"))
+			if file.Exists("svmod/server_1_5_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_0.txt"))
+				self.CFG.Seats.AllowWeaponsInVehicle = self.CFG.Others.IsWeaponsEnabled
+				self.CFG.Others.IsWeaponsEnabled = nil
+				self.CFG.Others.TimeDeploySpikeStrips = 5
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.4 to 1.5.")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.0 to 1.5.2.")
+				return
+			elseif file.Exists("svmod/server_1_4_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_4_0.txt"))
+				self.CFG.Seats.AllowWeaponsInVehicle = false
+				self.CFG.Others.IsWeaponsEnabled = nil
+				self.CFG.Others.TimeDeploySpikeStrips = 5
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.4 to 1.5.2.")
 				return
 			elseif file.Exists("svmod/server_1_3_2.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
@@ -87,20 +94,27 @@ function SVMOD:Load()
 					CustomSuspension = 0,
 					IsWeaponsEnabled = false
 				}
+				self.CFG.Seats.AllowWeaponsInVehicle = false
+				self.CFG.Others.TimeDeploySpikeStrips = 5
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.4.")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.5.2.")
 				return
 			end
 		elseif CLIENT then
-			if file.Exists("svmod/client_1_4_0.txt", "DATA") then
+			if file.Exists("svmod/client_1_5_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_5_0.txt"))
+				SVMOD:Save()
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.5.0 to 1.5.2.")
+				return
+			elseif file.Exists("svmod/client_1_4_0.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/client_1_4_0.txt"))
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.4 to 1.5.")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.4 to 1.5.2.")
 				return
 			elseif file.Exists("svmod/client_1_3_2.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.4.")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.5.2.")
 				return
 			end
 		end
