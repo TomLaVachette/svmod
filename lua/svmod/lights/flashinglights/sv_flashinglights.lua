@@ -51,6 +51,10 @@ net.Receive("SV_SetFlashingLightsState", function(_, ply)
 
 	local state = net.ReadBool()
 
+	if hook.Run("SV_PlayerCanToggleFlashingLights", ply, veh, state) == false then
+		return
+	end
+
 	if state then
 		veh:SV_TurnOnFlashingLights()
 	else
