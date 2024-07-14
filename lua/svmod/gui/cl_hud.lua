@@ -18,8 +18,7 @@ net.Receive("SV_HUDConfiguration", function()
 end)
 
 function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
-	local function createDrawHook(veh)
-		local maxSpeed = 200
+	local function setupHUD()
 		local positionX = ScrW() * ratioX
 		local positionY = ScrH() * ratioY
 		local scale = radius * (ScrW() / 1920)
@@ -33,6 +32,15 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 			font = "Tahoma",
 			size = (scale * 0.7) / 2
 		})
+	end
+	setupHUD()
+	hook.Add("OnScreenSizeChanged", "SV_SetupHUD", setupHUD)
+
+	local function createDrawHook(veh)
+		local maxSpeed = 200
+		local positionX = ScrW() * ratioX
+		local positionY = ScrH() * ratioY
+		local scale = radius * (ScrW() / 1920)
 
 		local big_circle = circles.New(CIRCLE_OUTLINED, scale * 1.1, positionX, positionY, 2 * scale / 100)
 		big_circle:SetMaterial(true)
@@ -127,6 +135,7 @@ function SVMOD:EnableHUD(ratioX, ratioY, radius, color)
 end
 
 function SVMOD:DisableHUD()
+	hook.Remove("OnScreenSizeChanged", "SV_SetupHUD")
 	hook.Remove("SV_PlayerEnteredVehicle", "SV_EnableHUD2")
 	hook.Remove("HUDPaint", "SV_HUDPaint")
 end
