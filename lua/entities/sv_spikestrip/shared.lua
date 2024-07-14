@@ -1,6 +1,6 @@
 ENT.Type = "anim"
-ENT.Base = "base_gmodentity"
+ENT.Base = "base_entity"
 ENT.PrintName = "Herse"
-ENT.Author = "Romain Lejeune"
+ENT.Author = "Hertinox & TomLaVachette"
 ENT.Category = "SVMod"
 ENT.Spawnable = true
