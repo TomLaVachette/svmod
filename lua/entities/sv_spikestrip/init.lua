@@ -16,7 +16,7 @@ function ENT:PunctureClosestWheels(veh)
 	for _, part in ipairs(veh.SV_Data.Parts) do
 		if part.WheelID then
 			local distance = self:GetPos():DistToSqr(veh:LocalToWorld(part.Position))
-			if distance < 20000 then
+			if distance < 15000 then
 				veh:SV_StartPunctureWheel(part.WheelID, 1)
 			end
 		end
