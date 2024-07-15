@@ -13,7 +13,7 @@ net.Receive("SV_PlacingSpikeStrip", function()
 		surface.SetDrawColor(178, 95, 245)
         surface.DrawRect(x + border / 2, y + border / 2, (width - border) * (1 - ((endtime - CurTime()) / delay)), height - border)
 
-        draw.DrawText(tostring(math.floor(endtime - CurTime() + 1)), "SV_HUD20", x + width / 2, y + 2, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER)
+        draw.DrawText(tostring(math.floor(endtime - CurTime() + 1)), "SVModFont", x + width / 2, y + 5, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER)
     end)
 
     timer.Simple(delay, function()
