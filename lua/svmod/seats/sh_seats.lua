@@ -18,7 +18,7 @@ end
 function SVMOD.Metatable:SV_GetDriverSeat()
 	local parent = self:GetParent()
 
-	if IsValid(parent) then
+	if IsValid(parent) and SVMOD:IsVehicle(parent) then
 		return parent
 	end
 
