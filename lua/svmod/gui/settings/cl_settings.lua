@@ -109,11 +109,9 @@ net.Receive("SV_Settings", function()
 		SVMOD:GUI_Credits(frame:GetCenterPanel(), data)
 	end)
 
-	if not game.IsDedicated() then
-		frame:CreateMenuButton(language.GetPhrase("svmod.contributor.contributor"), BOTTOM, function()
-			SVMOD:GUI_Contributor(frame:GetCenterPanel(), data)
-		end)
-	end
+	frame:CreateMenuButton(language.GetPhrase("svmod.contributor.contributor"), BOTTOM, function()
+		SVMOD:GUI_Contributor(frame:GetCenterPanel(), data)
+	end)
 
 	SVMOD:GUI_Home(frame:GetCenterPanel(), data)
 end)
