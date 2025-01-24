@@ -376,17 +376,21 @@ util.AddNetworkString("SV_SwitchSeat")
 net.Receive("SV_SwitchSeat", function(_, ply)
 	if not SVMOD.CFG.Seats.IsSwitchEnabled then return end
 
-	local veh = ply:GetVehicle()
-	if not SVMOD:IsVehicle(veh) then return end
+	local currentSeat = ply:GetVehicle()
+	if not SVMOD:IsVehicle(currentSeat) then return end
 
-	veh = veh:SV_GetDriverSeat()
-
+	local veh = currentSeat:SV_GetDriverSeat()
+	
 	if hook.Run("CanExitVehicle", veh, ply) == false then return end
 
 	local seatIndex = net.ReadUInt(4) -- max: 15
 
 	local seat = veh:SV_CreateSeat(seatIndex)
 	if IsValid(seat) then
+		if hook.Run("SV_PlayerCanSwitchSeat", currentSeat, seat) == false then
+			return
+		end
+		
 		if hook.Run("CanPlayerEnterVehicle", ply, seat) == false then
 			return
 		end
