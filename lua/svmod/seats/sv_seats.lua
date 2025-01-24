@@ -387,7 +387,7 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 
 	local seat = veh:SV_CreateSeat(seatIndex)
 	if IsValid(seat) then
-		if hook.Run("SV_PlayerCanSwitchSeat", currentSeat, seat) == false then
+		if hook.Run("SV_PlayerCanSwitchSeat", ply, currentSeat, seat) == false then
 			return
 		end
 		
