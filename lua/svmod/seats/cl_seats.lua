@@ -33,8 +33,8 @@ hook.Add("PlayerBindPress", "SV_EnterExitVehicle", function(ply, bind, pressed)
 			return -- DO NOT RETURN TRUE HERE!
 		end
 
-		-- Return if the vehicle is picked up from the physgun
-		if veh.SV_PhysgunPickup then
+		-- Return if something is picked up with the physgun
+		if ply.SV_PhysgunPickedUp then
 			return true
 		end
 
@@ -103,14 +103,19 @@ function SVMOD:CreateCSSeat(veh)
 	return seat
 end
 
-hook.Add("PhysgunPickup", "SV_DisableEnterOnPhysgunPickup", function(ply, ent)
-	if SVMOD:IsVehicle(ent) then
-		ent.SV_PhysgunPickup = true
-	end
+hook.Add("KeyPress", "SV_DetectPhysgunPickedUp", function(ply, key)
+	if key ~= IN_ATTACK then return end
+
+	local activeWeapon = ply:GetActiveWeapon()
+	if activeWeapon:GetClass() ~= "weapon_physgun" then return end
+
+	ply.SV_PhysgunPickedUp = true
 end)
 
-hook.Add("PhysgunDrop", "SV_DisableEnterOnPhysgunDrop", function(ply, ent)
-	if SVMOD:IsVehicle(ent) then
-		ent.SV_PhysgunPickup = false
+hook.Add("KeyRelease", "SV_DetectPhysgunReleased", function(ply, key)
+	if key ~= IN_ATTACK then return end
+
+	if ply.SV_PhysgunPickedUp then
+		ply.SV_PhysgunPickedUp = false
 	end
 end)
