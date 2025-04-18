@@ -107,7 +107,7 @@ hook.Add("KeyPress", "SV_DetectPhysgunPickedUp", function(ply, key)
 	if key ~= IN_ATTACK then return end
 
 	local activeWeapon = ply:GetActiveWeapon()
-	if activeWeapon:GetClass() ~= "weapon_physgun" then return end
+	if not IsValid(activeWeapon) or activeWeapon:GetClass() ~= "weapon_physgun" then return end
 
 	ply.SV_PhysgunPickedUp = true
 end)
