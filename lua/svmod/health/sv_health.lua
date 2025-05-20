@@ -203,7 +203,10 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 			timer.Simple(SVMOD.CFG.Damage.StopEngineAfterCrashTime, function()
 				if IsValid(ent) then
 					ent:EnableEngine(true)
-					ent:StartEngine(true)
+					-- Prevent the engine from starting if no driver
+					if IsValid(ent:GetDriver()) then
+						ent:StartEngine(true)
+					end
 					ent:SetHandbrake(false)
 					ent.SV_IsCrashed = false
 					veh:SV_TurnOffHazardLights()
