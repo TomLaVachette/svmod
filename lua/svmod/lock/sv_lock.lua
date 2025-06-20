@@ -20,10 +20,21 @@ function SVMOD.Metatable:SV_Lock()
 
 	Vehicle:Fire("lock", "", 0)
 
+	if not Vehicle:SV_GetHazardLightsState() and not IsValid(Vehicle:GetDriver()) then
+		Vehicle:SV_TurnOnHazardLights()
+
+		timer.Create("SV_TurnOffHazardLightsLock_" .. Vehicle:EntIndex(), 3, 1, function()
+			if IsValid(Vehicle) then
+				Vehicle:SV_TurnOffHazardLights()
+			end
+		end)
+	end
+
 	Vehicle:EmitSound("doors/door_latch1.wav")
 
 	return true
 end
+
 
 -- Unlocks the vehicle.
 -- @treturn boolean True if successful, false otherwise
@@ -35,6 +46,16 @@ function SVMOD.Metatable:SV_Unlock()
 	end
 
 	Vehicle:Fire("unlock", "", 0)
+
+	if not Vehicle:SV_GetHazardLightsState() and not IsValid(Vehicle:GetDriver()) then
+		Vehicle:SV_TurnOnHazardLights()
+
+		timer.Create("SV_TurnOffHazardLightsUnlock_" .. Vehicle:EntIndex(), 2, 1, function()
+			if IsValid(Vehicle) then
+				Vehicle:SV_TurnOffHazardLights()
+			end
+		end)
+	end
 
 	Vehicle:EmitSound("doors/door_latch3.wav")
 
