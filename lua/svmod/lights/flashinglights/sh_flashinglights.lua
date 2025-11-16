@@ -9,3 +9,10 @@ function SVMOD.Metatable:SV_GetFlashingLightsState()
 	end
 	return self.SV_States.FlashingLights
 end
+
+function SVMOD.Metatable:SV_GetSirenState()
+	if self:SV_IsPassengerSeat() then
+		return self:SV_GetDriverSeat().SV_States.Siren
+	end
+	return self.SV_States.Siren
+end

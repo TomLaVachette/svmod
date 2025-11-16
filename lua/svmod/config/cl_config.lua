@@ -3,7 +3,8 @@ SVMOD.CFG = {}
 SVMOD.CFG.Lights = {
 	DrawProjectedLights = true,
 	DrawShadows = false,
-	DisableBlinkersOnTurn = true
+	DisableBlinkersOnTurn = true,
+	SeparateFlashingLights = false
 }
 
 SVMOD.CFG.Damage = {

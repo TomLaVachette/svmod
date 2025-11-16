@@ -4,42 +4,31 @@
 util.AddNetworkString("SV_TurnFlashingLights")
 util.AddNetworkString("SV_TurnFlashingSound")
 
--- Turns on the flashing lights of a vehicle.
--- @treturn boolean True if successful, false otherwise
-function SVMOD.Metatable:SV_TurnOnFlashingLights()
+function SVMOD.Metatable:SV_SetFlashingLightsState(flashingLightState, sirenState)
 	if not self.SV_IsEditMode and #self.SV_Data.FlashingLights == 0 then
 		return false -- No flashing light on this vehicle
 	elseif not SVMOD.CFG.ELS.AreFlashingLightsEnabled then
 		return false -- Flashing lights disabled
-	elseif self:SV_GetFlashingLightsState() then
-		return false -- Flashing lights already active
 	elseif not self.SV_IsEditMode and self:SV_GetHealth() == 0 then
 		return false -- Vehicle destroyed
 	end
 
-	net.Start("SV_TurnFlashingLights")
-	net.WriteEntity(self)
-	net.WriteBool(true)
-	net.Broadcast()
+	-- Default value (for editor mode, enable flashing lights only)
+	if flashingLightState == nil then flashingLightState = true end
+	if sirenState == nil then sirenState = false end
 
-	self.SV_States.FlashingLights = true
-
-	return true
-end
-
--- Turns off the flashing lights of a vehicle.
--- @treturn boolean True if successful, false otherwise
-function SVMOD.Metatable:SV_TurnOffFlashingLights()
-	if not self:SV_GetFlashingLightsState() then
-		return false -- Flashing lights already inactive
+	if flashingLightState == self:SV_GetFlashingLightsState() and sirenState == self:SV_GetSirenState() then
+		return false -- No change
 	end
 
 	net.Start("SV_TurnFlashingLights")
 	net.WriteEntity(self)
-	net.WriteBool(false)
+	net.WriteBool(flashingLightState)
+	net.WriteBool(sirenState)
 	net.Broadcast()
 
-	self.SV_States.FlashingLights = false
+	self.SV_States.FlashingLights = flashingLightState
+	self.SV_States.Siren = sirenState
 
 	return true
 end
@@ -49,17 +38,14 @@ net.Receive("SV_SetFlashingLightsState", function(_, ply)
 	local veh = ply:GetVehicle()
 	if not SVMOD:IsVehicle(veh) or not veh:SV_IsDriverSeat() then return end
 
-	local state = net.ReadBool()
+	local flashingLightState = net.ReadBool()
+	local sirenState = net.ReadBool()
 
-	if hook.Run("SV_PlayerCanToggleFlashingLights", ply, veh, state) == false then
+	if hook.Run("SV_PlayerCanToggleFlashingLights", ply, veh, flashingLightState, sirenState) == false then
 		return
 	end
 
-	if state then
-		veh:SV_TurnOnFlashingLights()
-	else
-		veh:SV_TurnOffFlashingLights()
-	end
+	veh:SV_SetFlashingLightsState(flashingLightState, sirenState)
 end)
 
 local function turnFlashingSound(veh, state)
@@ -78,7 +64,7 @@ local function disableFlashingLights(veh)
 		timer.Create("SV_DisableFlashingLights_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffFlashingLights, 1, function()
 			if not SVMOD:IsVehicle(veh) then return end
 
-			veh:SV_TurnOffFlashingLights()
+			veh:SV_SetFlashingLightsState(false, false)
 		end)
 
 		timer.Create("SV_DisableFlashingSound_" .. veh:EntIndex(), SVMOD.CFG.ELS.TimeTurnOffSound, 1, function()
@@ -94,7 +80,7 @@ hook.Add("PlayerEnteredVehicle", "SV_EnableFlashingSoundOnEnter", function(ply, 
 		return
 	end
 
-	if veh.SV_States.FlashingLights then
+	if veh.SV_States.Siren then
 		turnFlashingSound(veh, true)
 	end
 end)
