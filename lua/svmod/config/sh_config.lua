@@ -3,8 +3,8 @@ SVMOD.FCFG = {}
 -- FCFG for File Configuration
 -- The configurations in this table are not saved to a file.
 
-SVMOD.FCFG.Version = "1.5.3"
-SVMOD.FCFG.FileVersion = "1.5.3"
+SVMOD.FCFG.Version = "1.6.0"
+SVMOD.FCFG.FileVersion = "1.6.0"
 SVMOD.FCFG.DataVersion = 2
 SVMOD.FCFG.LastVersion = "?" -- Do not change
 
@@ -65,13 +65,13 @@ function SVMOD:Load()
 	else
 		if SERVER then
 			if file.Exists("svmod/server_1_5_2.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_2.txt"))
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_6_0.txt"))
 				self.CFG.Damage.StopEngineAfterCrash = false
 				self.CFG.Damage.StopEngineAfterCrashTime = 5
 				self.CFG.Damage.StopEngineAfterCrashDamageMultiplier = 1
 
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.2 to 1.5.3.")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.2 to 1.6.0.")
 				return
 			elseif file.Exists("svmod/server_1_5_0.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_0.txt"))
