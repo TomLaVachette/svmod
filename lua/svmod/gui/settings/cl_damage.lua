@@ -9,6 +9,17 @@ function SVMOD:GUI_Damage(panel, data)
 	local scrollBar = scroll:GetVBar()
 	scrollBar:SetHideButtons(true)
 	scrollBar:SetScroll(0)
+	scrollBar.Paint = function(self, w, h)
+		surface.SetDrawColor(39, 52, 58)
+		surface.DrawRect(0, 0, w, h)
+	end
+	scrollBar.btnGrip.Paint = function(self, w, h)
+		surface.SetDrawColor(132, 84, 202)
+		surface.DrawRect(0, 0, w, h)
+	end
+
+	local scrollCanvas = scroll:GetCanvas()
+	scrollCanvas:DockPadding(0, 0, 10, 0)
 
 	SVMOD:CreateTitle(scroll, language.GetPhrase("svmod.damage.vehicle_damage"))
 

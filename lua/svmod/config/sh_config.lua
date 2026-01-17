@@ -64,32 +64,7 @@ function SVMOD:Load()
 		end
 	else
 		if SERVER then
-			if file.Exists("svmod/server_1_5_2.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/server_1_6_0.txt"))
-				self.CFG.Damage.StopEngineAfterCrash = false
-				self.CFG.Damage.StopEngineAfterCrashTime = 5
-				self.CFG.Damage.StopEngineAfterCrashDamageMultiplier = 1
-
-				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.2 to 1.6.0.")
-				return
-			elseif file.Exists("svmod/server_1_5_0.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_0.txt"))
-				self.CFG.Seats.AllowWeaponsInVehicle = self.CFG.Others.IsWeaponsEnabled
-				self.CFG.Others.IsWeaponsEnabled = nil
-				self.CFG.Others.TimeDeploySpikeStrips = 5
-				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.0 to 1.5.2.")
-				return
-			elseif file.Exists("svmod/server_1_4_0.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/server_1_4_0.txt"))
-				self.CFG.Seats.AllowWeaponsInVehicle = false
-				self.CFG.Others.IsWeaponsEnabled = nil
-				self.CFG.Others.TimeDeploySpikeStrips = 5
-				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.4 to 1.5.2.")
-				return
-			elseif file.Exists("svmod/server_1_3_2.txt", "DATA") then
+			if file.Exists("svmod/server_1_3_2.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/server_1_3_2.txt"))
 				self.CFG.Damage.WheelShotMultiplier = 1
 				self.CFG.Damage.WheelCollisionMultiplier = 1
@@ -106,25 +81,67 @@ function SVMOD:Load()
 				self.CFG.Seats.AllowWeaponsInVehicle = false
 				self.CFG.Others.TimeDeploySpikeStrips = 5
 				SVMOD:Save()
+				file.Delete("svmod/server_1_3_2.txt")
 				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.3 to 1.5.2.")
-				return
+			end
+
+			if file.Exists("svmod/server_1_4_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_4_0.txt"))
+				self.CFG.Seats.AllowWeaponsInVehicle = false
+				self.CFG.Others.IsWeaponsEnabled = nil
+				self.CFG.Others.TimeDeploySpikeStrips = 5
+				SVMOD:Save()
+				file.Delete("svmod/server_1_4_0.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.4 to 1.5.2.")
+			end
+
+			if file.Exists("svmod/server_1_5_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_0.txt"))
+				self.CFG.Seats.AllowWeaponsInVehicle = self.CFG.Others.IsWeaponsEnabled
+				self.CFG.Others.IsWeaponsEnabled = nil
+				self.CFG.Others.TimeDeploySpikeStrips = 5
+				SVMOD:Save()
+				file.Delete("svmod/server_1_5_0.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.0 to 1.5.2.")
+			end
+
+			if file.Exists("svmod/server_1_5_2.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/server_1_5_2.txt"))
+				self.CFG.Damage.StopEngineAfterCrash = false
+				self.CFG.Damage.StopEngineAfterCrashTime = 5
+				self.CFG.Damage.StopEngineAfterCrashDamageMultiplier = 1
+				SVMOD:Save()
+				file.Delete("svmod/server_1_5_2.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file server-side converted from 1.5.2 to 1.6.0.")
 			end
 		elseif CLIENT then
+			if file.Exists("svmod/client_1_3_2.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
+				SVMOD:Save()
+				file.Delete("svmod/client_1_3_2.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.5.2.")
+			end
+
+			if file.Exists("svmod/client_1_4_0.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_4_0.txt"))
+				SVMOD:Save()
+				file.Delete("svmod/client_1_4_0.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.4 to 1.5.2.")
+			end
+
 			if file.Exists("svmod/client_1_5_0.txt", "DATA") then
 				self.CFG = util.JSONToTable(file.Read("svmod/client_1_5_0.txt"))
 				SVMOD:Save()
+				file.Delete("svmod/client_1_5_0.txt")
 				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.5.0 to 1.5.2.")
-				return
-			elseif file.Exists("svmod/client_1_4_0.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/client_1_4_0.txt"))
+			end
+
+			if file.Exists("svmod/client_1_5_2.txt", "DATA") then
+				self.CFG = util.JSONToTable(file.Read("svmod/client_1_5_2.txt"))
+				self.CFG.Lights.SeparateFlashingLights = false
 				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.4 to 1.5.2.")
-				return
-			elseif file.Exists("svmod/client_1_3_2.txt", "DATA") then
-				self.CFG = util.JSONToTable(file.Read("svmod/client_1_3_2.txt"))
-				SVMOD:Save()
-				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.3 to 1.5.2.")
-				return
+				file.Delete("svmod/client_1_5_2.txt")
+				SVMOD:PrintConsole(SVMOD.LOG.Info, "Configuration file client-side converted from 1.5.2 to 1.6.0.")
 			end
 		end
 
