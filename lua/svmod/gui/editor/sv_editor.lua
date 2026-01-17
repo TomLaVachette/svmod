@@ -74,7 +74,7 @@ net.Receive("SV_Editor_ActiveTab", function(_, ply)
 	veh:SV_TurnOffBackLights()
 	veh:SV_TurnOffLeftBlinker()
 	veh:SV_TurnOffRightBlinker()
-	veh:SV_TurnOffFlashingLights()
+	veh:SV_SetFlashingLightsState(false, false)
 
 	local actions = {
 		["Headlights"] = "SV_TurnOnHeadlights",
@@ -82,7 +82,7 @@ net.Receive("SV_Editor_ActiveTab", function(_, ply)
 		["Reversing"] = "SV_TurnOnBackLights",
 		["Left Blinkers"] = "SV_TurnOnLeftBlinker",
 		["Right Blinkers"] = "SV_TurnOnRightBlinker",
-		["Flashing"] = "SV_TurnOnFlashingLights"
+		["Flashing"] = "SV_SetFlashingLightsState"
 	}
 
 	if actions[name] then

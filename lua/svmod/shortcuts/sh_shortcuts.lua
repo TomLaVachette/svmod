@@ -76,10 +76,36 @@ SVMOD.Shortcuts = {
 		DefaultKey = KEY_LSHIFT,
 		Key = KEY_LSHIFT,
 		PressedFunction = function(veh)
-			if veh:SV_GetFlashingLightsState() then
-				SVMOD:SetFlashingLightsState(false)
+			local currFlashing = veh:SV_GetFlashingLightsState()
+			local currSiren = veh:SV_GetSirenState()
+			local hasSiren = veh.SV_Data.Sounds.Siren and #veh.SV_Data.Sounds.Siren > 0
+			local separated = SVMOD.CFG.Lights.SeparateFlashingLights
+
+			-- Cycle : Off -> Flashing only -> Flashing + Siren -> Off
+			if separated then
+				-- Off -> Flashing only
+				if not currFlashing and not currSiren then
+					SVMOD:SetFlashingLightsState(true, false)
+
+				-- Flashing only -> Flashing + Siren
+				elseif currFlashing and not currSiren and hasSiren then
+					SVMOD:SetFlashingLightsState(true, true)
+
+				-- Flashing + Siren -> Off
+				else
+					SVMOD:SetFlashingLightsState(false, false)
+				end
+
+				return
+			end
+
+			-- Cycle : Off -> (Flashing + Siren) -> Off
+			if not currFlashing and not currSiren then
+				-- turn everything on
+				SVMOD:SetFlashingLightsState(true, hasSiren)
 			else
-				SVMOD:SetFlashingLightsState(true)
+				-- turn everything off
+				SVMOD:SetFlashingLightsState(false, false)
 			end
 		end
 	}
