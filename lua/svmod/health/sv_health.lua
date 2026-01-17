@@ -18,8 +18,8 @@ hook.Add("PlayerEnteredVehicle", "SV_Health_StopEngine", function(ply, veh)
 
 	-- Timer needed here because Source use the next frame to start the engine
 	timer.Simple(FrameTime() * 4, function()
-		-- Stop the engine if the vehicle is exploded
-		if veh.SV_IsExploded then
+		-- Stop the engine if the vehicle is exploded or crashed
+		if veh.SV_IsExploded or veh.SV_IsCrashed then
 			veh:EnableEngine(false)
 			veh:StartEngine(false)
 		end
@@ -191,6 +191,27 @@ hook.Add("SV_LoadVehicle", "SV_InitCrashDamageHook", function(veh)
 					passengerSeat:GetDriver():TakeDamageInfo(DInfo)
 				end
 			end
+		end
+
+		if SVMOD.CFG.Damage.StopEngineAfterCrash and data.Speed > 500 * SVMOD.CFG.Damage.StopEngineAfterCrashDamageMultiplier then
+			ent:EnableEngine(false)
+			ent:StartEngine(false)
+			ent:SetHandbrake(true)
+			veh.SV_IsCrashed = true
+			veh:SV_TurnOnHazardLights()
+			
+			timer.Simple(SVMOD.CFG.Damage.StopEngineAfterCrashTime, function()
+				if IsValid(ent) then
+					ent:EnableEngine(true)
+					-- Prevent the engine from starting if no driver
+					if IsValid(ent:GetDriver()) then
+						ent:StartEngine(true)
+					end
+					ent:SetHandbrake(false)
+					ent.SV_IsCrashed = false
+					veh:SV_TurnOffHazardLights()
+				end
+			end)
 		end
 
 		local nearestWheelID, _ = ent:SV_GetNearestWheel(ent:WorldToLocal(data.HitPos))
