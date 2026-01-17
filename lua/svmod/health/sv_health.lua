@@ -46,7 +46,7 @@ function SVMOD.Metatable:SV_SetHealth(value)
 			veh:SV_TurnOffLeftBlinker()
 			veh:SV_TurnOffRightBlinker()
 			veh:SV_TurnOffHazardLights()
-			veh:SV_TurnOffFlashingLights()
+			veh:SV_SetFlashingLightsState(false, false)
 
 			veh:StopParticles()
 

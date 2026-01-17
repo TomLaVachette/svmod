@@ -82,6 +82,7 @@ function SVMOD:LoadVehicle(veh)
 				RightBlinkers = false,
 				HazardLights = false,
 				FlashingLights = false,
+				Siren = false,
 				Horn = false
 			}
 

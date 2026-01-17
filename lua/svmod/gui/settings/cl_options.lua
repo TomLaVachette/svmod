@@ -75,7 +75,7 @@ function SVMOD:GUI_Options(panel, data)
 
 	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.options.gameplay"))
 
-	local gameplayPanel = SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.disable_blinkers"), {
+	SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.disable_blinkers"), {
 		{
 			Name = language.GetPhrase("svmod.enable"),
 			Color = Color(59, 217, 85),
@@ -97,7 +97,30 @@ function SVMOD:GUI_Options(panel, data)
 			end
 		}
 	})
-	gameplayPanel:DockMargin(0, 4, 0, 30)
+
+	local separatedFlashingLights = SVMOD:CreateSettingPanel(panel, language.GetPhrase("svmod.options.enable_separated_flashing"), {
+		{
+			Name = language.GetPhrase("svmod.enable"),
+			Color = Color(59, 217, 85),
+			HoverColor = Color(156, 255, 161),
+			IsSelected = (SVMOD.CFG.Lights.SeparateFlashingLights == true),
+			DoClick = function()
+			   SVMOD.CFG.Lights.SeparateFlashingLights = true
+			   SVMOD:Save()
+			end
+		},
+		{
+			Name = language.GetPhrase("svmod.disable"),
+			Color = Color(173, 48, 43),
+			HoverColor = Color(224, 62, 56),
+			IsSelected = (SVMOD.CFG.Lights.SeparateFlashingLights == false),
+			DoClick = function()
+				SVMOD.CFG.Lights.SeparateFlashingLights = false
+				SVMOD:Save()
+			end
+		}
+	})
+	separatedFlashingLights:DockMargin(0, 4, 0, 30)
 
 	SVMOD:CreateTitle(panel, language.GetPhrase("svmod.options.sounds"))
 
