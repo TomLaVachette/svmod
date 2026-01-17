@@ -64,6 +64,7 @@ function ENT:Initialize()
 		end
 	end)
 
+	if not IsValid(self.Pump) then return end
 	local pumpPos = self.Pump:GetPos()
 
 	timer.Create("SV_FillerPistolRope_" .. entIndex, 1, 0, function()
