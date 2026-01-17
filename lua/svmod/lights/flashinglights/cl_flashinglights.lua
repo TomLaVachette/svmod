@@ -1,10 +1,16 @@
 -- @class SVMOD
 -- @clientside
 
--- Sets the state of the flashing lights of the vehicle
+-- Sets the state of the flashing lights and siren of the vehicle
 -- driven by the player.
--- @tparam boolean result True to enable the flashing lights, false to disable
+-- @tparam boolean flashingLightsState True to enable the flashing lights, false to disable
+-- @tparam boolean sirenState True to enable the siren, false to disable
 function SVMOD:SetFlashingLightsState(flashingLightsState, sirenState)
+	-- 1.5.2 -> 1.6.0: Keep the same behavior as 1.5.2
+	if sirenState == nil then
+		sirenState = flashingLightsState
+	end
+
 	local Vehicle = LocalPlayer():GetVehicle()
 	if not SVMOD:IsVehicle(Vehicle) or not Vehicle:SV_IsDriverSeat() then return end
 

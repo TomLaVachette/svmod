@@ -4,6 +4,24 @@
 util.AddNetworkString("SV_TurnFlashingLights")
 util.AddNetworkString("SV_TurnFlashingSound")
 
+-- Turns on the flashing lights and siren of the vehicle.
+-- @treturn boolean True if the state was changed, false otherwise
+function SVMOD.Metatable:SV_TurnOnFlashingLights()
+	-- 1.5.2 -> 1.6.0: Keep the same behavior as 1.5.2
+	return self:SV_SetFlashingLightsState(true, true)
+end
+
+-- Turns off the flashing lights and siren of the vehicle.
+-- @treturn boolean True if the state was changed, false otherwise
+function SVMOD.Metatable:SV_TurnOffFlashingLights()
+	-- 1.5.2 -> 1.6.0: Keep the same behavior as 1.5.2
+	return self:SV_SetFlashingLightsState(false, false)
+end
+
+-- Sets the state of the flashing lights and siren of the vehicle.
+-- @tparam boolean flashingLightState True to enable the flashing lights, false to disable (default: true)
+-- @tparam boolean sirenState True to enable the siren, false to disable (default: false)
+-- @treturn boolean True if the state was changed, false otherwise
 function SVMOD.Metatable:SV_SetFlashingLightsState(flashingLightState, sirenState)
 	if not self.SV_IsEditMode and #self.SV_Data.FlashingLights == 0 then
 		return false -- No flashing light on this vehicle
