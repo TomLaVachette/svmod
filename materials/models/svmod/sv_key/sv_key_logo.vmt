@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+    "$basetexture" "models/svmod/sv_key/sv_key_logo"
+    
+    "$translucent" 1
+    "$model"       1
+}

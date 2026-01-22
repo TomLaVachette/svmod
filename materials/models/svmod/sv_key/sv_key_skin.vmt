@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/svmod/sv_key/sv_key_skin"
+	"$bumpmap" "models/svmod/sv_key/sv_key_metal_n"
+
+	"$surfaceprop" "plastic"
+	"$model" 1
+	
+	"$phong" "1"
+	"$phongboost" "0.2"
+	"$phongexponent" "5"
+}
