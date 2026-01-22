@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/debug/debugwhite"
+
+	"$color2" "[0.7 0.7 0.7]"
+
+	"$surfaceprop" "metal"
+	"$model" 1
+	
+	"$phong" "1"
+	"$phongboost" "5"
+	"$phongexponent" "10"
+}
