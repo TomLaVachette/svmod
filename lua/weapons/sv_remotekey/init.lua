@@ -11,14 +11,17 @@ function SWEP:PrimaryAttack()
 
     ply:EmitSound("svmod/key_click.wav", 100, 100)
 
-    local tr = ply:GetEyeTrace()
+    local tr = util.TraceLine({
+        start = ply:GetShootPos(),
+        endpos = ply:GetShootPos() + ply:GetAimVector() * self.MaxUseDistance,
+        filter = ply,
+        mask = MASK_SHOT
+    })
+    
     local veh = tr.Entity
 
     if not IsValid(veh) or not veh:IsVehicle() then return end
-    
     if SVMOD and not SVMOD:IsVehicle(veh) then return end
-
-    if tr.HitPos:DistToSqr(ply:GetShootPos()) > self.MaxUseDistanceSqr then return end
 
     local isOwner = self:IsVehicleOwner(ply, veh)
     if not isOwner then return end

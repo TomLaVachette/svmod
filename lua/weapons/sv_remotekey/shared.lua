@@ -35,7 +35,6 @@ SWEP.AnimKeyDuration = 0.75
 SWEP.PrimaryFireDelay = 0.75
 
 SWEP.MaxUseDistance = 450
-SWEP.MaxUseDistanceSqr = SWEP.MaxUseDistance * SWEP.MaxUseDistance
 
 function SWEP:Initialize()
     self:SetHoldType("slam")
