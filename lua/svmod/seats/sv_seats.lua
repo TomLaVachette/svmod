@@ -420,7 +420,8 @@ net.Receive("SV_SwitchSeat", function(_, ply)
 			seat.SV_LastDriver = ply
 		end
 
-		ply:SetEyeAngles(EyeAngle)
+		-- Prevent disorienting camera roll/pitch when switching seats
+		ply:SetEyeAngles(Angle(0, EyeAngle.y, 0))
 	end
 end)
 
